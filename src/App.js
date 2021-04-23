@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import useSWR from 'swr';
+
+const BASE_URL = 'http://localhost:8000';
+
+const fetcher = (url, ...args) =>
+  fetch(BASE_URL + url, ...args).then((res) => res.json());
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+  const { data, error } = useSWR('/braccio/', fetcher);
+
+  if (error) return <p>Error.</p>;
+  if (!data) return <p>Loading...</p>;
+
+  return data.map(({ id, name, serial }) => (
+    <div key={id}>
+      <p>Name: {name}</p>
+      <p>Serial: {serial}</p>
     </div>
-  );
+  ));
 }
 
 export default App;
