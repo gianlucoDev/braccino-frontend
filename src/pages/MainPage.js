@@ -10,8 +10,13 @@ function MainPage() {
   const { data: braccios, error: bracciosError } = useSWR('/braccio');
   const { data: routines, error: routinesError } = useSWR('/routines');
 
-  if (bracciosError || routinesError) return <p>Error.</p>;
-  if (!braccios || !routines) return <p>Loading...</p>;
+  if (bracciosError || routinesError) {
+    return <Typography variant="h3">Error.</Typography>;
+  }
+
+  if (!braccios || !routines) {
+    return <Typography variant="h3">Loading...</Typography>;
+  }
 
   return (
     <Box marginTop={2}>
