@@ -4,10 +4,10 @@ import useSWR from 'swr';
 
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 import useDirtyData from '../hooks/useDirtyData';
+import RoutineEditorControls from '../components/RoutineEditorControls';
 import StepList from '../components/StepList';
 import StepEditor from '../components/StepEditor';
 
@@ -29,6 +29,13 @@ function RoutinePage() {
     setState(newState);
   };
 
+  const handleNameChange = (event) => {
+    setState({
+      ...state,
+      name: event.target.value,
+    });
+  };
+
   if (error) {
     return <Typography variant="h3">Error.</Typography>;
   }
@@ -37,14 +44,19 @@ function RoutinePage() {
     return <Typography variant="h3">Loading...</Typography>;
   }
 
-  const { steps } = state;
+  const { name, steps } = state;
 
   return (
     <Box padding={2}>
-      <Grid container spacing={1}>
+      <Grid container spacing={2}>
         <Grid item xs={4}>
-          <Typography>{dirty ? 'dirty' : 'clean'}</Typography>
-          <Button onClick={() => reset()}>Reset</Button>
+          <RoutineEditorControls
+            name={name}
+            onNameChange={handleNameChange}
+            dirty={dirty}
+            onSubmit={() => alert('non ancora implementato')}
+            onCancel={() => reset()}
+          />
           <StepList
             steps={steps}
             activeItem={selectedStep}
