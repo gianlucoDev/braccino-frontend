@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -40,12 +38,10 @@ const SETTINGS = {
   },
 };
 
-function StepEditor({ step }) {
-  const [values, setValues] = useState(step);
-
+function StepEditor({ step, onChange }) {
   const handleChange = (key) => (value) => {
-    setValues({
-      ...values,
+    onChange({
+      ...step,
       [key]: value,
     });
   };
@@ -60,7 +56,7 @@ function StepEditor({ step }) {
         <LabelNumberCombo
           label="Delay"
           min={0}
-          value={values['delay']}
+          value={step['delay']}
           onChange={handleChange('delay')}
         />
 
@@ -70,7 +66,7 @@ function StepEditor({ step }) {
             label={key.toUpperCase()}
             min={settings.min}
             max={settings.max}
-            value={values[key]}
+            value={step[key]}
             onChange={handleChange(key)}
           />
         ))}
