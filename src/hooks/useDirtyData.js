@@ -1,17 +1,23 @@
 import { useEffect, useState } from 'react';
 
 function useDirtyData({ original }) {
-  const [state, setStateInternal] = useState();
-  const [isDirty, setDirty] = useState(false);
+  const [{ data, isDirty }, setStateInternal] = useState({
+    data: original,
+    isDirty: false,
+  });
 
   const setState = (state) => {
-    setStateInternal(state);
-    setDirty(true);
+    setStateInternal({
+      data: state,
+      isDirty: true,
+    });
   };
 
   const reset = () => {
-    setStateInternal(original);
-    setDirty(false);
+    setStateInternal({
+      data: original,
+      isDirty: false,
+    });
   };
 
   useEffect(() => {
@@ -20,7 +26,7 @@ function useDirtyData({ original }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [original]);
 
-  return [state, setState, isDirty, reset];
+  return [data, setState, isDirty, reset];
 }
 
 export default useDirtyData;
