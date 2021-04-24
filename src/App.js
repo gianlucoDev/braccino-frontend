@@ -3,12 +3,13 @@ import { SWRConfig } from 'swr';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import fetcher from './fetcher';
-import BraccioAppBar from './components/BraccioAppBar';
 
 import DarkModeProvider from './components/DarkModeProvider';
 import MuiThemeProvider from './components/MuiThemeProvider';
-import MainPage from './pages/MainPage';
-import RoutinePage from './pages/RoutinePage';
+
+import BraccioAppBar from './components/BraccioAppBar';
+import MainPage from './pages/MainPage/MainPage';
+import RoutinePage from './pages/RoutinePage/RoutinePage';
 
 function App() {
   return (

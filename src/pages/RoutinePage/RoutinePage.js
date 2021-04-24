@@ -6,10 +6,10 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-import useDirtyData from '../hooks/useDirtyData';
-import RoutineEditorControls from '../components/RoutineEditorControls';
-import StepList from '../components/StepList';
-import StepEditor from '../components/StepEditor';
+import useDirtyData from '../../hooks/useDirtyData';
+import RoutineEditorControls from './components/RoutineEditorControls';
+import StepList from './components/StepList';
+import StepEditor from './components/StepEditor';
 
 function RoutinePage() {
   const { id } = useParams();

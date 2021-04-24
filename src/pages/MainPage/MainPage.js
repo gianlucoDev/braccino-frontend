@@ -3,8 +3,9 @@ import useSWR from 'swr';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import BraccioList from '../components/BraccioList';
-import RoutineList from '../components/RoutineList';
+
+import BraccioList from './components/BraccioList';
+import RoutineList from './components/RoutineList';
 
 function MainPage() {
   const { data: braccios, error: bracciosError } = useSWR('/braccio');
