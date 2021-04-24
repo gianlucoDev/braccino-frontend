@@ -1,3 +1,5 @@
+import { Link as RouterLink } from 'react-router-dom';
+
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import Card from '@material-ui/core/Card';
@@ -21,10 +23,7 @@ function RoutineList({ routines }) {
               </Typography>
             </CardContent>
             <CardActions>
-              <Button
-                size="small"
-                onClick={() => alert('Non ancora impementato')}
-              >
+              <Button size="small" component={RouterLink} to={`/routines/${id}`}>
                 Modifica
               </Button>
             </CardActions>
