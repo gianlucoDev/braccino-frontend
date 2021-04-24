@@ -5,38 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import LabelSliderNumberCombo from './LabelSliderNumberCombo';
 import LabelNumberCombo from './LabelNumberCombo';
 
-const SETTINGS = {
-  m1: {
-    min: 0,
-    max: 180,
-    default: 90,
-  },
-  m2: {
-    min: 15,
-    max: 165,
-    default: 45,
-  },
-  m3: {
-    min: 0,
-    max: 180,
-    default: 180,
-  },
-  m4: {
-    min: 0,
-    max: 180,
-    default: 180,
-  },
-  m5: {
-    min: 0,
-    max: 180,
-    default: 90,
-  },
-  m6: {
-    min: 10,
-    max: 73,
-    default: 10,
-  },
-};
+import { JOINTS } from '../joints';
 
 function StepEditor({ step, onChange }) {
   const handleChange = (key) => (value) => {
@@ -60,12 +29,12 @@ function StepEditor({ step, onChange }) {
           onChange={handleChange('delay')}
         />
 
-        {Object.entries(SETTINGS).map(([key, settings]) => (
+        {Object.entries(JOINTS).map(([key, joint]) => (
           <LabelSliderNumberCombo
             key={key}
             label={key.toUpperCase()}
-            min={settings.min}
-            max={settings.max}
+            min={joint.min}
+            max={joint.max}
             value={step[key]}
             onChange={handleChange(key)}
           />

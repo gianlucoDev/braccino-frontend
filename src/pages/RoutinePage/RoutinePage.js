@@ -11,6 +11,8 @@ import RoutineEditorControls from './components/RoutineEditorControls';
 import StepList from './components/StepList';
 import StepEditor from './components/StepEditor';
 
+import { DEFAULT_JOINT_VALUES } from './joints';
+
 function RoutinePage() {
   const { id } = useParams();
   const { data, error } = useSWR(`/routines/${id}`);
@@ -36,6 +38,28 @@ function RoutinePage() {
     });
   };
 
+  const handleNewStep = () => {
+    const newStep = {
+      ...DEFAULT_JOINT_VALUES,
+      delay: 1000,
+    };
+
+    setState({
+      ...state,
+      steps: [...state.steps, newStep],
+    });
+  };
+
+  const handleReset = () => {
+    // when we reset the data some steps may get deleted
+    // this ensures that those steps are not selected when resetting
+    if (selectedStep >= data.steps.length) {
+      setSelectedStep(null);
+    }
+
+    reset();
+  };
+
   if (error) {
     return <Typography variant="h3">Error.</Typography>;
   }
@@ -55,13 +79,13 @@ function RoutinePage() {
             onNameChange={handleNameChange}
             dirty={dirty}
             onSubmit={() => alert('non ancora implementato')}
-            onCancel={() => reset()}
+            onCancel={handleReset}
           />
           <StepList
             steps={steps}
             activeItem={selectedStep}
             onEdit={(index) => setSelectedStep(index)}
-            onAdd={() => alert('non ancora implementato')}
+            onAdd={handleNewStep}
           />
         </Grid>
         <Grid item xs={8}>
