@@ -5,6 +5,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import fetcher from './fetcher';
 import BraccioAppBar from './components/BraccioAppBar';
 
+import DarkModeProvider from './components/DarkModeProvider';
+import MuiThemeProvider from './components/MuiThemeProvider';
 import MainPage from './pages/MainPage';
 import RoutinePage from './pages/RoutinePage';
 
@@ -16,12 +18,16 @@ function App() {
           fetcher,
         }}
       >
-        <CssBaseline />
-        <BraccioAppBar />
-        <Switch>
-          <Route path="/routines/:id" children={<RoutinePage />} />
-          <Route path="/" children={<MainPage />} />
-        </Switch>
+        <DarkModeProvider>
+          <MuiThemeProvider>
+            <CssBaseline />
+            <BraccioAppBar />
+            <Switch>
+              <Route path="/routines/:id" children={<RoutinePage />} />
+              <Route path="/" children={<MainPage />} />
+            </Switch>
+          </MuiThemeProvider>
+        </DarkModeProvider>
       </SWRConfig>
     </Router>
   );
