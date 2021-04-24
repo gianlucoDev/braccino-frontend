@@ -22,8 +22,8 @@ function MainPage() {
 
       <GridList cellHeight="auto" cols={3}>
         {data.map(({ id, name, serial }) => (
-          <Box m={1}>
-            <Card key={id}>
+          <Box key={id} m={1}>
+            <Card>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">
                   {name}
