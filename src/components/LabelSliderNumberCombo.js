@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SliderTextInputCombo({ label, min, max, value, onChange }) {
+function LabelSliderNumberCombo({ label, min, max, value, onChange }) {
   const classes = useStyles();
 
   const handleSliderChange = (event, newValue) => {
@@ -52,7 +52,6 @@ function SliderTextInputCombo({ label, min, max, value, onChange }) {
           max={max}
           value={value}
           onChange={handleSliderChange}
-          valueLabelDisplay="auto"
         />
       </Grid>
       <Grid item className={classes.extremes}>
@@ -77,4 +76,4 @@ function SliderTextInputCombo({ label, min, max, value, onChange }) {
   );
 }
 
-export default SliderTextInputCombo;
+export default LabelSliderNumberCombo;
