@@ -19,13 +19,13 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(0.25),
     },
   },
-  avatar: {
-    color: theme.palette.getContrastText(theme.palette.primary.dark),
-    backgroundColor: theme.palette.primary.dark,
+  active: {
+    color: theme.palette.getContrastText(theme.palette.primary.main),
+    backgroundColor: theme.palette.primary.main,
   },
 }));
 
-function StepListItem({ index, step, onEdit }) {
+function StepListItem({ index, step, active = false, onEdit }) {
   const classes = useStyles();
 
   const values = (
@@ -42,7 +42,7 @@ function StepListItem({ index, step, onEdit }) {
   return (
     <ListItem alignItems="flex-start">
       <ListItemAvatar>
-        <Avatar variant="rounded" className={classes.avatar}>
+        <Avatar variant="rounded" className={active ? classes.active : ''}>
           {index + 1}
         </Avatar>
       </ListItemAvatar>

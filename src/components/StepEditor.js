@@ -39,12 +39,8 @@ const SETTINGS = {
   },
 };
 
-const DEFAULT_VALUES = Object.fromEntries(
-  Object.keys(SETTINGS).map((key) => [key, SETTINGS[key].default])
-);
-
-function StepEditor() {
-  const [values, setValues] = useState(DEFAULT_VALUES);
+function StepEditor({ step }) {
+  const [values, setValues] = useState(step);
 
   const handleChange = (key) => (value) => {
     setValues({

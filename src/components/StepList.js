@@ -8,11 +8,17 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import StepListItem from './StepListItem';
 
-function StepList({ steps, onEdit, onAdd }) {
+function StepList({ steps, activeItem, onEdit, onAdd }) {
   return (
     <List>
       {steps.map((step, i) => (
-        <StepListItem key={i} index={i} step={step} onEdit={() => onEdit(i)} />
+        <StepListItem
+          key={i}
+          index={i}
+          step={step}
+          active={i === activeItem}
+          onEdit={() => onEdit(i)}
+        />
       ))}
 
       <Divider />

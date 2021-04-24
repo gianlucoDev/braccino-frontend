@@ -30,6 +30,7 @@ function RoutinePage() {
         <Grid item xs={4}>
           <StepList
             steps={steps}
+            activeItem={selectedStep}
             onEdit={(index) => setSelectedStep(index)}
             onAdd={() => alert('non ancora implementato')}
           />
@@ -40,7 +41,7 @@ function RoutinePage() {
               Seleziona uno step nel pannello a sinistra
             </Typography>
           ) : (
-            <StepEditor />
+            <StepEditor key={selectedStep} step={steps[selectedStep]} />
           )}
         </Grid>
       </Grid>
