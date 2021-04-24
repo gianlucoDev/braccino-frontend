@@ -1,5 +1,7 @@
 import useSWR from 'swr';
 
+import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import BraccioList from '../components/BraccioList';
 import RoutineList from '../components/RoutineList';
@@ -12,17 +14,19 @@ function MainPage() {
   if (!braccios || !routines) return <p>Loading...</p>;
 
   return (
-    <>
-      <Typography gutterBottom variant="h3" component="h1">
-        Bracci collegati
-      </Typography>
-      <BraccioList braccios={braccios} />
+    <Box marginTop={2}>
+      <Container>
+        <Typography gutterBottom variant="h3" component="h1">
+          Bracci collegati
+        </Typography>
+        <BraccioList braccios={braccios} />
 
-      <Typography gutterBottom variant="h3" component="h1">
-        Routine disponibili
-      </Typography>
-      <RoutineList routines={routines} />
-    </>
+        <Typography gutterBottom variant="h3" component="h1">
+          Routine disponibili
+        </Typography>
+        <RoutineList routines={routines} />
+      </Container>
+    </Box>
   );
 }
 
