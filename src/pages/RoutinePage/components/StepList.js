@@ -24,10 +24,10 @@ function StepList({ steps, activeItem, onEdit, onAdd }) {
       <Divider />
 
       <ListItem alignItems="flex-start">
-        <ListItemText primary="Nuovo step" />
+        <ListItemText primary={`${steps.length} steps`} />
         <ListItemSecondaryAction>
           <Button onClick={onAdd} startIcon={<AddIcon />}>
-            Crea
+            Aggiungi step
           </Button>
         </ListItemSecondaryAction>
       </ListItem>
