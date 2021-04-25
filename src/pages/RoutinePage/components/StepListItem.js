@@ -10,6 +10,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
 
 import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles((theme) => ({
   valuesContainer: {
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function StepListItem({ index, step, active = false, onEdit }) {
+function StepListItem({ index, step, active = false, onDelete, onEdit }) {
   const classes = useStyles();
 
   const values = (
@@ -54,6 +55,9 @@ function StepListItem({ index, step, active = false, onEdit }) {
         secondaryTypographyProps={{ component: 'div' }}
       />
       <ListItemSecondaryAction>
+        <IconButton edge="end" aria-label="edit" onClick={onDelete}>
+          <DeleteIcon />
+        </IconButton>
         <IconButton edge="end" aria-label="edit" onClick={onEdit}>
           <EditIcon />
         </IconButton>

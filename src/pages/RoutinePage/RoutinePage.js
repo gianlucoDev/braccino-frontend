@@ -33,6 +33,16 @@ function RoutinePage() {
     setState(newState);
   };
 
+  const handleStepDelete = (index) => {
+    const newSteps = [...state.steps];
+    newSteps.splice(index, 1);
+
+    setState({
+      ...state,
+      steps: newSteps,
+    });
+  };
+
   const handleStepSelect = (index) => {
     setSelectedStep(index);
   };
@@ -84,6 +94,7 @@ function RoutinePage() {
           <StepList
             steps={steps}
             activeItem={selectedIndex}
+            onDelete={handleStepDelete}
             onEdit={handleStepSelect}
             onAdd={handleNewStep}
           />
