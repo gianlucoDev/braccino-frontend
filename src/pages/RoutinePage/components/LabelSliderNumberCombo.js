@@ -57,7 +57,7 @@ function LabelSliderNumberCombo({ label, min, max, value, onChange }) {
       <Grid item className={classes.extremes}>
         <Typography>{max}</Typography>
       </Grid>
-      <Grid item xs>
+      <Grid item>
         <TextField
           type="number"
           className={classes.textField}

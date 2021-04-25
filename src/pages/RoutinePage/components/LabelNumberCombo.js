@@ -33,6 +33,7 @@ function LabelNumberCombo({ label, min = undefined, max = undefined, value, onCh
       <Grid item xs>
         <TextField
           type="number"
+          fullWidth
           value={value}
           inputProps={{
             min,
