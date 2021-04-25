@@ -12,10 +12,11 @@ import StepList from './components/StepList';
 import StepEditor from './components/StepEditor';
 
 import { DEFAULT_JOINT_VALUES } from './joints';
+import { BASE_URL } from '../../fetcher';
 
 function RoutinePage() {
   const { id } = useParams();
-  const { data, error } = useSWR(`/routines/${id}`);
+  const { data, error, mutate } = useSWR(`/routines/${id}`);
   const [state, setState, dirty, reset] = useDirtyData({ original: data });
   const [selectedStep, setSelectedStep, selectedIndex] = useArrayItemSelection(
     state ? state.steps : []
@@ -66,6 +67,19 @@ function RoutinePage() {
     });
   };
 
+  const handleSubmit = async () => {
+    await fetch(BASE_URL + `/routines/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(state),
+    });
+
+    // trigger re-validation
+    mutate();
+  };
+
   const handleReset = () => {
     reset();
   };
@@ -88,7 +102,7 @@ function RoutinePage() {
             name={name}
             onNameChange={handleNameChange}
             dirty={dirty}
-            onSubmit={() => alert('non ancora implementato')}
+            onSubmit={handleSubmit}
             onCancel={handleReset}
           />
           <StepList
