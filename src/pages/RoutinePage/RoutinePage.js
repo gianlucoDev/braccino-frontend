@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import useSWR from 'swr';
 
@@ -7,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import useDirtyData from '../../hooks/useDirtyData';
+import useArrayItemSelection from '../../hooks/useArrayItemSelection';
 import RoutineEditorControls from './components/RoutineEditorControls';
 import StepList from './components/StepList';
 import StepEditor from './components/StepEditor';
@@ -17,11 +17,13 @@ function RoutinePage() {
   const { id } = useParams();
   const { data, error } = useSWR(`/routines/${id}`);
   const [state, setState, dirty, reset] = useDirtyData({ original: data });
-  const [selectedStep, setSelectedStep] = useState(null);
+  const [selectedStep, setSelectedStep, selectedIndex] = useArrayItemSelection(
+    state ? state.steps : []
+  );
 
   const handleStepChange = (newStep) => {
     const newSteps = [...steps];
-    newSteps[selectedStep] = newStep;
+    newSteps[selectedIndex] = newStep;
 
     const newState = {
       ...state,
@@ -29,6 +31,10 @@ function RoutinePage() {
     };
 
     setState(newState);
+  };
+
+  const handleStepSelect = (index) => {
+    setSelectedStep(index);
   };
 
   const handleNameChange = (event) => {
@@ -51,12 +57,6 @@ function RoutinePage() {
   };
 
   const handleReset = () => {
-    // when we reset the data some steps may get deleted
-    // this ensures that those steps are not selected when resetting
-    if (selectedStep >= data.steps.length) {
-      setSelectedStep(null);
-    }
-
     reset();
   };
 
@@ -83,8 +83,8 @@ function RoutinePage() {
           />
           <StepList
             steps={steps}
-            activeItem={selectedStep}
-            onEdit={(index) => setSelectedStep(index)}
+            activeItem={selectedIndex}
+            onEdit={handleStepSelect}
             onAdd={handleNewStep}
           />
         </Grid>
@@ -94,11 +94,7 @@ function RoutinePage() {
               Seleziona uno step nel pannello a sinistra
             </Typography>
           ) : (
-            <StepEditor
-              key={selectedStep}
-              step={steps[selectedStep]}
-              onChange={handleStepChange}
-            />
+            <StepEditor step={selectedStep} onChange={handleStepChange} />
           )}
         </Grid>
       </Grid>
