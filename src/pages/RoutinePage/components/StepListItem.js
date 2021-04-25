@@ -9,7 +9,6 @@ import Avatar from '@material-ui/core/Avatar';
 
 import Chip from '@material-ui/core/Chip';
 
-import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles((theme) => ({
