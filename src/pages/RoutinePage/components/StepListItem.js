@@ -41,7 +41,7 @@ function StepListItem({ index, step, active = false, onDelete, onEdit }) {
   );
 
   return (
-    <ListItem alignItems="flex-start">
+    <ListItem button alignItems="flex-start" onClick={onEdit} selected={active}>
       <ListItemAvatar>
         <Avatar variant="rounded" className={active ? classes.active : ''}>
           {index + 1}
@@ -57,9 +57,6 @@ function StepListItem({ index, step, active = false, onDelete, onEdit }) {
       <ListItemSecondaryAction>
         <IconButton edge="end" aria-label="edit" onClick={onDelete}>
           <DeleteIcon />
-        </IconButton>
-        <IconButton edge="end" aria-label="edit" onClick={onEdit}>
-          <EditIcon />
         </IconButton>
       </ListItemSecondaryAction>
     </ListItem>
