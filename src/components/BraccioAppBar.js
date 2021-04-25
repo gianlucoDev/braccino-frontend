@@ -46,9 +46,11 @@ function BraccioAppBar() {
 
           <IconButton
             edge="start"
-            className={classes.menuButton}
             color="inherit"
-            aria-label="menu"
+            className={classes.menuButton}
+            aria-label={
+              isDarkMode ? 'Attiva modalità chiara' : 'Attiva modalità scura'
+            }
             onClick={() => setDarkMode(!isDarkMode)}
           >
             {isDarkMode ? <LightModeIcon /> : <DarkModeIcon />}
