@@ -9,8 +9,7 @@ import MuiThemeProvider from './components/MuiThemeProvider';
 
 import BraccioAppBar from './components/BraccioAppBar';
 import MainPage from './pages/MainPage/MainPage';
-import NewRoutinePage from './pages/RoutinePage/NewRoutinePage';
-import EditRoutinePage from './pages/RoutinePage/EditRoutinePage';
+import EditRoutinePage from './pages/RoutinePage/RoutinePage';
 
 function App() {
   return (
@@ -25,8 +24,16 @@ function App() {
             <CssBaseline />
             <BraccioAppBar />
             <Switch>
-              <Route path="/routines/new" children={<NewRoutinePage />} />
-              <Route path="/routines/:id" children={<EditRoutinePage />} />
+              <Route
+                path="/routines/new"
+                render={() => <EditRoutinePage createNew />}
+              />
+              <Route
+                path="/routines/:id"
+                render={({ match: { params } }) => (
+                  <EditRoutinePage id={params.id} />
+                )}
+              />
               <Route path="/" children={<MainPage />} />
             </Switch>
           </MuiThemeProvider>
