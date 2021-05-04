@@ -14,7 +14,7 @@ import StepEditor from './components/StepEditor';
 import { DEFAULT_JOINT_VALUES } from './joints';
 import { BASE_URL } from '../../fetcher';
 
-function RoutinePage() {
+function EditRoutinePage() {
   const { id } = useParams();
   const { data, error, mutate } = useSWR(`/routines/${id}`);
   const [state, setState, dirty, reset] = useDirtyData({ original: data });
@@ -127,4 +127,4 @@ function RoutinePage() {
   );
 }
 
-export default RoutinePage;
+export default EditRoutinePage;
