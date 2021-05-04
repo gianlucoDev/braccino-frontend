@@ -12,7 +12,7 @@ import { BASE_URL } from '../../fetcher';
 function EditRoutinePage() {
   const { id } = useParams();
   const { data, error, mutate } = useSWR(`/routines/${id}`);
-  const [state, setState, dirty, reset] = useDirtyData({ original: data });
+  const [state, setState, dirty, reset] = useDirtyData(data);
 
   const handleSubmit = async () => {
     await fetch(BASE_URL + `/routines/${id}`, {
