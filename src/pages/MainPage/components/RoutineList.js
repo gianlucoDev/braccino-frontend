@@ -52,6 +52,7 @@ function RoutineList({ routines }) {
       <GridListTile>
         <Card className={classes.full}>
           <ButtonBase
+            focusRipple
             className={classes.full}
             component={RouterLink}
             to="/routines/new"
