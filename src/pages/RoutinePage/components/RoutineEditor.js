@@ -18,6 +18,7 @@ function RoutineEditor({
   const [selectedStep, setSelectedStep, selectedIndex] = useArrayItemSelection(
     routine ? routine.steps : []
   );
+  const nameError = enableSubmitCancel && !routine.name;
 
   const handleNameChange = (event) => {
     onChange({
@@ -69,8 +70,10 @@ function RoutineEditor({
       <Grid item xs={4}>
         <RoutineEditorControls
           name={routine.name}
+          nameError={nameError}
+          nameHelperText={nameError ? 'Nome richisto' : undefined}
+          enableSubmitCancel={enableSubmitCancel && !nameError}
           onNameChange={handleNameChange}
-          enableSubmitCancel={enableSubmitCancel}
           onSubmit={onSubmit}
           onCancel={onCancel}
         />

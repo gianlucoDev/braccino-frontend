@@ -17,6 +17,8 @@ const useStyles = makeStyles((theme) => ({
 function RoutineEditorControls({
   name,
   onNameChange,
+  nameError = false,
+  nameHelperText,
   enableSubmitCancel,
   onSubmit,
   onCancel,
@@ -31,6 +33,8 @@ function RoutineEditorControls({
         variant="filled"
         fullWidth
         value={name}
+        error={nameError}
+        helperText={nameHelperText}
         onChange={onNameChange}
       />
       <Box display="flex" justifyContent="center">

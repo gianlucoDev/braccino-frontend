@@ -19,7 +19,6 @@ const create = async (routine) => {
     body: JSON.stringify(routine),
   });
 
-  // TODO: validate user input
   // TODO: handle non-200 responses
   return await res.json();
 };
