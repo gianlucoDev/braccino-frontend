@@ -12,7 +12,17 @@ import Button from '@material-ui/core/Button';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
 
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
+
+import { BASE_URL } from '../../../fetcher';
+
+const deleteRoutine = async (id) => {
+  await fetch(BASE_URL + `/routines/${id}`, {
+    method: 'DELETE',
+  });
+};
 
 const useStyles = makeStyles((theme) => ({
   full: {
@@ -23,7 +33,14 @@ const useStyles = makeStyles((theme) => ({
 
 function RoutineList() {
   const classes = useStyles();
-  const { data, error } = useSWR('/routines');
+  const { data, error, mutate } = useSWR('/routines');
+
+  const handleRoutineDelete = async (id) => {
+    await deleteRoutine(id);
+
+    // trigger re-validation
+    mutate();
+  };
 
   if (error) {
     return <Typography>Error.</Typography>;
@@ -49,10 +66,18 @@ function RoutineList() {
             <CardActions>
               <Button
                 size="small"
+                startIcon={<EditIcon />}
                 component={RouterLink}
                 to={`/routines/${id}`}
               >
                 Modifica
+              </Button>
+              <Button
+                size="small"
+                startIcon={<DeleteIcon />}
+                onClick={() => handleRoutineDelete(id)}
+              >
+                Elimina
               </Button>
             </CardActions>
           </Card>
