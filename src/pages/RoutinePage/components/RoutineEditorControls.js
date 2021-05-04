@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 function RoutineEditorControls({
   name,
   onNameChange,
-  dirty,
+  enableSubmitCancel,
   onSubmit,
   onCancel,
 }) {
@@ -39,7 +39,7 @@ function RoutineEditorControls({
           color="primary"
           className={classes.button}
           startIcon={<SaveIcon />}
-          disabled={!dirty}
+          disabled={!enableSubmitCancel}
           onClick={onSubmit}
         >
           Salva
@@ -49,7 +49,7 @@ function RoutineEditorControls({
           color="secondary"
           className={classes.button}
           startIcon={<CancelIcon />}
-          disabled={!dirty}
+          disabled={!enableSubmitCancel}
           onClick={onCancel}
         >
           Annulla
