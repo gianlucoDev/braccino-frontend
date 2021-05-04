@@ -1,5 +1,6 @@
 import { Link as RouterLink } from 'react-router-dom';
 
+import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import Card from '@material-ui/core/Card';
@@ -8,12 +9,23 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
+import CardButton from './CardButton';
+
+const useStyles = makeStyles((theme) => ({
+  full: {
+    height: '100%',
+    width: '100%',
+  },
+}));
+
 function RoutineList({ routines }) {
+  const classes = useStyles();
+
   return (
     <GridList cellHeight="auto" cols={3}>
       {routines.map(({ id, name, steps }) => (
         <GridListTile key={id}>
-          <Card>
+          <Card className={classes.full}>
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
                 {name}
@@ -23,13 +35,24 @@ function RoutineList({ routines }) {
               </Typography>
             </CardContent>
             <CardActions>
-              <Button size="small" component={RouterLink} to={`/routines/${id}`}>
+              <Button
+                size="small"
+                component={RouterLink}
+                to={`/routines/${id}`}
+              >
                 Modifica
               </Button>
             </CardActions>
           </Card>
         </GridListTile>
       ))}
+
+      <GridListTile>
+        <CardButton
+          text="Aggiungi una routine"
+          onClick={() => alert('Non ancora implementato')}
+        />
+      </GridListTile>
     </GridList>
   );
 }
