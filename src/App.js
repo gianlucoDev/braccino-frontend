@@ -9,6 +9,7 @@ import MuiThemeProvider from './components/MuiThemeProvider';
 
 import BraccioAppBar from './components/BraccioAppBar';
 import MainPage from './pages/MainPage/MainPage';
+import NewRoutinePage from './pages/RoutinePage/NewRoutinePage';
 import EditRoutinePage from './pages/RoutinePage/EditRoutinePage';
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
             <CssBaseline />
             <BraccioAppBar />
             <Switch>
+              <Route path="/routines/new" children={<NewRoutinePage />} />
               <Route path="/routines/:id" children={<EditRoutinePage />} />
               <Route path="/" children={<MainPage />} />
             </Switch>
