@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import { useDarkMode } from './DarkModeProvider';
+import useDarkMode from '../hooks/useDarkMode';
 
 function MuiThemeProvider({ children }) {
   const { isDarkMode } = useDarkMode();

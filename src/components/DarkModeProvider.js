@@ -1,13 +1,8 @@
-import { createContext, useContext } from 'react';
+import { createContext } from 'react';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import useLocalStorage from '../hooks/useLocalStorage';
 
 const darkModeContext = createContext({});
-
-function useDarkMode() {
-  const { isDarkMode, setDarkMode } = useContext(darkModeContext);
-  return { isDarkMode, setDarkMode };
-}
 
 function DarkModeProvider({ children }) {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -28,4 +23,4 @@ function DarkModeProvider({ children }) {
 }
 
 export default DarkModeProvider;
-export { useDarkMode };
+export { darkModeContext };

@@ -12,7 +12,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import DarkModeIcon from '@material-ui/icons/Brightness2';
 import LightModeIcon from '@material-ui/icons/Brightness6';
 
-import { useDarkMode } from './DarkModeProvider';
+import useDarkMode from '../hooks/useDarkMode';
 
 const useStyles = makeStyles((theme) => ({
   root: {
