@@ -1,4 +1,5 @@
 import { Link as RouterLink } from 'react-router-dom';
+import useSWR from 'swr';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -20,12 +21,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function RoutineList({ routines }) {
+function RoutineList() {
   const classes = useStyles();
+  const { data, error } = useSWR('/routines');
+
+  if (error) {
+    return <Typography>Error.</Typography>;
+  }
+
+  if (!data) {
+    return <Typography>Loading...</Typography>;
+  }
 
   return (
     <GridList cellHeight="auto" cols={3}>
-      {routines.map(({ id, name, steps }) => (
+      {data.map(({ id, name, steps }) => (
         <GridListTile key={id}>
           <Card className={classes.full}>
             <CardContent>

@@ -1,3 +1,5 @@
+import useSWR from 'swr';
+
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import Card from '@material-ui/core/Card';
@@ -6,10 +8,20 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-function BraccioList({ braccios }) {
+function BraccioList() {
+  const { data, error } = useSWR('/braccio');
+
+  if (error) {
+    return <Typography>Error.</Typography>;
+  }
+
+  if (!data) {
+    return <Typography>Loading...</Typography>;
+  }
+
   return (
     <GridList cellHeight="auto" cols={3}>
-      {braccios.map(({ id, name, serial }) => (
+      {data.map(({ id, name, serial }) => (
         <GridListTile key={id}>
           <Card>
             <CardContent>
