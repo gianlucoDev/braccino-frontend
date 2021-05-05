@@ -25,8 +25,8 @@ const deleteRoutine = async (id) => {
 };
 
 const useStyles = makeStyles((theme) => ({
-  full: {
-    height: '100%',
+  card_size: {
+    height: '10em',
     width: '100%',
   },
 }));
@@ -54,7 +54,7 @@ function RoutineList() {
     <GridList cellHeight="auto" cols={3}>
       {data.map(({ id, name, steps }) => (
         <GridListTile key={id}>
-          <Card className={classes.full}>
+          <Card className={classes.card_size}>
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
                 {name}
@@ -85,10 +85,10 @@ function RoutineList() {
       ))}
 
       <GridListTile>
-        <Card className={classes.full}>
+        <Card className={classes.card_size}>
           <ButtonBase
             focusRipple
-            className={classes.full}
+            className={classes.card_size}
             component={RouterLink}
             to="/routines/new"
           >
