@@ -21,16 +21,19 @@ function BraccioList() {
 
   return (
     <GridList cellHeight="auto" cols={3}>
-      {data.map(({ id, name, serial }) => (
-        <GridListTile key={id}>
+      {data.map(({ serial_number, name, status }) => (
+        <GridListTile key={serial_number}>
           <Card>
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
                 {name}
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                Serial: {serial}
-              </Typography>
+
+              <Typography variant="body1">Status</Typography>
+              <Typography color="textSecondary">{status.code}</Typography>
+
+              <Typography variant="body1">Serial number</Typography>
+              <Typography color="textSecondary">{serial_number}</Typography>
             </CardContent>
             <CardActions>
               <Button
