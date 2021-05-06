@@ -26,11 +26,11 @@ function RoutineEditorControls({
   const classes = useStyles();
 
   return (
-    <Paper>
+    <>
       <TextField
         id="name"
         label="Nome"
-        variant="filled"
+        variant="outlined"
         fullWidth
         value={name}
         error={nameError}
@@ -59,7 +59,7 @@ function RoutineEditorControls({
           Annulla
         </Button>
       </Box>
-    </Paper>
+    </>
   );
 }
 

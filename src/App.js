@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { SWRConfig } from 'swr';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Box from '@material-ui/core/Box';
 
 import fetcher from './fetcher';
 
@@ -22,20 +23,26 @@ function App() {
         <DarkModeProvider>
           <MuiThemeProvider>
             <CssBaseline />
-            <BraccioAppBar />
-            <Switch>
-              <Route
-                path="/routines/new"
-                render={() => <EditRoutinePage createNew />}
-              />
-              <Route
-                path="/routines/:id"
-                render={({ match: { params } }) => (
-                  <EditRoutinePage id={params.id} />
-                )}
-              />
-              <Route path="/" children={<MainPage />} />
-            </Switch>
+            <Box height="100%" display="flex" flexDirection="column">
+              <Box flexShrink={1}>
+                <BraccioAppBar />
+              </Box>
+              <Box flexGrow={1}>
+                <Switch>
+                  <Route
+                    path="/routines/new"
+                    render={() => <EditRoutinePage createNew />}
+                  />
+                  <Route
+                    path="/routines/:id"
+                    render={({ match: { params } }) => (
+                      <EditRoutinePage id={params.id} />
+                    )}
+                  />
+                  <Route path="/" children={<MainPage />} />
+                </Switch>
+              </Box>
+            </Box>
           </MuiThemeProvider>
         </DarkModeProvider>
       </SWRConfig>

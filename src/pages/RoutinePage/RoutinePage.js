@@ -70,15 +70,13 @@ function EditRoutinePage({ createNew = false, id }) {
   }
 
   return (
-    <Box padding={2}>
-      <RoutineEditor
-        routine={state}
-        enableSubmitCancel={dirty}
-        onChange={setState}
-        onSubmit={createNew ? handleSubmitNew : handleSubmitEdit}
-        onCancel={handleReset}
-      />
-    </Box>
+    <RoutineEditor
+      routine={state}
+      enableSubmitCancel={dirty}
+      onChange={setState}
+      onSubmit={createNew ? handleSubmitNew : handleSubmitEdit}
+      onCancel={handleReset}
+    />
   );
 }
 

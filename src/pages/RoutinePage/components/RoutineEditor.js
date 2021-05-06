@@ -1,3 +1,6 @@
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
@@ -8,6 +11,12 @@ import StepEditor from './StepEditor';
 
 import { DEFAULT_JOINT_VALUES } from '../joints';
 
+const useStyles = makeStyles((theme) => ({
+  fullHeight: {
+    height: '100%',
+  },
+}));
+
 function RoutineEditor({
   routine,
   enableSubmitCancel,
@@ -15,6 +24,8 @@ function RoutineEditor({
   onSubmit,
   onCancel,
 }) {
+  const classes = useStyles();
+
   const [selectedStep, setSelectedStep, selectedIndex] = useArrayItemSelection(
     routine ? routine.steps : []
   );
@@ -66,33 +77,48 @@ function RoutineEditor({
   };
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={4}>
-        <RoutineEditorControls
-          name={routine.name}
-          nameError={nameError}
-          nameHelperText={nameError ? 'Nome richisto' : undefined}
-          enableSubmitCancel={enableSubmitCancel && !nameError}
-          onNameChange={handleNameChange}
-          onSubmit={onSubmit}
-          onCancel={onCancel}
-        />
-        <StepList
-          steps={routine.steps}
-          activeItem={selectedIndex}
-          onDelete={handleStepDelete}
-          onEdit={handleStepSelect}
-          onAdd={handleNewStep}
-        />
+    <Grid container className={classes.fullHeight}>
+      {/* left column */}
+      <Grid item xs={6}>
+        <Paper square className={classes.fullHeight}>
+          <Grid container>
+            <Grid item xs={6}>
+              <Box padding={1}>
+                <RoutineEditorControls
+                  name={routine.name}
+                  nameError={nameError}
+                  nameHelperText={nameError ? 'Nome richisto' : undefined}
+                  enableSubmitCancel={enableSubmitCancel && !nameError}
+                  onNameChange={handleNameChange}
+                  onSubmit={onSubmit}
+                  onCancel={onCancel}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={6}>
+              <StepList
+                steps={routine.steps}
+                activeItem={selectedIndex}
+                onDelete={handleStepDelete}
+                onEdit={handleStepSelect}
+                onAdd={handleNewStep}
+              />
+            </Grid>
+          </Grid>
+        </Paper>
       </Grid>
-      <Grid item xs={8}>
-        {selectedStep === null ? (
-          <Typography variant="h3">
-            Seleziona uno step nel pannello a sinistra
-          </Typography>
-        ) : (
-          <StepEditor step={selectedStep} onChange={handleStepChange} />
-        )}
+
+      {/* Right column */}
+      <Grid item xs={6}>
+        <Box margin={2}>
+          {selectedStep === null ? (
+            <Typography variant="h3">
+              Seleziona uno step dal pannello a sinistra
+            </Typography>
+          ) : (
+            <StepEditor step={selectedStep} onChange={handleStepChange} />
+          )}
+        </Box>
       </Grid>
     </Grid>
   );
