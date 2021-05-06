@@ -1,5 +1,5 @@
 import { useHistory } from 'react-router-dom';
-import useSWR from 'swr';
+import useSWR, { mutate } from 'swr';
 
 import Typography from '@material-ui/core/Typography';
 
@@ -16,13 +16,16 @@ const DEFAULT_ROUTINE = { name: '', steps: [] };
 function EditRoutinePage({ createNew = false, id }) {
   const history = useHistory();
 
-  const { data, error, mutate } = useSWR(createNew ? null : `/routines/${id}`);
+  const { data, error } = useSWR(createNew ? null : `/routines/${id}`);
   const [state, setState, dirty, reset] = useDirtyData(
     createNew ? DEFAULT_ROUTINE : data
   );
 
   const handleSubmitNew = async () => {
     const created = await createRoutine(state);
+
+    // preload the data so the next page loads instantly
+    mutate(`/routines/${created.id}`, state, false);
 
     // navigate to newly created routine
     history.push(`/routines/${created.id}`);
@@ -32,7 +35,7 @@ function EditRoutinePage({ createNew = false, id }) {
     await updateRoutine(id, state);
 
     // trigger re-validation
-    mutate();
+    mutate(`/routines/${id}`);
   };
 
   const handleReset = () => {
@@ -60,7 +63,7 @@ function EditRoutinePage({ createNew = false, id }) {
       onChange={setState}
       onSubmit={createNew ? handleSubmitNew : handleSubmitEdit}
       onCancel={handleReset}
-      onDelete={createNew ? undefined : handleDelete}
+      onDelete={!createNew && handleDelete}
     />
   );
 }
