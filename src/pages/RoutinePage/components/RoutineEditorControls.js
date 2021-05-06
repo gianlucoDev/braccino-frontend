@@ -40,6 +40,7 @@ function RoutineEditorControls({
         <Button
           variant="contained"
           color="primary"
+          fullWidth
           className={classes.button}
           startIcon={<SaveIcon />}
           disabled={!enableSubmitCancel}
@@ -50,6 +51,7 @@ function RoutineEditorControls({
         <Button
           variant="contained"
           color="secondary"
+          fullWidth
           className={classes.button}
           startIcon={<CancelIcon />}
           disabled={!enableSubmitCancel}
