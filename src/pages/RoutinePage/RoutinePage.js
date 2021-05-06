@@ -1,7 +1,6 @@
 import { useHistory } from 'react-router-dom';
 import useSWR from 'swr';
 
-import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 
 import useDirtyData from '../../hooks/useDirtyData';
