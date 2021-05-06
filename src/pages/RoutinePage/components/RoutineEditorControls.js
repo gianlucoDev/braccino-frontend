@@ -20,7 +20,8 @@ function RoutineEditorControls({
   onNameChange,
   nameError = false,
   nameHelperText,
-  enableSubmitCancel,
+  enableSubmit,
+  enableCancel,
   onSubmit,
   onCancel,
   onDelete = null,
@@ -46,7 +47,7 @@ function RoutineEditorControls({
           fullWidth
           className={classes.button}
           startIcon={<SaveIcon />}
-          disabled={!enableSubmitCancel}
+          disabled={!enableSubmit}
           onClick={onSubmit}
         >
           Salva
@@ -57,7 +58,7 @@ function RoutineEditorControls({
           fullWidth
           className={classes.button}
           startIcon={<CancelIcon />}
-          disabled={!enableSubmitCancel}
+          disabled={!enableCancel}
           onClick={onCancel}
         >
           Annulla

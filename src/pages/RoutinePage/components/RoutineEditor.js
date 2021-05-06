@@ -12,7 +12,8 @@ import { DEFAULT_JOINT_VALUES } from '../joints';
 
 function RoutineEditor({
   routine,
-  enableSubmitCancel,
+  enableSubmit,
+  enableCancel,
   onChange,
   onSubmit,
   onCancel,
@@ -21,7 +22,7 @@ function RoutineEditor({
   const [selectedStep, setSelectedStep, selectedIndex] = useArrayItemSelection(
     routine ? routine.steps : []
   );
-  const nameError = enableSubmitCancel && !routine.name;
+  const nameError = enableSubmit && !routine.name;
 
   const handleNameChange = (event) => {
     onChange({
@@ -84,7 +85,8 @@ function RoutineEditor({
                   name={routine.name}
                   nameError={nameError}
                   nameHelperText={nameError ? 'Nome richisto' : undefined}
-                  enableSubmitCancel={enableSubmitCancel && !nameError}
+                  enableSubmit={enableSubmit && !nameError}
+                  enableCancel={enableCancel}
                   onNameChange={handleNameChange}
                   onSubmit={onSubmit}
                   onCancel={onCancel}

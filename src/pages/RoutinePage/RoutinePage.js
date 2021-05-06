@@ -55,7 +55,8 @@ function EditRoutinePage({ createNew = false, id }) {
   return (
     <RoutineEditor
       routine={state}
-      enableSubmitCancel={dirty}
+      enableSubmit={dirty}
+      enableCancel={dirty}
       onChange={setState}
       onSubmit={createNew ? handleSubmitNew : handleSubmitEdit}
       onCancel={handleReset}
