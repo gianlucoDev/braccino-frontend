@@ -16,6 +16,7 @@ function RoutineEditor({
   onChange,
   onSubmit,
   onCancel,
+  onDelete,
 }) {
   const [selectedStep, setSelectedStep, selectedIndex] = useArrayItemSelection(
     routine ? routine.steps : []
@@ -73,8 +74,9 @@ function RoutineEditor({
       <Grid item xs={6}>
         <Paper square style={{ height: '100%' }}>
           <Grid container>
+            {/* left left column */}
             <Grid item xs={6}>
-              <Box margin={2}>
+              <Box padding={2}>
                 <Typography variant="h4" gutterBottom>
                   Routine
                 </Typography>
@@ -86,11 +88,14 @@ function RoutineEditor({
                   onNameChange={handleNameChange}
                   onSubmit={onSubmit}
                   onCancel={onCancel}
+                  onDelete={onDelete}
                 />
               </Box>
             </Grid>
+
+            {/* left right column */}
             <Grid item xs={6}>
-              <Box marginTop={2}>
+              <Box paddingTop={2}>
                 <Typography variant="h4" gutterBottom>
                   Steps
                 </Typography>
@@ -109,7 +114,7 @@ function RoutineEditor({
 
       {/* Right column */}
       <Grid item xs={6}>
-        <Box margin={2}>
+        <Box padding={2}>
           {selectedStep === null ? (
             <Typography variant="h3">
               Seleziona uno step dal pannello a sinistra

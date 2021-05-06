@@ -18,6 +18,7 @@ import AddIcon from '@material-ui/icons/Add';
 
 import { BASE_URL } from '../../../fetcher';
 
+// FIXME: duplicated in RoutinePage.js
 const deleteRoutine = async (id) => {
   await fetch(BASE_URL + `/routines/${id}`, {
     method: 'DELETE',

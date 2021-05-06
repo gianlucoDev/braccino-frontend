@@ -3,9 +3,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 
 import SaveIcon from '@material-ui/icons/Save';
 import CancelIcon from '@material-ui/icons/Cancel';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -21,6 +23,7 @@ function RoutineEditorControls({
   enableSubmitCancel,
   onSubmit,
   onCancel,
+  onDelete = null,
 }) {
   const classes = useStyles();
 
@@ -60,6 +63,22 @@ function RoutineEditorControls({
           Annulla
         </Button>
       </Box>
+      {!!onDelete && (
+        <>
+          <Typography variant="h6">Azioni</Typography>
+          <Box display="flex">
+            <Button
+              variant="outlined"
+              fullWidth
+              className={classes.button}
+              startIcon={<DeleteIcon />}
+              onClick={onDelete}
+            >
+              Elimina routine
+            </Button>
+          </Box>
+        </>
+      )}
     </>
   );
 }

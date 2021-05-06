@@ -34,6 +34,12 @@ const update = async (routine, id) => {
   return await res.json();
 };
 
+const deleteRoutine = async (id) => {
+  await fetch(BASE_URL + `/routines/${id}`, {
+    method: 'DELETE',
+  });
+};
+
 function EditRoutinePage({ createNew = false, id }) {
   const history = useHistory();
 
@@ -60,6 +66,11 @@ function EditRoutinePage({ createNew = false, id }) {
     reset();
   };
 
+  const handleDelete = async () => {
+    await deleteRoutine(id);
+    history.push('/');
+  };
+
   if (error) {
     return <Typography variant="h3">Error.</Typography>;
   }
@@ -75,6 +86,7 @@ function EditRoutinePage({ createNew = false, id }) {
       onChange={setState}
       onSubmit={createNew ? handleSubmitNew : handleSubmitEdit}
       onCancel={handleReset}
+      onDelete={createNew ? undefined : handleDelete}
     />
   );
 }
