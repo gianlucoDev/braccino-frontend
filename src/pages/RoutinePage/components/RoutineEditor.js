@@ -11,12 +11,6 @@ import StepEditor from './StepEditor';
 
 import { DEFAULT_JOINT_VALUES } from '../joints';
 
-const useStyles = makeStyles((theme) => ({
-  fullHeight: {
-    height: '100%',
-  },
-}));
-
 function RoutineEditor({
   routine,
   enableSubmitCancel,
@@ -24,8 +18,6 @@ function RoutineEditor({
   onSubmit,
   onCancel,
 }) {
-  const classes = useStyles();
-
   const [selectedStep, setSelectedStep, selectedIndex] = useArrayItemSelection(
     routine ? routine.steps : []
   );
@@ -77,10 +69,10 @@ function RoutineEditor({
   };
 
   return (
-    <Grid container className={classes.fullHeight}>
+    <Grid container style={{ height: '100%' }}>
       {/* left column */}
       <Grid item xs={6}>
-        <Paper square className={classes.fullHeight}>
+        <Paper square style={{ height: '100%' }}>
           <Grid container>
             <Grid item xs={6}>
               <Box padding={1}>
