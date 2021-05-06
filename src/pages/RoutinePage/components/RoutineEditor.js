@@ -1,14 +1,27 @@
+import { makeStyles } from '@material-ui/core/styles';
+
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
+import SaveIcon from '@material-ui/icons/Save';
+import CancelIcon from '@material-ui/icons/Cancel';
+import DeleteIcon from '@material-ui/icons/Delete';
+
 import useArrayItemSelection from '../../../hooks/useArrayItemSelection';
-import RoutineEditorControls from './RoutineEditorControls';
 import StepList from './StepList';
 import StepEditor from './StepEditor';
 
 import { DEFAULT_JOINT_VALUES } from '../joints';
+
+const useStyles = makeStyles((theme) => ({
+  button: {
+    margin: theme.spacing(1),
+  },
+}));
 
 function RoutineEditor({
   routine,
@@ -17,17 +30,19 @@ function RoutineEditor({
   onChange,
   onSubmit,
   onCancel,
-  onDelete,
+  onDelete = null,
 }) {
+  const classes = useStyles();
+
   const [selectedStep, setSelectedStep, selectedIndex] = useArrayItemSelection(
     routine ? routine.steps : []
   );
   const nameError = enableSubmit && !routine.name;
 
-  const handleNameChange = (event) => {
+  const handleNameChange = (name) => {
     onChange({
       ...routine,
-      name: event.target.value,
+      name,
     });
   };
 
@@ -81,17 +96,62 @@ function RoutineEditor({
                 <Typography variant="h4" gutterBottom>
                   Routine
                 </Typography>
-                <RoutineEditorControls
-                  name={routine.name}
-                  nameError={nameError}
-                  nameHelperText={nameError ? 'Nome richisto' : undefined}
-                  enableSubmit={enableSubmit && !nameError}
-                  enableCancel={enableCancel}
-                  onNameChange={handleNameChange}
-                  onSubmit={onSubmit}
-                  onCancel={onCancel}
-                  onDelete={onDelete}
+
+                {/* name text field */}
+                <TextField
+                  id="name"
+                  label="Nome"
+                  variant="outlined"
+                  fullWidth
+                  value={routine.name}
+                  error={nameError}
+                  helperText={nameError ? 'Nome richisto' : undefined}
+                  onChange={(e) => handleNameChange(e.target.value)}
                 />
+
+                {/* save-cancel buttons */}
+                <Box display="flex" justifyContent="center">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    className={classes.button}
+                    startIcon={<SaveIcon />}
+                    disabled={!enableSubmit}
+                    onClick={onSubmit}
+                  >
+                    Salva
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    fullWidth
+                    className={classes.button}
+                    startIcon={<CancelIcon />}
+                    disabled={!enableCancel}
+                    onClick={onCancel}
+                  >
+                    Annulla
+                  </Button>
+                </Box>
+
+                {/* actions */}
+                {!!onDelete && (
+                  <>
+                    <Typography variant="h6">Azioni</Typography>
+                    <Box display="flex">
+                      <Button
+                        variant="outlined"
+                        fullWidth
+                        className={classes.button}
+                        startIcon={<DeleteIcon />}
+                        onClick={onDelete}
+                      >
+                        Elimina routine
+                      </Button>
+                    </Box>
+                  </>
+                )}
               </Box>
             </Grid>
 
