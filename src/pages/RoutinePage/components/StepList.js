@@ -10,7 +10,7 @@ import StepListItem from './StepListItem';
 
 function StepList({ steps, activeItem, onDelete, onEdit, onAdd }) {
   return (
-    <List>
+    <List disablePadding>
       {steps.map((step, i) => (
         <StepListItem
           key={i}

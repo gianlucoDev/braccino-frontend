@@ -74,7 +74,10 @@ function RoutineEditor({
         <Paper square style={{ height: '100%' }}>
           <Grid container>
             <Grid item xs={6}>
-              <Box padding={1}>
+              <Box margin={2}>
+                <Typography variant="h4" gutterBottom>
+                  Routine
+                </Typography>
                 <RoutineEditorControls
                   name={routine.name}
                   nameError={nameError}
@@ -87,13 +90,18 @@ function RoutineEditor({
               </Box>
             </Grid>
             <Grid item xs={6}>
-              <StepList
-                steps={routine.steps}
-                activeItem={selectedIndex}
-                onDelete={handleStepDelete}
-                onEdit={handleStepSelect}
-                onAdd={handleNewStep}
-              />
+              <Box marginTop={2}>
+                <Typography variant="h4" gutterBottom>
+                  Steps
+                </Typography>
+                <StepList
+                  steps={routine.steps}
+                  activeItem={selectedIndex}
+                  onDelete={handleStepDelete}
+                  onEdit={handleStepSelect}
+                  onAdd={handleNewStep}
+                />
+              </Box>
             </Grid>
           </Grid>
         </Paper>
