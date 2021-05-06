@@ -3,7 +3,7 @@ import { SWRConfig } from 'swr';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
 
-import fetcher from './fetcher';
+import fetcher from './api/fetcher';
 
 import DarkModeProvider from './components/DarkModeProvider';
 import MuiThemeProvider from './components/MuiThemeProvider';

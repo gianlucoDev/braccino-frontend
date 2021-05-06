@@ -16,14 +16,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 
-import { BASE_URL } from '../../../fetcher';
-
-// FIXME: duplicated in RoutinePage.js
-const deleteRoutine = async (id) => {
-  await fetch(BASE_URL + `/routines/${id}`, {
-    method: 'DELETE',
-  });
-};
+import { deleteRoutine } from '../../../api/routines';
 
 const useStyles = makeStyles((theme) => ({
   card_size: {
