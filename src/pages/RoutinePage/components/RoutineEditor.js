@@ -35,7 +35,8 @@ function RoutineEditor({
   const classes = useStyles();
 
   const [selectedStep, setSelectedStep, selectedIndex] = useArrayItemSelection(
-    routine ? routine.steps : []
+    routine ? routine.steps : [],
+    0
   );
   const nameError = enableSubmit && !routine.name;
 
@@ -179,7 +180,7 @@ function RoutineEditor({
         <Box padding={2}>
           {selectedStep === null ? (
             <Typography variant="h3">
-              Seleziona uno step dal pannello a sinistra
+              Crea uno step dal pannello a sinistra
             </Typography>
           ) : (
             <StepEditor step={selectedStep} onChange={handleStepChange} />
