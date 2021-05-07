@@ -58,12 +58,16 @@ function EditRoutinePage({ createNew = false, id }) {
   return (
     <RoutineEditor
       routine={state}
+      onChange={setState}
+      // name text field
       enableSubmit={dirty}
       enableCancel={dirty}
-      onChange={setState}
       onSubmit={createNew ? handleSubmitNew : handleSubmitEdit}
       onCancel={handleReset}
-      onDelete={!createNew && handleDelete}
+      // optional actions
+      showOptionalActions={!createNew}
+      enableRun={!dirty}
+      onDelete={handleDelete}
     />
   );
 }

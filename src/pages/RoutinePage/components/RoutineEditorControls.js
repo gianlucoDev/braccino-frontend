@@ -9,9 +9,14 @@ import SaveIcon from '@material-ui/icons/Save';
 import CancelIcon from '@material-ui/icons/Cancel';
 import DeleteIcon from '@material-ui/icons/Delete';
 
+import RoutineEditorRunControls from './RoutineEditorRunControls';
+
 const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(1),
+  },
+  wideButton: {
+    margin: theme.spacing(1, 0),
   },
 }));
 
@@ -23,12 +28,14 @@ function RoutineEditorControls({
   onNameChange,
 
   // submit-cancel actions
-  enableSubmit,
-  enableCancel,
+  enableSubmit = false,
+  enableCancel = false,
   onSubmit,
   onCancel,
 
   // optional actions
+  showOptionalActions = false,
+  enableRun = false,
   onDelete,
 }) {
   const classes = useStyles();
@@ -74,20 +81,22 @@ function RoutineEditorControls({
       </Box>
 
       {/* actions */}
-      {!!onDelete && (
+      {showOptionalActions && (
         <>
-          <Typography variant="h6">Azioni</Typography>
+          <Typography variant="h6">Cancella routine</Typography>
           <Box display="flex">
             <Button
               variant="outlined"
               fullWidth
-              className={classes.button}
+              className={classes.wideButton}
               startIcon={<DeleteIcon />}
               onClick={onDelete}
             >
               Elimina routine
             </Button>
           </Box>
+
+          <RoutineEditorRunControls routine={routine} enabled={enableRun} />
         </>
       )}
     </>

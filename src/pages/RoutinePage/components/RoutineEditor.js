@@ -12,12 +12,18 @@ import { DEFAULT_JOINT_VALUES } from '../joints';
 
 function RoutineEditor({
   routine,
-  enableSubmit,
-  enableCancel,
   onChange,
+
+  // name text field
+  enableSubmit = false,
+  enableCancel = false,
   onSubmit,
   onCancel,
-  onDelete = null,
+
+  // optional actions
+  showOptionalActions = false,
+  enableRun = false,
+  onDelete,
 }) {
   const [selectedStep, setSelectedStep, selectedIndex] = useArrayItemSelection(
     routine ? routine.steps : [],
@@ -94,6 +100,8 @@ function RoutineEditor({
                   onSubmit={onSubmit}
                   onCancel={onCancel}
                   // optional actions
+                  showOptionalActions={showOptionalActions}
+                  enableRun={enableRun}
                   onDelete={onDelete}
                 />
               </Box>
