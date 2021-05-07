@@ -17,6 +17,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 
 import { deleteRoutine } from '../../../api/routines';
+import BigAction from '../../../components/BigAction';
 
 const useStyles = makeStyles((theme) => ({
   card_size: {
@@ -80,23 +81,9 @@ function RoutineList() {
 
       <GridListTile>
         <Card className={classes.card_size}>
-          <ButtonBase
-            focusRipple
-            className={classes.card_size}
-            component={RouterLink}
-            to="/routines/new"
-          >
-            <Box
-              display="flex"
-              flexDirection="column"
-              justifyContent="center"
-              alignItems="center"
-              height="100%"
-            >
-              <AddIcon style={{ fontSize: '5em' }} />
-              <Typography>Aggiungi una routine</Typography>
-            </Box>
-          </ButtonBase>
+          <BigAction icon={AddIcon} component={RouterLink} to="/routines/new">
+            Aggiungi una routine
+          </BigAction>
         </Card>
       </GridListTile>
     </GridList>

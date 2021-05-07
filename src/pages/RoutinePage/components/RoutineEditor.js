@@ -4,9 +4,12 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import useArrayItemSelection from '../../../hooks/useArrayItemSelection';
+import BigAction from '../../../components/BigAction';
 import RoutineEditorControls from './RoutineEditorControls';
 import StepList from './StepList';
 import StepEditor from './StepEditor';
+
+import AddIcon from '@material-ui/icons/Add';
 
 import { DEFAULT_JOINT_VALUES } from '../joints';
 
@@ -128,15 +131,17 @@ function RoutineEditor({
 
       {/* Right column */}
       <Grid item xs={6}>
-        <Box padding={2}>
-          {selectedStep === null ? (
-            <Typography variant="h3">
-              Crea uno step dal pannello a sinistra
-            </Typography>
-          ) : (
+        {selectedStep === null ? (
+          <Box height="100%">
+            <BigAction icon={AddIcon} onClick={handleNewStep}>
+              Crea uno step
+            </BigAction>
+          </Box>
+        ) : (
+          <Box padding={2}>
             <StepEditor step={selectedStep} onChange={handleStepChange} />
-          )}
-        </Box>
+          </Box>
+        )}
       </Grid>
     </Grid>
   );
