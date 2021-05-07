@@ -117,7 +117,7 @@ function RoutineEditor({
                     fullWidth
                     className={classes.button}
                     startIcon={<SaveIcon />}
-                    disabled={!enableSubmit}
+                    disabled={!enableSubmit || nameError}
                     onClick={onSubmit}
                   >
                     Salva
