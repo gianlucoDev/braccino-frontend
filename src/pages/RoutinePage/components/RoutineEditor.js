@@ -1,27 +1,14 @@
-import { makeStyles } from '@material-ui/core/styles';
-
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
-import SaveIcon from '@material-ui/icons/Save';
-import CancelIcon from '@material-ui/icons/Cancel';
-import DeleteIcon from '@material-ui/icons/Delete';
-
 import useArrayItemSelection from '../../../hooks/useArrayItemSelection';
+import RoutineEditorControls from './RoutineEditorControls';
 import StepList from './StepList';
 import StepEditor from './StepEditor';
 
 import { DEFAULT_JOINT_VALUES } from '../joints';
-
-const useStyles = makeStyles((theme) => ({
-  button: {
-    margin: theme.spacing(1),
-  },
-}));
 
 function RoutineEditor({
   routine,
@@ -32,8 +19,6 @@ function RoutineEditor({
   onCancel,
   onDelete = null,
 }) {
-  const classes = useStyles();
-
   const [selectedStep, setSelectedStep, selectedIndex] = useArrayItemSelection(
     routine ? routine.steps : [],
     0
@@ -98,61 +83,19 @@ function RoutineEditor({
                   Routine
                 </Typography>
 
-                {/* name text field */}
-                <TextField
-                  id="name"
-                  label="Nome"
-                  variant="outlined"
-                  fullWidth
-                  value={routine.name}
-                  error={nameError}
-                  helperText={nameError ? 'Nome richisto' : undefined}
-                  onChange={(e) => handleNameChange(e.target.value)}
+                <RoutineEditorControls
+                  routine={routine}
+                  // name text field
+                  nameError={nameError}
+                  onNameChange={handleNameChange}
+                  // submit-cancel actions
+                  enableSubmit={enableSubmit}
+                  enableCancel={enableCancel}
+                  onSubmit={onSubmit}
+                  onCancel={onCancel}
+                  // optional actions
+                  onDelete={onDelete}
                 />
-
-                {/* save-cancel buttons */}
-                <Box display="flex" justifyContent="center">
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    fullWidth
-                    className={classes.button}
-                    startIcon={<SaveIcon />}
-                    disabled={!enableSubmit || nameError}
-                    onClick={onSubmit}
-                  >
-                    Salva
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    fullWidth
-                    className={classes.button}
-                    startIcon={<CancelIcon />}
-                    disabled={!enableCancel}
-                    onClick={onCancel}
-                  >
-                    Annulla
-                  </Button>
-                </Box>
-
-                {/* actions */}
-                {!!onDelete && (
-                  <>
-                    <Typography variant="h6">Azioni</Typography>
-                    <Box display="flex">
-                      <Button
-                        variant="outlined"
-                        fullWidth
-                        className={classes.button}
-                        startIcon={<DeleteIcon />}
-                        onClick={onDelete}
-                      >
-                        Elimina routine
-                      </Button>
-                    </Box>
-                  </>
-                )}
               </Box>
             </Grid>
 
