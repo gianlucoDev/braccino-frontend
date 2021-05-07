@@ -1,3 +1,5 @@
+import { makeStyles } from '@material-ui/core/styles';
+
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
@@ -8,9 +10,18 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import StepListItem from './StepListItem';
 
+const useStyles = makeStyles((theme) => ({
+  list: {
+    height: `calc(100vh - 10em)`,
+    overflow: 'auto',
+  },
+}));
+
 function StepList({ steps, activeItem, onDelete, onEdit, onAdd }) {
+  const classes = useStyles();
+
   return (
-    <List disablePadding>
+    <List disablePadding className={classes.list}>
       {steps.map((step, i) => (
         <StepListItem
           key={i}
