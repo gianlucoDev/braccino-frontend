@@ -11,6 +11,7 @@ import MuiThemeProvider from './components/MuiThemeProvider';
 import BraccioAppBar from './components/BraccioAppBar';
 import MainPage from './pages/MainPage/MainPage';
 import EditRoutinePage from './pages/RoutinePage/RoutinePage';
+import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
               </Box>
               <Box flexGrow={1}>
                 <Switch>
+                  <Route exact path="/" children={<MainPage />} />
                   <Route
                     path="/routines/new"
                     render={() => <EditRoutinePage createNew />}
@@ -39,7 +41,7 @@ function App() {
                       <EditRoutinePage id={params.id} />
                     )}
                   />
-                  <Route path="/" children={<MainPage />} />
+                  <Route children={<NotFoundPage />} />
                 </Switch>
               </Box>
             </Box>
