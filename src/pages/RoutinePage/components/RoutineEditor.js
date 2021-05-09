@@ -82,52 +82,45 @@ function RoutineEditor({
 
   return (
     <Grid container style={{ height: '100%' }}>
-      {/* left column */}
-      <Grid item xs={6}>
-        <Paper square style={{ height: '100%' }}>
-          <Grid container>
-            {/* left left column */}
-            <Grid item xs={6}>
-              <Box padding={2}>
-                <Typography variant="h4" gutterBottom>
-                  Routine
-                </Typography>
+      {/* left left column */}
+      <Grid item xs={3}>
+        <Box padding={2}>
+          <Typography variant="h4" gutterBottom>
+            Routine
+          </Typography>
 
-                <RoutineEditorControls
-                  routine={routine}
-                  // name text field
-                  nameError={nameError}
-                  onNameChange={handleNameChange}
-                  // submit-cancel actions
-                  enableSubmit={enableSubmit}
-                  enableCancel={enableCancel}
-                  onSubmit={onSubmit}
-                  onCancel={onCancel}
-                  // optional actions
-                  showOptionalActions={showOptionalActions}
-                  enableRun={enableRun}
-                  onDelete={onDelete}
-                />
-              </Box>
-            </Grid>
+          <RoutineEditorControls
+            routine={routine}
+            // name text field
+            nameError={nameError}
+            onNameChange={handleNameChange}
+            // submit-cancel actions
+            enableSubmit={enableSubmit}
+            enableCancel={enableCancel}
+            onSubmit={onSubmit}
+            onCancel={onCancel}
+            // optional actions
+            showOptionalActions={showOptionalActions}
+            enableRun={enableRun}
+            onDelete={onDelete}
+          />
+        </Box>
+      </Grid>
 
-            {/* left right column */}
-            <Grid item xs={6}>
-              <Box paddingTop={2}>
-                <Typography variant="h4" gutterBottom>
-                  Steps
-                </Typography>
-                <StepList
-                  steps={routine.steps}
-                  activeItem={selectedIndex}
-                  onDelete={handleStepDelete}
-                  onEdit={handleStepSelect}
-                  onAdd={handleNewStep}
-                />
-              </Box>
-            </Grid>
-          </Grid>
-        </Paper>
+      {/* left right column */}
+      <Grid item xs={3}>
+        <Box paddingTop={2}>
+          <Typography variant="h4" gutterBottom>
+            Steps
+          </Typography>
+          <StepList
+            steps={routine.steps}
+            activeItem={selectedIndex}
+            onDelete={handleStepDelete}
+            onEdit={handleStepSelect}
+            onAdd={handleNewStep}
+          />
+        </Box>
       </Grid>
 
       {/* Right column */}
