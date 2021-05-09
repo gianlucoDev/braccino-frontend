@@ -1,18 +1,10 @@
-import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-import useArrayItemSelection from 'hooks/useArrayItemSelection';
-import BigMessage from 'components/BigMessage';
-
 import RoutineEditorControls from './RoutineEditorControls';
-import StepList from './StepList';
-import StepEditor from './StepEditor';
 
-import ListIcon from '@material-ui/icons/ListAlt';
-
-import { DEFAULT_JOINT_VALUES } from '../joints';
+import StepListEditor from './StepListEditor';
 
 function RoutineEditor({
   routine,
@@ -29,54 +21,12 @@ function RoutineEditor({
   enableRun = false,
   onDelete,
 }) {
-  const [selectedStep, setSelectedStep, selectedIndex] = useArrayItemSelection(
-    routine ? routine.steps : [],
-    0
-  );
   const nameError = enableSubmit && !routine.name;
 
   const handleNameChange = (name) => {
     onChange({
       ...routine,
       name,
-    });
-  };
-
-  const handleStepSelect = (index) => {
-    setSelectedStep(index);
-  };
-
-  const handleNewStep = () => {
-    const newStep = {
-      ...DEFAULT_JOINT_VALUES,
-      delay: 1000,
-    };
-
-    onChange({
-      ...routine,
-      steps: [...routine.steps, newStep],
-    });
-  };
-
-  const handleStepChange = (newStep) => {
-    const newSteps = [...routine.steps];
-    newSteps[selectedIndex] = newStep;
-
-    const newState = {
-      ...routine,
-      steps: newSteps,
-    };
-
-    onChange(newState);
-  };
-
-  const handleStepDelete = (index) => {
-    const newSteps = [...routine.steps];
-    newSteps.splice(index, 1);
-
-    onChange({
-      ...routine,
-      steps: newSteps,
     });
   };
 
@@ -107,37 +57,8 @@ function RoutineEditor({
         </Box>
       </Grid>
 
-      {/* left right column */}
-      <Grid item xs={3}>
-        <Box paddingTop={2}>
-          <Typography variant="h4" gutterBottom>
-            Steps
-          </Typography>
-          <StepList
-            steps={routine.steps}
-            activeItem={selectedIndex}
-            onDelete={handleStepDelete}
-            onEdit={handleStepSelect}
-            onAdd={handleNewStep}
-          />
-        </Box>
-      </Grid>
-
-      {/* Right column */}
-      <Grid item xs={6}>
-        {selectedStep === null ? (
-          <Box height="100%">
-            <BigMessage
-              IconComponent={ListIcon}
-              message="Non ci sono step"
-              suggestion="Puoi crearne uno dal pannello a sinistra"
-            />
-          </Box>
-        ) : (
-          <Box padding={2}>
-            <StepEditor step={selectedStep} onChange={handleStepChange} />
-          </Box>
-        )}
+      <Grid item xs={9}>
+        <StepListEditor routine={routine} onChange={onChange} />
       </Grid>
     </Grid>
   );
