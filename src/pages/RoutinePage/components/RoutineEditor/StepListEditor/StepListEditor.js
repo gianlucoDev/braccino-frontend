@@ -1,13 +1,13 @@
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 
+import ListIcon from '@material-ui/icons/ListAlt';
+
 import useArrayItemSelection from 'hooks/useArrayItemSelection';
 import BigMessage from 'components/BigMessage';
 
 import StepList from './StepList';
 import StepEditor from './StepEditor/StepEditor';
-
-import ListIcon from '@material-ui/icons/ListAlt';
 
 import { DEFAULT_JOINT_VALUES } from '../../../joints';
 
