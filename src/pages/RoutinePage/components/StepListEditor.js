@@ -1,6 +1,5 @@
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 
 import useArrayItemSelection from 'hooks/useArrayItemSelection';
 import BigMessage from 'components/BigMessage';
@@ -58,9 +57,6 @@ function StepListEditor({ routine, onChange }) {
 
   return (
     <Box padding={2}>
-      <Typography variant="h4">
-        Steps
-      </Typography>
       <Grid container>
         <Grid item xs={6}>
           <Box>

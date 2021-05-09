@@ -98,10 +98,6 @@ function RoutineEditor({
       {/* left left column */}
       <Grid item xs={3}>
         <Box padding={2}>
-          <Typography variant="h4" gutterBottom>
-            Routine
-          </Typography>
-
           <RoutineEditorControls
             routine={routine}
             // name text field
