@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import LabelSliderNumberCombo from './LabelSliderNumberCombo';
 import LabelNumberCombo from './LabelNumberCombo';
 
-import { JOINTS } from '../joints';
+import { JOINTS } from '../../../../joints';
 
 function StepEditor({ step, onChange }) {
   const handleChange = (key) => (value) => {

@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import { createRoutine, updateRoutine, deleteRoutine } from 'api/routines';
 import useDirtyData from 'hooks/useDirtyData';
 
-import RoutineEditor from './components/RoutineEditor';
+import RoutineEditor from './components/RoutineEditor/RoutineEditor';
 
 const DEFAULT_ROUTINE = { name: '', steps: [] };
 

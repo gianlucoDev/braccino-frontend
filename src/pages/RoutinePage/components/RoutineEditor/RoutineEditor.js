@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 
 import RoutineEditorControls from './RoutineEditorControls';
 
-import StepListEditor from './StepListEditor';
+import StepListEditor from './StepListEditor/StepListEditor';
 
 const useStyles = makeStyles((theme) => ({
   tabsPaper: {

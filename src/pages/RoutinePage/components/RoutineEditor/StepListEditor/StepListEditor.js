@@ -5,11 +5,11 @@ import useArrayItemSelection from 'hooks/useArrayItemSelection';
 import BigMessage from 'components/BigMessage';
 
 import StepList from './StepList';
-import StepEditor from './StepEditor';
+import StepEditor from './StepEditor/StepEditor';
 
 import ListIcon from '@material-ui/icons/ListAlt';
 
-import { DEFAULT_JOINT_VALUES } from '../joints';
+import { DEFAULT_JOINT_VALUES } from '../../../joints';
 
 function StepListEditor({ routine, onChange }) {
   const [selectedStep, setSelectedStep, selectedIndex] = useArrayItemSelection(
