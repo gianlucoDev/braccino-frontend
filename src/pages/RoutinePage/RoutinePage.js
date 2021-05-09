@@ -3,12 +3,9 @@ import useSWR, { mutate } from 'swr';
 
 import Typography from '@material-ui/core/Typography';
 
-import {
-  createRoutine,
-  updateRoutine,
-  deleteRoutine,
-} from '../../api/routines';
-import useDirtyData from '../../hooks/useDirtyData';
+import { createRoutine, updateRoutine, deleteRoutine } from 'api/routines';
+import useDirtyData from 'hooks/useDirtyData';
+
 import RoutineEditor from './components/RoutineEditor';
 
 const DEFAULT_ROUTINE = { name: '', steps: [] };

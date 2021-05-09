@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 
-import { runRoutine } from '../../../api/braccio';
+import { runRoutine } from 'api/braccio';
 
 const useStyles = makeStyles((theme) => ({
   wideButton: {
