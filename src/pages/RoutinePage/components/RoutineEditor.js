@@ -4,12 +4,12 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import useArrayItemSelection from '../../../hooks/useArrayItemSelection';
-import BigAction from '../../../components/BigAction';
+import BigMessage from '../../../components/BigMessage';
 import RoutineEditorControls from './RoutineEditorControls';
 import StepList from './StepList';
 import StepEditor from './StepEditor';
 
-import AddIcon from '@material-ui/icons/Add';
+import ListIcon from '@material-ui/icons/ListAlt';
 
 import { DEFAULT_JOINT_VALUES } from '../joints';
 
@@ -133,9 +133,11 @@ function RoutineEditor({
       <Grid item xs={6}>
         {selectedStep === null ? (
           <Box height="100%">
-            <BigAction icon={AddIcon} onClick={handleNewStep}>
-              Crea uno step
-            </BigAction>
+            <BigMessage
+              IconComponent={ListIcon}
+              message="Non ci sono step"
+              suggestion="Puoi crearne uno dal pannello a sinistra"
+            />
           </Box>
         ) : (
           <Box padding={2}>

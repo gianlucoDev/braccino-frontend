@@ -79,9 +79,12 @@ function RoutineList() {
 
       <GridListTile>
         <Card className={classes.card_size}>
-          <BigAction icon={AddIcon} component={RouterLink} to="/routines/new">
-            Aggiungi una routine
-          </BigAction>
+          <BigAction
+            IconComponent={AddIcon}
+            action="Aggiungi una routine"
+            component={RouterLink}
+            to="/routines/new"
+          />
         </Card>
       </GridListTile>
     </GridList>

@@ -1,8 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
-
-import Box from '@material-ui/core/Box';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import Typography from '@material-ui/core/Typography';
+
+import BigMessage from './BigMessage';
 
 const useStyles = makeStyles((theme) => ({
   fullSize: {
@@ -11,22 +10,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function BigAction({ direction = 'column', icon: IconComponent, children, ...props }) {
+function BigAction({
+  direction = 'column',
+  IconComponent,
+  action,
+  ...props
+}) {
   const classes = useStyles();
 
   return (
     <ButtonBase className={classes.fullSize} focusRipple {...props}>
-      <Box
-        display="flex"
-        flexDirection={direction}
-        justifyContent="center"
-        alignItems="center"
-        height="100%"
-        width="100%"
-      >
-        <IconComponent style={{ fontSize: '5em' }} />
-        <Typography>{children}</Typography>
-      </Box>
+      <BigMessage
+        IconComponent={IconComponent}
+        direction={direction}
+        message={action}
+      />
     </ButtonBase>
   );
 }
