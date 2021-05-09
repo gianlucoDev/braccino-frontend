@@ -1,7 +1,6 @@
 import useSWR from 'swr';
 
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
+import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -20,9 +19,9 @@ function BraccioList() {
   }
 
   return (
-    <GridList cellHeight="auto" cols={3}>
+    <Grid container spacing={2}>
       {data.map(({ serial_number, name, status }) => (
-        <GridListTile key={serial_number}>
+        <Grid item xs={12} sm={6} md={4} key={serial_number}>
           <Card>
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
@@ -44,9 +43,9 @@ function BraccioList() {
               </Button>
             </CardActions>
           </Card>
-        </GridListTile>
+        </Grid>
       ))}
-    </GridList>
+    </Grid>
   );
 }
 

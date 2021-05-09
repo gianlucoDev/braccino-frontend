@@ -2,8 +2,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import useSWR from 'swr';
 
 import { makeStyles } from '@material-ui/core/styles';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
+import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -44,9 +43,9 @@ function RoutineList() {
   }
 
   return (
-    <GridList cellHeight="auto" cols={3}>
+    <Grid container spacing={2}>
       {data.map(({ id, name, steps }) => (
-        <GridListTile key={id}>
+        <Grid item xs={12} sm={6} md={4} key={id}>
           <Card className={classes.card_size}>
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
@@ -74,10 +73,10 @@ function RoutineList() {
               </Button>
             </CardActions>
           </Card>
-        </GridListTile>
+        </Grid>
       ))}
 
-      <GridListTile>
+      <Grid item xs={12} sm={6} md={4}>
         <Card className={classes.card_size}>
           <BigAction
             IconComponent={AddIcon}
@@ -86,8 +85,8 @@ function RoutineList() {
             to="/routines/new"
           />
         </Card>
-      </GridListTile>
-    </GridList>
+      </Grid>
+    </Grid>
   );
 }
 
