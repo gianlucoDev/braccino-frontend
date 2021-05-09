@@ -11,7 +11,7 @@ import StepListItem from './StepListItem';
 
 const useStyles = makeStyles((theme) => ({
   list: {
-    height: `calc(100vh - 14em)`,
+    maxHeight: `calc(100vh - 14em)`,
     overflow: 'auto',
   },
 }));
