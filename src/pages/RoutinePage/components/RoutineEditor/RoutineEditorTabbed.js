@@ -7,8 +7,9 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
-import RoutineEditorControls from './RoutineEditorControls';
+import BraccioAppBar from 'components/BraccioAppBar';
 
+import RoutineEditorControls from './RoutineEditorControls';
 import StepListEditor from './StepListEditor/StepListEditor';
 
 const useStyles = makeStyles((theme) => ({
@@ -46,46 +47,51 @@ function RoutineEditorTabbed({
   };
 
   return (
-    <>
-      <Paper square elevation={0} className={classes.tabsPaper}>
-        <Tabs
-          variant="fullWidth"
-          value={selectedTab}
-          onChange={handleTabChange}
-        >
-          <Tab label="Routine" />
-          <Tab label="Steps" />
-        </Tabs>
-      </Paper>
+    <Box height="100%" display="flex" flexDirection="column">
+      <Box flexShrink={1}>
+        <BraccioAppBar />
+      </Box>
+      <Box flexGrow={1}>
+        <Paper square elevation={0} className={classes.tabsPaper}>
+          <Tabs
+            variant="fullWidth"
+            value={selectedTab}
+            onChange={handleTabChange}
+          >
+            <Tab label="Routine" />
+            <Tab label="Steps" />
+          </Tabs>
+        </Paper>
 
-      <div hidden={selectedTab !== 0}>
-        <Box padding={2}>
-          <Typography variant="h4" gutterBottom>
-            Routine
-          </Typography>
+        <div hidden={selectedTab !== 0}>
+          <Box padding={2}>
+            <Typography variant="h4" gutterBottom>
+              Routine
+            </Typography>
 
-          <RoutineEditorControls
-            routine={routine}
-            // name text field
-            nameError={nameError}
-            onNameChange={onNameChange}
-            // submit-cancel actions
-            enableSubmit={enableSubmit}
-            enableCancel={enableCancel}
-            onSubmit={onSubmit}
-            onCancel={onCancel}
-            // optional actions
-            showOptionalActions={showOptionalActions}
-            enableRun={enableRun}
-            onDelete={onDelete}
-          />
-        </Box>
-      </div>
+            <RoutineEditorControls
+              routine={routine}
+              // name text field
+              nameError={nameError}
+              onNameChange={onNameChange}
+              // submit-cancel actions
+              enableSubmit={enableSubmit}
+              enableCancel={enableCancel}
+              onSubmit={onSubmit}
+              onCancel={onCancel}
+              // optional actions
+              showOptionalActions={showOptionalActions}
+              enableRun={enableRun}
+              onDelete={onDelete}
+            />
+          </Box>
+        </div>
 
-      <div hidden={selectedTab !== 1}>
-        <StepListEditor steps={routine.steps} onChange={onStepsChange} />
-      </div>
-    </>
+        <div hidden={selectedTab !== 1}>
+          <StepListEditor steps={routine.steps} onChange={onStepsChange} />
+        </div>
+      </Box>
+    </Box>
   );
 }
 

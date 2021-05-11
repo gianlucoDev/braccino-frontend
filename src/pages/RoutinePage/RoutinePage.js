@@ -1,12 +1,10 @@
 import { useHistory } from 'react-router-dom';
 import useSWR, { mutate } from 'swr';
 
-import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 
 import { createRoutine, updateRoutine, deleteRoutine } from 'api/routines';
 import useDirtyData from 'hooks/useDirtyData';
-import BraccioAppBar from 'components/BraccioAppBar';
 
 import RoutineEditor from './components/RoutineEditor/RoutineEditor';
 
@@ -55,28 +53,19 @@ function EditRoutinePage({ createNew = false, id }) {
   }
 
   return (
-    <>
-      <Box height="100%" display="flex" flexDirection="column">
-        <Box flexShrink={1}>
-          <BraccioAppBar />
-        </Box>
-        <Box flexGrow={1}>
-          <RoutineEditor
-            routine={state}
-            onChange={setState}
-            // name text field
-            enableSubmit={dirty}
-            enableCancel={dirty}
-            onSubmit={createNew ? handleSubmitNew : handleSubmitEdit}
-            onCancel={handleReset}
-            // optional actions
-            showOptionalActions={!createNew}
-            enableRun={!dirty}
-            onDelete={handleDelete}
-          />
-        </Box>
-      </Box>
-    </>
+    <RoutineEditor
+      routine={state}
+      onChange={setState}
+      // name text field
+      enableSubmit={dirty}
+      enableCancel={dirty}
+      onSubmit={createNew ? handleSubmitNew : handleSubmitEdit}
+      onCancel={handleReset}
+      // optional actions
+      showOptionalActions={!createNew}
+      enableRun={!dirty}
+      onDelete={handleDelete}
+    />
   );
 }
 
