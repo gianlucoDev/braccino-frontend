@@ -1,8 +1,6 @@
 import { useState } from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
-import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
@@ -11,12 +9,6 @@ import BraccioAppBar from 'components/BraccioAppBar';
 
 import RoutineEditorControls from './RoutineEditorControls';
 import StepListEditor from './StepListEditor/StepListEditor';
-
-const useStyles = makeStyles((theme) => ({
-  tabsPaper: {
-    backgroundColor: theme.palette.primary.main,
-  },
-}));
 
 function RoutineEditorTabbed({
   routine,
@@ -39,7 +31,6 @@ function RoutineEditorTabbed({
   enableRun = false,
   onDelete,
 }) {
-  const classes = useStyles();
   const [selectedTab, setSelectedTab] = useState(0);
 
   const handleTabChange = (event, newValue) => {
@@ -49,10 +40,7 @@ function RoutineEditorTabbed({
   return (
     <Box height="100%" display="flex" flexDirection="column">
       <Box flexShrink={1}>
-        <BraccioAppBar />
-      </Box>
-      <Box flexGrow={1}>
-        <Paper square elevation={0} className={classes.tabsPaper}>
+        <BraccioAppBar>
           <Tabs
             variant="fullWidth"
             value={selectedTab}
@@ -61,8 +49,9 @@ function RoutineEditorTabbed({
             <Tab label="Routine" />
             <Tab label="Steps" />
           </Tabs>
-        </Paper>
-
+        </BraccioAppBar>
+      </Box>
+      <Box flexGrow={1}>
         <div hidden={selectedTab !== 0}>
           <Box padding={2}>
             <Typography variant="h4" gutterBottom>

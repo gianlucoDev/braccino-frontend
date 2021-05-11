@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function BraccioAppBar() {
+function BraccioAppBar({ children }) {
   const classes = useStyles();
   const location = useLocation();
   const { isDarkMode, setDarkMode } = useDarkMode();
@@ -62,6 +62,8 @@ function BraccioAppBar() {
           </IconButton>
           <Button color="inherit">Login</Button>
         </Toolbar>
+
+        {children}
       </AppBar>
     </div>
   );
