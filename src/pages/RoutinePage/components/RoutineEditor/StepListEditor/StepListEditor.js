@@ -59,15 +59,13 @@ function StepListEditor({ routine, onChange }) {
     <Box padding={2}>
       <Grid container>
         <Grid item xs={6}>
-          <Box>
-            <StepList
-              steps={routine.steps}
-              activeItem={selectedIndex}
-              onDelete={handleStepDelete}
-              onEdit={handleStepSelect}
-              onAdd={handleNewStep}
-            />
-          </Box>
+          <StepList
+            steps={routine.steps}
+            activeItem={selectedIndex}
+            onDelete={handleStepDelete}
+            onEdit={handleStepSelect}
+            onAdd={handleNewStep}
+          />
         </Grid>
 
         <Grid item xs={6}>
