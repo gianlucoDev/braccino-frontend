@@ -44,6 +44,13 @@ function RoutineEditor({
     });
   };
 
+  const handleStepsChange = (steps) => {
+    onChange({
+      ...routine,
+      steps,
+    });
+  };
+
   const [selectedTab, setSelectedTab] = useState(0);
 
   const handleTabChange = (event, newValue) => {
@@ -88,7 +95,7 @@ function RoutineEditor({
       </div>
 
       <div hidden={selectedTab !== 1}>
-        <StepListEditor routine={routine} onChange={onChange} />
+        <StepListEditor steps={routine.steps} onChange={handleStepsChange} />
       </div>
     </>
   );
@@ -117,7 +124,7 @@ function RoutineEditor({
       </Grid>
 
       <Grid item xs={9}>
-        <StepListEditor routine={routine} onChange={onChange} />
+        <StepListEditor steps={routine.steps} onChange={handleStepsChange} />
       </Grid>
     </Grid>
   );

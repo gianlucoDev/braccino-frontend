@@ -16,9 +16,9 @@ const defaultStep = {
   delay: 1000,
 };
 
-function StepListEditor({ routine, onChange }) {
+function StepListEditor({ steps, onChange }) {
   const [selectedStep, selectedIndex, setSelectedStep] = useArrayItemSelection(
-    routine ? routine.steps : [],
+    steps || [],
     0
   );
 
@@ -27,43 +27,27 @@ function StepListEditor({ routine, onChange }) {
   };
 
   const handleNewStep = () => {
-    const lastStep =
-      routine.steps.length >= 1
-        ? routine.steps[routine.steps.length - 1]
-        : null;
-
+    const lastStep = steps.length >= 1 ? steps[steps.length - 1] : null;
     const newStep = lastStep || defaultStep;
+    const newSteps = [...steps, newStep];
 
-    const newRoutine = {
-      ...routine,
-      steps: [...routine.steps, newStep],
-    };
-
-    onChange(newRoutine);
-    // selects the last step
-    setSelectedStep(newRoutine.steps.length - 1);
+    onChange(newSteps);
+    // select the last step
+    setSelectedStep(newSteps.length - 1);
   };
 
   const handleStepChange = (newStep) => {
-    const newSteps = [...routine.steps];
+    const newSteps = [...steps];
     newSteps[selectedIndex] = newStep;
 
-    const newState = {
-      ...routine,
-      steps: newSteps,
-    };
-
-    onChange(newState);
+    onChange(newSteps);
   };
 
   const handleStepDelete = (index) => {
-    const newSteps = [...routine.steps];
+    const newSteps = [...steps];
     newSteps.splice(index, 1);
 
-    onChange({
-      ...routine,
-      steps: newSteps,
-    });
+    onChange(newSteps);
   };
 
   return (
@@ -71,7 +55,7 @@ function StepListEditor({ routine, onChange }) {
       <Grid container>
         <Grid item xs={6}>
           <StepList
-            steps={routine.steps}
+            steps={steps}
             activeItem={selectedIndex}
             onDelete={handleStepDelete}
             onEdit={handleStepSelect}
@@ -82,7 +66,7 @@ function StepListEditor({ routine, onChange }) {
         <Grid item xs={6}>
           {selectedStep === null ? (
             <Box height="100%">
-              {routine.steps ? (
+              {steps ? (
                 <BigMessage
                   IconComponent={ListIcon}
                   message="Nessuno step selezionato"
