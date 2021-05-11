@@ -11,7 +11,7 @@ import SaveCancelFabs from './components/SaveCancelFabs';
 
 const DEFAULT_ROUTINE = { name: '', steps: [] };
 
-function EditRoutinePage({ createNew = false, id }) {
+function RoutinePage({ createNew = false, id }) {
   const history = useHistory();
 
   const { data, error } = useSWR(createNew ? null : `/routines/${id}`);
@@ -75,4 +75,4 @@ function EditRoutinePage({ createNew = false, id }) {
   );
 }
 
-export default EditRoutinePage;
+export default RoutinePage;

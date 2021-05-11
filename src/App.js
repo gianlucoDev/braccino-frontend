@@ -8,7 +8,7 @@ import DarkModeProvider from './components/DarkModeProvider';
 import MuiThemeProvider from './components/MuiThemeProvider';
 
 import MainPage from './pages/MainPage/MainPage';
-import EditRoutinePage from './pages/RoutinePage/RoutinePage';
+import RoutinePage from './pages/RoutinePage/RoutinePage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 
 function App() {
@@ -27,12 +27,12 @@ function App() {
               <Route exact path="/" children={<MainPage />} />
               <Route
                 path="/routines/new"
-                render={() => <EditRoutinePage createNew />}
+                render={() => <RoutinePage createNew />}
               />
               <Route
                 path="/routines/:id"
                 render={({ match: { params } }) => (
-                  <EditRoutinePage id={params.id} />
+                  <RoutinePage id={params.id} />
                 )}
               />
               <Route children={<NotFoundPage />} />
