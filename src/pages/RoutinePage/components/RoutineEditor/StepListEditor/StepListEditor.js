@@ -11,6 +11,11 @@ import StepEditor from './StepEditor/StepEditor';
 
 import { DEFAULT_JOINT_VALUES } from '../../../joints';
 
+const defaultStep = {
+  ...DEFAULT_JOINT_VALUES,
+  delay: 1000,
+};
+
 function StepListEditor({ routine, onChange }) {
   const [selectedStep, selectedIndex, setSelectedStep] = useArrayItemSelection(
     routine ? routine.steps : [],
@@ -22,10 +27,12 @@ function StepListEditor({ routine, onChange }) {
   };
 
   const handleNewStep = () => {
-    const newStep = {
-      ...DEFAULT_JOINT_VALUES,
-      delay: 1000,
-    };
+    const lastStep =
+      routine.steps.length >= 1
+        ? routine.steps[routine.steps.length - 1]
+        : null;
+
+    const newStep = lastStep || defaultStep;
 
     const newRoutine = {
       ...routine,
