@@ -7,6 +7,7 @@ import { createRoutine, updateRoutine, deleteRoutine } from 'api/routines';
 import useDirtyData from 'hooks/useDirtyData';
 
 import RoutineEditor from './components/RoutineEditor/RoutineEditor';
+import SaveCancelFabs from './components/SaveCancelFabs';
 
 const DEFAULT_ROUTINE = { name: '', steps: [] };
 
@@ -53,19 +54,24 @@ function EditRoutinePage({ createNew = false, id }) {
   }
 
   return (
-    <RoutineEditor
-      routine={state}
-      onChange={setState}
-      // name text field
-      enableSubmit={dirty}
-      enableCancel={dirty}
-      onSubmit={createNew ? handleSubmitNew : handleSubmitEdit}
-      onCancel={handleReset}
-      // optional actions
-      showOptionalActions={!createNew}
-      enableRun={!dirty}
-      onDelete={handleDelete}
-    />
+    <>
+      <RoutineEditor
+        routine={state}
+        onChange={setState}
+        dirty={dirty}
+        // optional actions
+        showOptionalActions={!createNew}
+        enableRun={!dirty}
+        onDelete={handleDelete}
+      />
+
+      <SaveCancelFabs
+        disableSubmit={!dirty || !state.name}
+        disableCancel={!dirty}
+        onSubmit={createNew ? handleSubmitNew : handleSubmitEdit}
+        onCancel={handleReset}
+      />
+    </>
   );
 }
 

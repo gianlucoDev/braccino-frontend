@@ -5,8 +5,6 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
-import SaveIcon from '@material-ui/icons/Save';
-import CancelIcon from '@material-ui/icons/Cancel';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import RoutineEditorRunControls from './RoutineEditorRunControls';
@@ -22,16 +20,10 @@ const useStyles = makeStyles((theme) => ({
 
 function RoutineEditorControls({
   routine,
+  dirty = false,
 
   // name text field
-  nameError,
   onNameChange,
-
-  // submit-cancel actions
-  enableSubmit = false,
-  enableCancel = false,
-  onSubmit,
-  onCancel,
 
   // optional actions
   showOptionalActions = false,
@@ -39,6 +31,7 @@ function RoutineEditorControls({
   onDelete,
 }) {
   const classes = useStyles();
+  const nameError = dirty && !routine.name;
 
   return (
     <>
@@ -53,32 +46,6 @@ function RoutineEditorControls({
         helperText={nameError ? 'Nome richisto' : undefined}
         onChange={(e) => onNameChange(e.target.value)}
       />
-
-      {/* save-cancel buttons */}
-      <Box display="flex" justifyContent="center">
-        <Button
-          variant="contained"
-          color="primary"
-          fullWidth
-          className={classes.button}
-          startIcon={<SaveIcon />}
-          disabled={!enableSubmit || nameError}
-          onClick={onSubmit}
-        >
-          Salva
-        </Button>
-        <Button
-          variant="contained"
-          color="secondary"
-          fullWidth
-          className={classes.button}
-          startIcon={<CancelIcon />}
-          disabled={!enableCancel}
-          onClick={onCancel}
-        >
-          Annulla
-        </Button>
-      </Box>
 
       {/* actions */}
       {showOptionalActions && (

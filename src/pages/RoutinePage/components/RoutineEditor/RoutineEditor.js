@@ -6,20 +6,13 @@ import RoutineEditorTabbed from './RoutineEditorTabbed';
 function RoutineEditor({
   routine,
   onChange,
-
-  // submit and cancel buttons
-  enableSubmit = false,
-  enableCancel = false,
-  onSubmit,
-  onCancel,
+  dirty = false,
 
   // optional actions
   showOptionalActions = false,
   enableRun = false,
   onDelete,
 }) {
-  const nameError = enableSubmit && !routine.name;
-
   const handleNameChange = (name) => {
     onChange({
       ...routine,
@@ -39,16 +32,10 @@ function RoutineEditor({
       <Hidden smDown>
         <RoutineEditorWide
           routine={routine}
+          dirty={dirty}
           // data changes
           onNameChange={handleNameChange}
           onStepsChange={handleStepsChange}
-          // name text field
-          nameError={nameError}
-          // submit and cancel buttons
-          enableSubmit={enableSubmit}
-          enableCancel={enableCancel}
-          onSubmit={onSubmit}
-          onCancel={onCancel}
           // optional actions
           showOptionalActions={showOptionalActions}
           enableRun={enableRun}
@@ -59,16 +46,10 @@ function RoutineEditor({
       <Hidden mdUp>
         <RoutineEditorTabbed
           routine={routine}
+          dirty={dirty}
           // data changes
           onNameChange={handleNameChange}
           onStepsChange={handleStepsChange}
-          // name text field
-          nameError={nameError}
-          // submit and cancel buttons
-          enableSubmit={enableSubmit}
-          enableCancel={enableCancel}
-          onSubmit={onSubmit}
-          onCancel={onCancel}
           // optional actions
           showOptionalActions={showOptionalActions}
           enableRun={enableRun}

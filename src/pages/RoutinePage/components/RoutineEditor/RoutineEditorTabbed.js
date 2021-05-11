@@ -12,19 +12,11 @@ import StepListEditor from './StepListEditor/StepListEditor';
 
 function RoutineEditorTabbed({
   routine,
+  dirty = false,
 
   // data changes
   onNameChange,
   onStepsChange,
-
-  // name text field
-  nameError,
-
-  // submit and cancel buttons
-  enableSubmit = false,
-  enableCancel = false,
-  onSubmit,
-  onCancel,
 
   // optional actions
   showOptionalActions = false,
@@ -60,14 +52,9 @@ function RoutineEditorTabbed({
 
             <RoutineEditorControls
               routine={routine}
+              dirty={dirty}
               // name text field
-              nameError={nameError}
               onNameChange={onNameChange}
-              // submit-cancel actions
-              enableSubmit={enableSubmit}
-              enableCancel={enableCancel}
-              onSubmit={onSubmit}
-              onCancel={onCancel}
               // optional actions
               showOptionalActions={showOptionalActions}
               enableRun={enableRun}
