@@ -71,11 +71,19 @@ function StepListEditor({ routine, onChange }) {
         <Grid item xs={6}>
           {selectedStep === null ? (
             <Box height="100%">
-              <BigMessage
-                IconComponent={ListIcon}
-                message="Non ci sono step"
-                suggestion="Puoi crearne uno dal pannello a sinistra"
-              />
+              {routine.steps ? (
+                <BigMessage
+                  IconComponent={ListIcon}
+                  message="Nessuno step selezionato"
+                  suggestion="Puoi selezionarne uno dal pannello a sinistra"
+                />
+              ) : (
+                <BigMessage
+                  IconComponent={ListIcon}
+                  message="Non ci sono step"
+                  suggestion="Puoi crearne uno dal pannello a sinistra"
+                />
+              )}
             </Box>
           ) : (
             <Box padding={2}>
