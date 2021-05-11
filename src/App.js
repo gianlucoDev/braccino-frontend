@@ -8,7 +8,6 @@ import fetcher from './api/fetcher';
 import DarkModeProvider from './components/DarkModeProvider';
 import MuiThemeProvider from './components/MuiThemeProvider';
 
-import BraccioAppBar from './components/BraccioAppBar';
 import MainPage from './pages/MainPage/MainPage';
 import EditRoutinePage from './pages/RoutinePage/RoutinePage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
@@ -24,27 +23,21 @@ function App() {
         <DarkModeProvider>
           <MuiThemeProvider>
             <CssBaseline />
-            <Box height="100%" display="flex" flexDirection="column">
-              <Box flexShrink={1}>
-                <BraccioAppBar />
-              </Box>
-              <Box flexGrow={1}>
-                <Switch>
-                  <Route exact path="/" children={<MainPage />} />
-                  <Route
-                    path="/routines/new"
-                    render={() => <EditRoutinePage createNew />}
-                  />
-                  <Route
-                    path="/routines/:id"
-                    render={({ match: { params } }) => (
-                      <EditRoutinePage id={params.id} />
-                    )}
-                  />
-                  <Route children={<NotFoundPage />} />
-                </Switch>
-              </Box>
-            </Box>
+
+            <Switch>
+              <Route exact path="/" children={<MainPage />} />
+              <Route
+                path="/routines/new"
+                render={() => <EditRoutinePage createNew />}
+              />
+              <Route
+                path="/routines/:id"
+                render={({ match: { params } }) => (
+                  <EditRoutinePage id={params.id} />
+                )}
+              />
+              <Route children={<NotFoundPage />} />
+            </Switch>
           </MuiThemeProvider>
         </DarkModeProvider>
       </SWRConfig>
