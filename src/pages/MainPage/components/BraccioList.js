@@ -20,7 +20,7 @@ function BraccioList() {
 
   return (
     <Grid container spacing={2}>
-      {data.map(({ serial_number, name, status }) => (
+      {data.map(({ serial_number, name, connection_status }) => (
         <Grid item xs={12} sm={6} md={4} key={serial_number}>
           <Card>
             <CardContent>
@@ -28,8 +28,8 @@ function BraccioList() {
                 {name}
               </Typography>
 
-              <Typography variant="body1">Status</Typography>
-              <Typography color="textSecondary">{status.code}</Typography>
+              <Typography variant="body1">Connetion status</Typography>
+              <Typography color="textSecondary">{connection_status.code}</Typography>
 
               <Typography variant="body1">Serial number</Typography>
               <Typography color="textSecondary">{serial_number}</Typography>
