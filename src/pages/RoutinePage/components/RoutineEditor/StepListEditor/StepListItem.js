@@ -1,23 +1,25 @@
 import { makeStyles } from '@material-ui/core/styles';
 
+import Box from '@material-ui/core/Box';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
-
 import Chip from '@material-ui/core/Chip';
+import Typography from '@material-ui/core/Typography';
 
 import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles((theme) => ({
   valuesContainer: {
-    display: 'flex',
-    flexWrap: 'wrap',
     '& > *': {
       margin: theme.spacing(0.25),
     },
+  },
+  chipRoot: {
+    width: '5em',
+    justifyContent: 'left',
   },
   active: {
     color: theme.palette.getContrastText(theme.palette.primary.main),
@@ -28,15 +30,32 @@ const useStyles = makeStyles((theme) => ({
 function StepListItem({ index, step, active = false, onDelete, onEdit }) {
   const classes = useStyles();
 
+  const StepValue = ({ i }) => {
+    const key = 'm' + i;
+
+    return (
+      <Chip
+        classes={{ root: classes.chipRoot }}
+        size="small"
+        avatar={<Avatar>{i}</Avatar>}
+        label={step[key] + '°'}
+      />
+    );
+  };
+
   const values = (
-    <div className={classes.valuesContainer}>
-      <Chip size="small" avatar={<Avatar>1</Avatar>} label={step.m1 + '°'} />
-      <Chip size="small" avatar={<Avatar>2</Avatar>} label={step.m2 + '°'} />
-      <Chip size="small" avatar={<Avatar>3</Avatar>} label={step.m3 + '°'} />
-      <Chip size="small" avatar={<Avatar>4</Avatar>} label={step.m4 + '°'} />
-      <Chip size="small" avatar={<Avatar>5</Avatar>} label={step.m5 + '°'} />
-      <Chip size="small" avatar={<Avatar>6</Avatar>} label={step.m6 + '°'} />
-    </div>
+    <>
+      <div className={classes.valuesContainer}>
+        <StepValue i={1} />
+        <StepValue i={2} />
+        <StepValue i={3} />
+      </div>
+      <div className={classes.valuesContainer}>
+        <StepValue i={4} />
+        <StepValue i={5} />
+        <StepValue i={6} />
+      </div>
+    </>
   );
 
   return (
@@ -46,13 +65,12 @@ function StepListItem({ index, step, active = false, onDelete, onEdit }) {
           {index + 1}
         </Avatar>
       </ListItemAvatar>
-      <ListItemText
-        primary={`Delay: ${step.delay}`}
-        primaryTypographyProps={{ variant: 'h6' }}
-        secondary={values}
-        // HACK: I actually use the second <Typography> as a <div> to hold the values
-        secondaryTypographyProps={{ component: 'div' }}
-      />
+      <Box marginY={1} display="flex" flexDirection="column">
+        <Typography variant="h6" component="p" gutterBottom>
+          Delay: {step.delay}
+        </Typography>
+        {values}
+      </Box>
       <ListItemSecondaryAction>
         <IconButton edge="end" aria-label="edit" onClick={onDelete}>
           <DeleteIcon />
