@@ -43,8 +43,9 @@ function RoutineEditorTabbed({
           </Tabs>
         </BraccioAppBar>
       </Box>
+
       <Box flexGrow={1}>
-        <div hidden={selectedTab !== 0}>
+        {selectedTab === 0 && (
           <Box padding={2}>
             <Typography variant="h4" gutterBottom>
               Routine
@@ -61,11 +62,11 @@ function RoutineEditorTabbed({
               onDelete={onDelete}
             />
           </Box>
-        </div>
+        )}
 
-        <div hidden={selectedTab !== 1}>
+        {selectedTab === 1 && (
           <StepListEditor steps={routine.steps} onChange={onStepsChange} />
-        </div>
+        )}
       </Box>
     </Box>
   );
