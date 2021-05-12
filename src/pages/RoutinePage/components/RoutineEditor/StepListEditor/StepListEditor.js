@@ -6,7 +6,7 @@ import ListIcon from '@material-ui/icons/ListAlt';
 import useArrayItemSelection from 'hooks/useArrayItemSelection';
 import BigMessage from 'components/BigMessage';
 
-import StepList from './StepList';
+import StepList from './StepList/StepList';
 import StepEditor from './StepEditor/StepEditor';
 
 import { DEFAULT_JOINT_VALUES } from '../../../joints';
