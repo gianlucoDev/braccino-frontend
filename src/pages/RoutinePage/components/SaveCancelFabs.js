@@ -14,6 +14,10 @@ const useStyles = makeStyles((theme) => ({
     position: 'fixed',
     bottom: theme.spacing(2),
     right: theme.spacing(2),
+
+    // show on top of modals,
+    // such as the <Dialog> in <StepListEditorMobile>
+    zIndex: theme.zIndex.modal + 1,
   },
   extendedFabIcon: {
     marginRight: theme.spacing(1),
