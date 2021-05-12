@@ -1,13 +1,10 @@
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-
-import ListIcon from '@material-ui/icons/ListAlt';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import useArrayItemSelection from 'hooks/useArrayItemSelection';
-import BigMessage from 'components/BigMessage';
 
-import StepList from './StepList/StepList';
-import StepEditor from './StepEditor/StepEditor';
+import StepListEditorWide from './StepListEditorWide';
+import StepListEditorMobile from './StepListEditorMobile';
 
 import { DEFAULT_JOINT_VALUES } from '../../../joints';
 
@@ -17,6 +14,9 @@ const defaultStep = {
 };
 
 function StepListEditor({ steps, onChange }) {
+  const theme = useTheme();
+  const sm = useMediaQuery(theme.breakpoints.up('sm'));
+
   const [selectedStep, selectedIndex, setSelectedStep] = useArrayItemSelection(
     steps || [],
     0
@@ -50,44 +50,18 @@ function StepListEditor({ steps, onChange }) {
     onChange(newSteps);
   };
 
-  return (
-    <Box padding={2}>
-      <Grid container>
-        <Grid item xs={6}>
-          <StepList
-            steps={steps}
-            activeItem={selectedIndex}
-            onDelete={handleStepDelete}
-            onEdit={handleStepSelect}
-            onAdd={handleNewStep}
-          />
-        </Grid>
+  const EditorLayout = sm ? StepListEditorWide : StepListEditorMobile;
 
-        <Grid item xs={6}>
-          {selectedStep === null ? (
-            <Box height="100%">
-              {steps ? (
-                <BigMessage
-                  IconComponent={ListIcon}
-                  message="Nessuno step selezionato"
-                  suggestion="Puoi selezionarne uno dal pannello a sinistra"
-                />
-              ) : (
-                <BigMessage
-                  IconComponent={ListIcon}
-                  message="Non ci sono step"
-                  suggestion="Puoi crearne uno dal pannello a sinistra"
-                />
-              )}
-            </Box>
-          ) : (
-            <Box padding={2}>
-              <StepEditor step={selectedStep} onChange={handleStepChange} />
-            </Box>
-          )}
-        </Grid>
-      </Grid>
-    </Box>
+  return (
+    <EditorLayout
+      steps={steps}
+      selectedIndex={selectedIndex}
+      selectedStep={selectedStep}
+      onStepSelect={handleStepSelect}
+      onNewStep={handleNewStep}
+      onStepChange={handleStepChange}
+      onStepDelete={handleStepDelete}
+    />
   );
 }
 
