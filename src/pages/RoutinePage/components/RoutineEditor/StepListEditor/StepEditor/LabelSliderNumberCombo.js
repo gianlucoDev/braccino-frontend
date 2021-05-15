@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
   label: {
+    width: 60,
     fontWeight: 'bold',
   },
   extremes: {
@@ -42,8 +43,10 @@ function LabelSliderNumberCombo({ label, min, max, value, onChange }) {
       <Grid item>
         <Typography className={classes.label}>{label}</Typography>
       </Grid>
-      <Grid item className={classes.extremes}>
-        <Typography>{min}</Typography>
+      <Grid item>
+        <Typography align="right" className={classes.extremes}>
+          {min}
+        </Typography>
       </Grid>
       <Grid item xs>
         <Slider
@@ -54,8 +57,10 @@ function LabelSliderNumberCombo({ label, min, max, value, onChange }) {
           onChange={handleSliderChange}
         />
       </Grid>
-      <Grid item className={classes.extremes}>
-        <Typography>{max}</Typography>
+      <Grid item>
+        <Typography align="left" className={classes.extremes}>
+          {max}
+        </Typography>
       </Grid>
       <Grid item>
         <TextField
