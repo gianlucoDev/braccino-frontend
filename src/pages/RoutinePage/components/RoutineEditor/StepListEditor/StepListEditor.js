@@ -6,11 +6,12 @@ import useArrayItemSelection from 'hooks/useArrayItemSelection';
 import StepListEditorWide from './StepListEditorWide';
 import StepListEditorMobile from './StepListEditorMobile';
 
-import { DEFAULT_JOINT_VALUES } from '../../../joints';
+import { DEFAULT_JOINT_POSITIONS } from '../../../joints';
 
 const defaultStep = {
-  ...DEFAULT_JOINT_VALUES,
   delay: 1000,
+  speed: 30,
+  position: DEFAULT_JOINT_POSITIONS,
 };
 
 function StepListEditor({ steps, onChange }) {
@@ -28,7 +29,7 @@ function StepListEditor({ steps, onChange }) {
 
   const handleNewStep = () => {
     const lastStep = steps.length >= 1 ? steps[steps.length - 1] : null;
-    const newStep = lastStep || defaultStep;
+    const newStep = lastStep || { ...defaultStep };
     const newSteps = [...steps, newStep];
 
     onChange(newSteps);

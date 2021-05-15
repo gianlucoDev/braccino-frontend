@@ -30,15 +30,13 @@ const useStyles = makeStyles((theme) => ({
 function StepListItem({ index, step, active = false, onDelete, onEdit }) {
   const classes = useStyles();
 
-  const StepValue = ({ i }) => {
-    const key = 'm' + i;
-
+  const StepValue = ({ i, name }) => {
     return (
       <Chip
         classes={{ root: classes.chipRoot }}
         size="small"
         avatar={<Avatar>{i}</Avatar>}
-        label={step[key] + '°'}
+        label={step.position[name] + '°'}
       />
     );
   };
@@ -46,14 +44,14 @@ function StepListItem({ index, step, active = false, onDelete, onEdit }) {
   const values = (
     <>
       <div className={classes.valuesContainer}>
-        <StepValue i={1} />
-        <StepValue i={2} />
-        <StepValue i={3} />
+        <StepValue i={1} name="base" />
+        <StepValue i={2} name="shoulder" />
+        <StepValue i={3} name="elbow" />
       </div>
       <div className={classes.valuesContainer}>
-        <StepValue i={4} />
-        <StepValue i={5} />
-        <StepValue i={6} />
+        <StepValue i={4} name="wrist_ver" />
+        <StepValue i={5} name="wrist_rot" />
+        <StepValue i={6} name="gripper" />
       </div>
     </>
   );

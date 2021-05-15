@@ -1,30 +1,36 @@
 export const JOINTS = {
-  m1: {
+  base: {
+    name: 'Base',
     min: 0,
     max: 180,
     default: 90,
   },
-  m2: {
+  shoulder: {
+    name: 'Shoulder',
     min: 15,
     max: 165,
     default: 45,
   },
-  m3: {
+  elbow: {
+    name: 'Elbow',
     min: 0,
     max: 180,
     default: 180,
   },
-  m4: {
+  wrist_ver: {
+    name: 'Wrist_ver',
     min: 0,
     max: 180,
     default: 180,
   },
-  m5: {
+  wrist_rot: {
+    name: 'Wrist_rot',
     min: 0,
     max: 180,
     default: 90,
   },
-  m6: {
+  gripper: {
+    name: 'Gripper',
     min: 10,
     max: 73,
     default: 10,
@@ -33,11 +39,11 @@ export const JOINTS = {
 
 /*
 {
-    m1: 90,
-    m2: 45,
-    ...
+  base: 90,
+  shoulder: 45,
+  ...
 }
 */
-export const DEFAULT_JOINT_VALUES = Object.fromEntries(
+export const DEFAULT_JOINT_POSITIONS = Object.fromEntries(
   Object.entries(JOINTS).map(([key, joint]) => [key, joint.default])
 );

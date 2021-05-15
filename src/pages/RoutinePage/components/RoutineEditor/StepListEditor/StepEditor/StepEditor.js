@@ -15,6 +15,16 @@ function StepEditor({ step, onChange }) {
     });
   };
 
+  const handlePositionChange = (key) => (value) => {
+    onChange({
+      ...step,
+      position: {
+        ...step.position,
+        [key]: value,
+      },
+    });
+  };
+
   return (
     <Paper>
       <Box padding={2}>
@@ -32,11 +42,11 @@ function StepEditor({ step, onChange }) {
         {Object.entries(JOINTS).map(([key, joint]) => (
           <LabelSliderNumberCombo
             key={key}
-            label={key.toUpperCase()}
+            label={JOINTS[key].name}
             min={joint.min}
             max={joint.max}
-            value={step[key]}
-            onChange={handleChange(key)}
+            value={step.position[key]}
+            onChange={handlePositionChange(key)}
           />
         ))}
       </Box>
