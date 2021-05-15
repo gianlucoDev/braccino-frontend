@@ -39,6 +39,14 @@ function StepEditor({ step, onChange }) {
           onChange={handleChange('delay')}
         />
 
+        <LabelNumberCombo
+          label="Speed"
+          min={10}
+          max={30}
+          value={step['speed']}
+          onChange={handleChange('speed')}
+        />
+
         {Object.entries(JOINTS).map(([key, joint]) => (
           <LabelSliderNumberCombo
             key={key}

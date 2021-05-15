@@ -64,8 +64,11 @@ function StepListItem({ index, step, active = false, onDelete, onEdit }) {
         </Avatar>
       </ListItemAvatar>
       <Box marginY={1} display="flex" flexDirection="column">
-        <Typography variant="h6" component="p" gutterBottom>
+        <Typography variant="h6" component="p">
           Delay: {step.delay}
+        </Typography>
+        <Typography variant="h6" component="p" gutterBottom>
+          Speed: {step.speed}
         </Typography>
         {values}
       </Box>
