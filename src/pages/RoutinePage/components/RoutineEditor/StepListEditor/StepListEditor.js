@@ -3,10 +3,10 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import useArrayItemSelection from 'hooks/useArrayItemSelection';
 
+import { DEFAULT_JOINT_POSITIONS } from 'api/joints';
+
 import StepListEditorWide from './StepListEditorWide';
 import StepListEditorMobile from './StepListEditorMobile';
-
-import { DEFAULT_JOINT_POSITIONS } from '../../../joints';
 
 const defaultStep = {
   delay: 1000,

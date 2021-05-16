@@ -1,7 +1,7 @@
 import Grid from '@material-ui/core/Grid';
 
 import LabelSliderNumberCombo from './LabelSliderNumberCombo';
-import { JOINTS } from '../../../../joints';
+import { JOINTS } from '../../api/joints';
 
 function StepPositionEditor({ step, onChange }) {
   const handlePositionChange = (key) => (value) => {

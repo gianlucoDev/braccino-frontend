@@ -2,8 +2,8 @@ import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
+import StepPositionEditor from 'components/StepPositionSliders/StepPositionSliders';
 import LabelNumberCombo from './LabelNumberCombo';
-import StepPositionEditor from './StepPositionSliders';
 
 function StepEditor({ step, onChange }) {
   const handleChange = (key) => (value) => {
