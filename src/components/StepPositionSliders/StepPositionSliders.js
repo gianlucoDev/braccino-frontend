@@ -3,14 +3,11 @@ import Grid from '@material-ui/core/Grid';
 import LabelSliderNumberCombo from './LabelSliderNumberCombo';
 import { JOINTS } from '../../api/joints';
 
-function StepPositionEditor({ step, onChange }) {
-  const handlePositionChange = (key) => (value) => {
+function StepPositionSliders({ position, onChange }) {
+  const handleChange = (key) => (value) => {
     onChange({
-      ...step,
-      position: {
-        ...step.position,
-        [key]: value,
-      },
+      ...position,
+      [key]: value,
     });
   };
 
@@ -22,12 +19,12 @@ function StepPositionEditor({ step, onChange }) {
           label={JOINTS[key].name}
           min={joint.min}
           max={joint.max}
-          value={step.position[key]}
-          onChange={handlePositionChange(key)}
+          value={position[key]}
+          onChange={handleChange(key)}
         />
       ))}
     </Grid>
   );
 }
 
-export default StepPositionEditor;
+export default StepPositionSliders;

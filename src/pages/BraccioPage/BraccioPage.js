@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useParams } from 'react-router';
 import useSWR from 'swr';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
@@ -7,7 +8,9 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
+import { DEFAULT_JOINT_POSITIONS } from 'api/joints';
 import BraccioAppBar from 'components/BraccioAppBar';
+import BraccioPositionEditor from './components/BraccioPositionEditor';
 
 const BASE_URL_WS = 'ws://localhost:8000/ws';
 
@@ -17,6 +20,8 @@ function BraccioPage() {
   const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(
     `${BASE_URL_WS}/braccio/${serial_number}/`
   );
+
+  const [targetPosition, setTargetPosition] = useState(DEFAULT_JOINT_POSITIONS);
 
   const connectionStatus = {
     [ReadyState.CONNECTING]: 'Connecting',
@@ -42,7 +47,7 @@ function BraccioPage() {
     <>
       <BraccioAppBar />
       <Container>
-        <Box marginTop={2}>
+        <Box marginY={2}>
           <Typography variant="h2" gutterBottom>
             {data.name}
           </Typography>
@@ -77,6 +82,11 @@ function BraccioPage() {
           {readyState === ReadyState.OPEN && (
             <Button onClick={handleSendMessage}>invia messaggio</Button>
           )}
+
+          <BraccioPositionEditor
+            position={targetPosition}
+            onChange={setTargetPosition}
+          />
         </Box>
       </Container>
     </>
