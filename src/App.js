@@ -8,6 +8,7 @@ import DarkModeProvider from './components/DarkModeProvider';
 import MuiThemeProvider from './components/MuiThemeProvider';
 
 import MainPage from './pages/MainPage/MainPage';
+import BraccioPage from 'pages/BraccioPage/BraccioPage';
 import RoutinePage from './pages/RoutinePage/RoutinePage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 
@@ -25,6 +26,10 @@ function App() {
 
             <Switch>
               <Route exact path="/" children={<MainPage />} />
+              <Route
+                path="/braccio/:serial_number"
+                children={<BraccioPage />}
+              />
               <Route
                 path="/routines/new"
                 render={() => <RoutinePage createNew />}

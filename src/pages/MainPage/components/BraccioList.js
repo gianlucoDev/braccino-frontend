@@ -1,3 +1,4 @@
+import { Link as RouterLink } from 'react-router-dom';
 import useSWR from 'swr';
 
 import Grid from '@material-ui/core/Grid';
@@ -6,6 +7,8 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+
+import InputIcon from '@material-ui/icons/Input';
 
 function BraccioList() {
   const { data, error } = useSWR('/braccio');
@@ -29,7 +32,9 @@ function BraccioList() {
               </Typography>
 
               <Typography variant="body1">Connetion status</Typography>
-              <Typography color="textSecondary">{connection_status.code}</Typography>
+              <Typography color="textSecondary">
+                {connection_status.code}
+              </Typography>
 
               <Typography variant="body1">Serial number</Typography>
               <Typography color="textSecondary">{serial_number}</Typography>
@@ -37,9 +42,11 @@ function BraccioList() {
             <CardActions>
               <Button
                 size="small"
-                onClick={() => alert('Non ancora impementato')}
+                startIcon={<InputIcon />}
+                component={RouterLink}
+                to={`/braccio/${serial_number}`}
               >
-                Attiva
+                Controlla braccio
               </Button>
             </CardActions>
           </Card>
