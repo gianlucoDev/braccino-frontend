@@ -36,7 +36,7 @@ function StepEditor({ step, onChange }) {
         />
 
         <StepPositionSliders
-          step={step.position}
+          position={step.position}
           onChange={handleChange('position')}
         />
       </Box>
