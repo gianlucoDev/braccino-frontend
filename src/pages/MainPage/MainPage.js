@@ -10,19 +10,21 @@ function MainPage() {
   return (
     <>
       <BraccioAppBar />
-      <Box marginTop={2}>
-        <Container>
+      <Container>
+        <Box marginTop={2}>
           <Typography gutterBottom variant="h3" component="h1">
             Bracci collegati
           </Typography>
           <BraccioList />
+        </Box>
 
+        <Box marginTop={2}>
           <Typography gutterBottom variant="h3" component="h1">
             Routine disponibili
           </Typography>
           <RoutineList />
-        </Container>
-      </Box>
+        </Box>
+      </Container>
     </>
   );
 }
