@@ -5,7 +5,6 @@ import useWebSocket, { ReadyState } from 'react-use-websocket';
 
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 import { DEFAULT_JOINT_POSITIONS } from 'api/joints';
@@ -17,7 +16,7 @@ const BASE_URL_WS = 'ws://localhost:8000/ws';
 function BraccioPage() {
   const { serial_number } = useParams();
   const { data, error } = useSWR(`/braccio/${serial_number}`);
-  const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(
+  const { sendJsonMessage, readyState } = useWebSocket(
     `${BASE_URL_WS}/braccio/${serial_number}/`
   );
 
@@ -31,8 +30,9 @@ function BraccioPage() {
     [ReadyState.UNINSTANTIATED]: 'Uninstantiated',
   }[readyState];
 
-  const handleSendMessage = () => {
-    sendJsonMessage({ hello: 'world', time: Date.now() });
+  const handleTargetPositionChange = (pos) => {
+    sendJsonMessage(pos);
+    setTargetPosition(pos);
   };
 
   if (error) {
@@ -76,17 +76,12 @@ function BraccioPage() {
           <Typography variant="h4">WebSocket connection status</Typography>
           <Typography color="textSecondary">{connectionStatus}</Typography>
 
-          <Typography variant="h4">Last message</Typography>
-          <pre>{JSON.stringify(lastJsonMessage, null, 2)}</pre>
-
           {readyState === ReadyState.OPEN && (
-            <Button onClick={handleSendMessage}>invia messaggio</Button>
+            <BraccioPositionEditor
+              position={targetPosition}
+              onChange={handleTargetPositionChange}
+            />
           )}
-
-          <BraccioPositionEditor
-            position={targetPosition}
-            onChange={setTargetPosition}
-          />
         </Box>
       </Container>
     </>
