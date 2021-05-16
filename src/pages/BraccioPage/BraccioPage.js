@@ -1,16 +1,34 @@
 import { useParams } from 'react-router';
 import useSWR from 'swr';
+import useWebSocket, { ReadyState } from 'react-use-websocket';
 
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 import BraccioAppBar from 'components/BraccioAppBar';
 
+const BASE_URL_WS = 'ws://localhost:8000/ws';
+
 function BraccioPage() {
   const { serial_number } = useParams();
   const { data, error } = useSWR(`/braccio/${serial_number}`);
+  const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(
+    `${BASE_URL_WS}/braccio/${serial_number}/`
+  );
+
+  const connectionStatus = {
+    [ReadyState.CONNECTING]: 'Connecting',
+    [ReadyState.OPEN]: 'Open',
+    [ReadyState.CLOSING]: 'Closing',
+    [ReadyState.CLOSED]: 'Closed',
+    [ReadyState.UNINSTANTIATED]: 'Uninstantiated',
+  }[readyState];
+
+  const handleSendMessage = () => {
+    sendJsonMessage({ hello: 'world', time: Date.now() });
+  };
 
   if (error) {
     return <Typography>Error.</Typography>;
@@ -29,10 +47,10 @@ function BraccioPage() {
             {data.name}
           </Typography>
 
-          <Typography variant="h4">Connetion status</Typography>
+          <Typography variant="h4">Arduino connetion status</Typography>
           <Typography color="textSecondary">
-            {data.connection_status.code} (data.connection_status.ok ? 'OK' :
-            'NOT OK')
+            {data.connection_status.code} (
+            {data.connection_status.ok ? 'OK' : 'NOT OK'})
           </Typography>
 
           <Typography variant="h4">Serial number</Typography>
@@ -48,6 +66,16 @@ function BraccioPage() {
             <Typography color="textSecondary">
               Non sta svoglendo nulla
             </Typography>
+          )}
+
+          <Typography variant="h4">WebSocket connection status</Typography>
+          <Typography color="textSecondary">{connectionStatus}</Typography>
+
+          <Typography variant="h4">Last message</Typography>
+          <pre>{JSON.stringify(lastJsonMessage, null, 2)}</pre>
+
+          {readyState === ReadyState.OPEN && (
+            <Button onClick={handleSendMessage}>invia messaggio</Button>
           )}
         </Box>
       </Container>
