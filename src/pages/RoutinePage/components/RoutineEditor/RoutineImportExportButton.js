@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -31,9 +31,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function RoutineImportExportButton({ routine }) {
+function RoutineImportExportButton({ routine, onImport }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+  const fileInput = useRef(null);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -44,6 +45,22 @@ function RoutineImportExportButton({ routine }) {
   };
 
   const handleImport = () => {
+    fileInput.current.click();
+  };
+
+  const handleImportFileSelected = (event) => {
+    if (!event.target.files) return;
+    const file = event.target.files[0];
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const text = event.target.result;
+      const routineJson = JSON.parse(text);
+      console.log(routineJson);
+      onImport(routineJson);
+    };
+    reader.readAsText(file);
+
     setOpen(false);
   };
 
@@ -51,17 +68,21 @@ function RoutineImportExportButton({ routine }) {
     // copy all properties from routine into data, except for the id property
     const { id, ...data } = routine;
     downloadJson(routine.name + '.json', data);
+
     setOpen(false);
   };
 
   return (
     <>
+      {/* button */}
       <AppBarIconButton
         aria-label="importa o esporta routine"
         onClick={handleClickOpen}
       >
         <ImportExportIcon />
       </AppBarIconButton>
+
+      {/* dialog */}
       <Dialog
         open={open}
         onClose={handleClose}
@@ -76,7 +97,8 @@ function RoutineImportExportButton({ routine }) {
             Vuoi esportare la routine corrente in file <code>.json</code> oppure
             importare un file e sostituire la routine corrente con esso?
           </DialogContentText>
-          {/* TODO: padding top and bottom */}
+
+          {/* import */}
           <Button
             fullWidth
             variant="outlined"
@@ -86,6 +108,15 @@ function RoutineImportExportButton({ routine }) {
           >
             Importa
           </Button>
+          <input
+            type="file"
+            ref={fileInput}
+            accept="application/json"
+            style={{ display: 'none' }}
+            onChange={handleImportFileSelected}
+          />
+
+          {/* export */}
           <Button
             fullWidth
             variant="outlined"

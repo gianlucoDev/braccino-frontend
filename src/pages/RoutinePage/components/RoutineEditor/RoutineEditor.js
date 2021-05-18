@@ -31,6 +31,14 @@ function RoutineEditor({
     });
   };
 
+  const handleImport = (importedRoutine) => {
+    onChange({
+      ...importedRoutine,
+      // ensure current ID is no overwritten by imported data
+      id: routine.id,
+    });
+  };
+
   const EditorLayout = md ? RoutineEditorWide : RoutineEditorTabbed;
 
   return (
@@ -40,6 +48,7 @@ function RoutineEditor({
       // data changes
       onNameChange={handleNameChange}
       onStepsChange={handleStepsChange}
+      onImport={handleImport}
       // optional actions
       showOptionalActions={showOptionalActions}
       enableRun={enableRun}
