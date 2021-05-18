@@ -56,7 +56,6 @@ function RoutineImportExportButton({ routine, onImport }) {
     reader.onload = (event) => {
       const text = event.target.result;
       const routineJson = JSON.parse(text);
-      console.log(routineJson);
       onImport(routineJson);
     };
     reader.readAsText(file);
