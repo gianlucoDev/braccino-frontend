@@ -62,10 +62,9 @@ function BraccioPage() {
           <Typography color="textSecondary">{data.serial_number}</Typography>
 
           <Typography variant="h4">Current action</Typography>
-          {data.current_action ? (
+          {data.running ? (
             <Typography color="textSecondary">
-              {data.current_action.name} (
-              {data.current_action.is_running ? 'running' : 'not running'})
+              {data.running.name}
             </Typography>
           ) : (
             <Typography color="textSecondary">
