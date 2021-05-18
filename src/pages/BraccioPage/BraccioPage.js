@@ -10,17 +10,17 @@ import Typography from '@material-ui/core/Typography';
 import { DEFAULT_JOINT_POSITIONS } from 'api/joints';
 import BraccioAppBar from 'components/BraccioAppBar';
 import BraccioPositionEditor from './components/BraccioPositionEditor';
+import BraccioSpeedEditor from './components/BraccioSpeedEditor';
 
 const BASE_URL_WS = 'ws://localhost:8000/ws';
 
 function BraccioPage() {
   const { serial_number } = useParams();
   const { data, error } = useSWR(`/braccio/${serial_number}`);
+
   const { sendJsonMessage, readyState } = useWebSocket(
     `${BASE_URL_WS}/braccio/${serial_number}/`
   );
-
-  const [targetPosition, setTargetPosition] = useState(DEFAULT_JOINT_POSITIONS);
 
   const connectionStatus = {
     [ReadyState.CONNECTING]: 'Connecting',
@@ -30,9 +30,21 @@ function BraccioPage() {
     [ReadyState.UNINSTANTIATED]: 'Uninstantiated',
   }[readyState];
 
+  const sendPacket = (type, data) => {
+    sendJsonMessage({ type, data });
+  };
+
+  const [targetPosition, setTargetPosition] = useState(DEFAULT_JOINT_POSITIONS);
+  const [speed, setSpeed] = useState(30);
+
   const handleTargetPositionChange = (pos) => {
-    sendJsonMessage(pos);
+    sendPacket('set_position', pos);
     setTargetPosition(pos);
+  };
+
+  const handleTargetSpeedChange = (speed) => {
+    sendPacket('set_speed', { speed });
+    setSpeed(speed);
   };
 
   if (error) {
@@ -63,9 +75,7 @@ function BraccioPage() {
 
           <Typography variant="h4">Current action</Typography>
           {data.running ? (
-            <Typography color="textSecondary">
-              {data.running.name}
-            </Typography>
+            <Typography color="textSecondary">{data.running.name}</Typography>
           ) : (
             <Typography color="textSecondary">
               Non sta svoglendo nulla
@@ -76,10 +86,21 @@ function BraccioPage() {
           <Typography color="textSecondary">{connectionStatus}</Typography>
 
           {readyState === ReadyState.OPEN && (
-            <BraccioPositionEditor
-              position={targetPosition}
-              onChange={handleTargetPositionChange}
-            />
+            <>
+              <Box paddingY={2}>
+                <BraccioSpeedEditor
+                  speed={speed}
+                  onChange={handleTargetSpeedChange}
+                />
+              </Box>
+
+              <Box paddingY={2}>
+                <BraccioPositionEditor
+                  position={targetPosition}
+                  onChange={handleTargetPositionChange}
+                />
+              </Box>
+            </>
           )}
         </Box>
       </Container>
