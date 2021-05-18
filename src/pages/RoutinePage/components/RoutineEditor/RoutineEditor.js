@@ -1,8 +1,12 @@
+import { createContext } from 'react';
+
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import RoutineEditorWide from './RoutineEditorWide';
 import RoutineEditorTabbed from './RoutineEditorTabbed';
+
+const RoutineEditorContext = createContext();
 
 function RoutineEditor({
   routine,
@@ -31,30 +35,25 @@ function RoutineEditor({
     });
   };
 
-  const handleImport = (importedRoutine) => {
-    onChange({
-      ...importedRoutine,
-      // ensure current ID is no overwritten by imported data
-      id: routine.id,
-    });
-  };
-
   const EditorLayout = md ? RoutineEditorWide : RoutineEditorTabbed;
 
+  const value = { routine, setRoutine: onChange };
   return (
-    <EditorLayout
-      routine={routine}
-      dirty={dirty}
-      // data changes
-      onNameChange={handleNameChange}
-      onStepsChange={handleStepsChange}
-      onImport={handleImport}
-      // optional actions
-      showOptionalActions={showOptionalActions}
-      enableRun={enableRun}
-      onDelete={onDelete}
-    />
+    <RoutineEditorContext.Provider value={value}>
+      <EditorLayout
+        routine={routine}
+        dirty={dirty}
+        // data changes
+        onNameChange={handleNameChange}
+        onStepsChange={handleStepsChange}
+        // optional actions
+        showOptionalActions={showOptionalActions}
+        enableRun={enableRun}
+        onDelete={onDelete}
+      />
+    </RoutineEditorContext.Provider>
   );
 }
 
 export default RoutineEditor;
+export { RoutineEditorContext };

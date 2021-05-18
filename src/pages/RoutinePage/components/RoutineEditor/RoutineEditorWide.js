@@ -14,8 +14,6 @@ function RoutineEditorWide({
   // data changes
   onNameChange,
   onStepsChange,
-  onImport,
-
   // optional actions
   showOptionalActions = false,
   enableRun = false,
@@ -24,11 +22,7 @@ function RoutineEditorWide({
   return (
     <Box height="100%" display="flex" flexDirection="column">
       <Box flexShrink={1}>
-        <BraccioAppBar
-          extraButtons={
-            <RoutineImportExportButton routine={routine} onImport={onImport} />
-          }
-        />
+        <BraccioAppBar extraButtons={<RoutineImportExportButton />} />
       </Box>
       <Box flexGrow={1}>
         <Grid container style={{ height: '100%' }}>

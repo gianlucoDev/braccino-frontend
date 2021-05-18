@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -12,6 +12,7 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 
 import AppBarIconButton from 'components/AppBarIconButton';
+import { RoutineEditorContext } from './RoutineEditor';
 
 function downloadJson(fileName, json) {
   const dataStr =
@@ -31,7 +32,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function RoutineImportExportButton({ routine, onImport }) {
+function RoutineImportExportButton() {
+  const { routine, setRoutine } = useContext(RoutineEditorContext);
+
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const fileInput = useRef(null);
@@ -44,7 +47,15 @@ function RoutineImportExportButton({ routine, onImport }) {
     setOpen(false);
   };
 
-  const handleImport = () => {
+  const handleImport = (importedRoutine) => {
+    setRoutine({
+      ...importedRoutine,
+      // ensure current ID is no overwritten by imported data
+      id: routine.id,
+    });
+  };
+
+  const handleImportButtonClick = () => {
     fileInput.current.click();
   };
 
@@ -56,7 +67,7 @@ function RoutineImportExportButton({ routine, onImport }) {
     reader.onload = (event) => {
       const text = event.target.result;
       const routineJson = JSON.parse(text);
-      onImport(routineJson);
+      handleImport(routineJson);
     };
     reader.readAsText(file);
 
@@ -103,7 +114,7 @@ function RoutineImportExportButton({ routine, onImport }) {
             variant="outlined"
             className={classes.button}
             startIcon={<CloudUploadIcon />}
-            onClick={handleImport}
+            onClick={handleImportButtonClick}
           >
             Importa
           </Button>

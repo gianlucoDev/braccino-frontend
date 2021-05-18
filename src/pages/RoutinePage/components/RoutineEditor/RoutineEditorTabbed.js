@@ -18,7 +18,6 @@ function RoutineEditorTabbed({
   // data changes
   onNameChange,
   onStepsChange,
-  onImport,
 
   // optional actions
   showOptionalActions = false,
@@ -34,11 +33,7 @@ function RoutineEditorTabbed({
   return (
     <Box height="100%" display="flex" flexDirection="column">
       <Box flexShrink={1}>
-        <BraccioAppBar
-          extraButtons={
-            <RoutineImportExportButton routine={routine} onImport={onImport} />
-          }
-        >
+        <BraccioAppBar extraButtons={<RoutineImportExportButton />}>
           <Tabs
             variant="fullWidth"
             value={selectedTab}
