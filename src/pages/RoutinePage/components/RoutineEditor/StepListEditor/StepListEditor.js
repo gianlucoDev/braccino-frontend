@@ -1,3 +1,5 @@
+import { useContext } from 'react';
+
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
@@ -7,6 +9,7 @@ import { DEFAULT_JOINT_POSITIONS } from 'api/joints';
 
 import StepListEditorWide from './StepListEditorWide';
 import StepListEditorMobile from './StepListEditorMobile';
+import { RoutineEditorContext } from '../RoutineEditor';
 
 const defaultStep = {
   delay: 1000,
@@ -14,14 +17,24 @@ const defaultStep = {
   position: DEFAULT_JOINT_POSITIONS,
 };
 
-function StepListEditor({ steps, onChange }) {
+function StepListEditor() {
   const theme = useTheme();
   const sm = useMediaQuery(theme.breakpoints.up('sm'));
 
+  const { routine, setRoutine } = useContext(RoutineEditorContext);
+  const steps = routine.steps || [];
+
   const [selectedStep, selectedIndex, setSelectedStep] = useArrayItemSelection(
-    steps || [],
+    steps,
     0
   );
+
+  const setSteps = (steps) => {
+    setRoutine({
+      ...routine,
+      steps,
+    });
+  };
 
   const handleStepSelect = (index) => {
     setSelectedStep(index);
@@ -32,7 +45,7 @@ function StepListEditor({ steps, onChange }) {
     const newStep = lastStep || { ...defaultStep };
     const newSteps = [...steps, newStep];
 
-    onChange(newSteps);
+    setSteps(newSteps);
     // select the last step
     setSelectedStep(newSteps.length - 1);
   };
@@ -41,14 +54,14 @@ function StepListEditor({ steps, onChange }) {
     const newSteps = [...steps];
     newSteps[selectedIndex] = newStep;
 
-    onChange(newSteps);
+    setSteps(newSteps);
   };
 
   const handleStepDelete = (index) => {
     const newSteps = [...steps];
     newSteps.splice(index, 1);
 
-    onChange(newSteps);
+    setSteps(newSteps);
   };
 
   const EditorLayout = sm ? StepListEditorWide : StepListEditorMobile;

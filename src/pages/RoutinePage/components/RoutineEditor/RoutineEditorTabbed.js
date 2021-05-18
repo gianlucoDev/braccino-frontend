@@ -17,7 +17,6 @@ function RoutineEditorTabbed({
 
   // data changes
   onNameChange,
-  onStepsChange,
 
   // optional actions
   showOptionalActions = false,
@@ -65,9 +64,7 @@ function RoutineEditorTabbed({
           </Box>
         )}
 
-        {selectedTab === 1 && (
-          <StepListEditor steps={routine.steps} onChange={onStepsChange} />
-        )}
+        {selectedTab === 1 && <StepListEditor />}
       </Box>
     </Box>
   );

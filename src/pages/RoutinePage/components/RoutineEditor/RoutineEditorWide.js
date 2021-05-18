@@ -13,7 +13,7 @@ function RoutineEditorWide({
 
   // data changes
   onNameChange,
-  onStepsChange,
+
   // optional actions
   showOptionalActions = false,
   enableRun = false,
@@ -43,7 +43,7 @@ function RoutineEditorWide({
           </Grid>
 
           <Grid item xs={9}>
-            <StepListEditor steps={routine.steps} onChange={onStepsChange} />
+            <StepListEditor />
           </Grid>
         </Grid>
       </Box>

@@ -28,13 +28,6 @@ function RoutineEditor({
     });
   };
 
-  const handleStepsChange = (steps) => {
-    onChange({
-      ...routine,
-      steps,
-    });
-  };
-
   const EditorLayout = md ? RoutineEditorWide : RoutineEditorTabbed;
 
   const value = { routine, setRoutine: onChange };
@@ -45,7 +38,6 @@ function RoutineEditor({
         dirty={dirty}
         // data changes
         onNameChange={handleNameChange}
-        onStepsChange={handleStepsChange}
         // optional actions
         showOptionalActions={showOptionalActions}
         enableRun={enableRun}
