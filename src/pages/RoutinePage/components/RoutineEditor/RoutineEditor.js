@@ -12,35 +12,21 @@ function RoutineEditor({
   routine,
   onChange,
   dirty = false,
+  isNew = false,
 
   // optional actions
-  showOptionalActions = false,
-  enableRun = false,
   onDelete,
 }) {
   const theme = useTheme();
   const md = useMediaQuery(theme.breakpoints.up('md'));
 
-  const handleNameChange = (name) => {
-    onChange({
-      ...routine,
-      name,
-    });
-  };
-
   const EditorLayout = md ? RoutineEditorWide : RoutineEditorTabbed;
 
-  const value = { routine, setRoutine: onChange };
+  const value = { routine, setRoutine: onChange, dirty, isNew };
   return (
     <RoutineEditorContext.Provider value={value}>
       <EditorLayout
-        routine={routine}
-        dirty={dirty}
-        // data changes
-        onNameChange={handleNameChange}
         // optional actions
-        showOptionalActions={showOptionalActions}
-        enableRun={enableRun}
         onDelete={onDelete}
       />
     </RoutineEditorContext.Provider>

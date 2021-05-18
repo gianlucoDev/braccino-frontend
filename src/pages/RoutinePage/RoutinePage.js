@@ -59,9 +59,8 @@ function RoutinePage({ createNew = false, id }) {
         routine={state}
         onChange={setState}
         dirty={dirty}
+        isNew={createNew}
         // optional actions
-        showOptionalActions={!createNew}
-        enableRun={!dirty}
         onDelete={handleDelete}
       />
 

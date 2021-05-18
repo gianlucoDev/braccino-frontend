@@ -8,15 +8,7 @@ import RoutineEditorControls from './RoutineEditorControls';
 import StepListEditor from './StepListEditor/StepListEditor';
 
 function RoutineEditorWide({
-  routine,
-  dirty = false,
-
-  // data changes
-  onNameChange,
-
   // optional actions
-  showOptionalActions = false,
-  enableRun = false,
   onDelete,
 }) {
   return (
@@ -30,13 +22,7 @@ function RoutineEditorWide({
           <Grid item xs={3}>
             <Box padding={2}>
               <RoutineEditorControls
-                routine={routine}
-                dirty={dirty}
-                // name text field
-                onNameChange={onNameChange}
                 // optional actions
-                showOptionalActions={showOptionalActions}
-                enableRun={enableRun}
                 onDelete={onDelete}
               />
             </Box>

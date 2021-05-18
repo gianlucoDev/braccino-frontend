@@ -1,5 +1,6 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { useContext } from 'react';
 
+import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -7,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 
 import DeleteIcon from '@material-ui/icons/Delete';
 
+import { RoutineEditorContext } from './RoutineEditor';
 import RoutineEditorRunControls from './RoutineEditorRunControls';
 
 const useStyles = makeStyles((theme) => ({
@@ -19,19 +21,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function RoutineEditorControls({
-  routine,
-  dirty = false,
-
-  // name text field
-  onNameChange,
-
   // optional actions
-  showOptionalActions = false,
-  enableRun = false,
   onDelete,
 }) {
   const classes = useStyles();
+
+  const { routine, dirty, isNew, setRoutine } = useContext(RoutineEditorContext);
   const nameError = dirty && !routine.name;
+
+  const handleNameChange = (name) => {
+    setRoutine({
+      ...routine,
+      name,
+    });
+  };
 
   return (
     <>
@@ -44,11 +47,11 @@ function RoutineEditorControls({
         value={routine.name}
         error={nameError}
         helperText={nameError ? 'Nome richisto' : undefined}
-        onChange={(e) => onNameChange(e.target.value)}
+        onChange={(e) => handleNameChange(e.target.value)}
       />
 
       {/* actions */}
-      {showOptionalActions && (
+      {!isNew && (
         <>
           <Typography variant="h6">Cancella routine</Typography>
           <Box display="flex">
@@ -63,7 +66,7 @@ function RoutineEditorControls({
             </Button>
           </Box>
 
-          <RoutineEditorRunControls routine={routine} enabled={enableRun} />
+          <RoutineEditorRunControls routine={routine} enabled={!dirty} />
         </>
       )}
     </>

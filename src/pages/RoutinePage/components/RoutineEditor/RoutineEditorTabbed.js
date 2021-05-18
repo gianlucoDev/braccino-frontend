@@ -12,15 +12,7 @@ import RoutineEditorControls from './RoutineEditorControls';
 import StepListEditor from './StepListEditor/StepListEditor';
 
 function RoutineEditorTabbed({
-  routine,
-  dirty = false,
-
-  // data changes
-  onNameChange,
-
   // optional actions
-  showOptionalActions = false,
-  enableRun = false,
   onDelete,
 }) {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -52,13 +44,7 @@ function RoutineEditorTabbed({
             </Typography>
 
             <RoutineEditorControls
-              routine={routine}
-              dirty={dirty}
-              // name text field
-              onNameChange={onNameChange}
               // optional actions
-              showOptionalActions={showOptionalActions}
-              enableRun={enableRun}
               onDelete={onDelete}
             />
           </Box>
