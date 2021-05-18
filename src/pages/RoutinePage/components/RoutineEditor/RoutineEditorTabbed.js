@@ -33,7 +33,9 @@ function RoutineEditorTabbed({
   return (
     <Box height="100%" display="flex" flexDirection="column">
       <Box flexShrink={1}>
-        <BraccioAppBar extraButtons={<RoutineImportExportButton />}>
+        <BraccioAppBar
+          extraButtons={<RoutineImportExportButton routine={routine} />}
+        >
           <Tabs
             variant="fullWidth"
             value={selectedTab}

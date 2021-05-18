@@ -13,13 +13,25 @@ import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 
 import AppBarIconButton from 'components/AppBarIconButton';
 
+function downloadJson(fileName, json) {
+  const dataStr =
+    'data:text/json;charset=utf-8,' +
+    encodeURIComponent(JSON.stringify(json, null, 2));
+  const downloadAnchorNode = document.createElement('a');
+  downloadAnchorNode.setAttribute('href', dataStr);
+  downloadAnchorNode.setAttribute('download', fileName);
+  document.body.appendChild(downloadAnchorNode); // required for firefox
+  downloadAnchorNode.click();
+  downloadAnchorNode.remove();
+}
+
 const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(1, 0),
   },
 }));
 
-function RoutineImportExportButton() {
+function RoutineImportExportButton({ routine }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
 
@@ -28,6 +40,17 @@ function RoutineImportExportButton() {
   };
 
   const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleImport = () => {
+    setOpen(false);
+  };
+
+  const handleExport = () => {
+    // copy all properties from routine into data, except for the id property
+    const { id, ...data } = routine;
+    downloadJson(routine.name + '.json', data);
     setOpen(false);
   };
 
@@ -59,7 +82,7 @@ function RoutineImportExportButton() {
             variant="outlined"
             className={classes.button}
             startIcon={<CloudUploadIcon />}
-            onClick={handleClose}
+            onClick={handleImport}
           >
             Importa
           </Button>
@@ -68,7 +91,7 @@ function RoutineImportExportButton() {
             variant="outlined"
             className={classes.button}
             startIcon={<CloudDownloadIcon />}
-            onClick={handleClose}
+            onClick={handleExport}
           >
             Esporta
           </Button>

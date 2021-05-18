@@ -23,7 +23,9 @@ function RoutineEditorWide({
   return (
     <Box height="100%" display="flex" flexDirection="column">
       <Box flexShrink={1}>
-        <BraccioAppBar extraButtons={<RoutineImportExportButton />} />
+        <BraccioAppBar
+          extraButtons={<RoutineImportExportButton routine={routine} />}
+        />
       </Box>
       <Box flexGrow={1}>
         <Grid container style={{ height: '100%' }}>
