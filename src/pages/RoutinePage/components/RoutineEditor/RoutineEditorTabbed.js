@@ -5,11 +5,9 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
-import ImportExportIcon from '@material-ui/icons/ImportExport';
-
 import BraccioAppBar from 'components/BraccioAppBar';
-import AppBarIconButton from 'components/AppBarIconButton';
 
+import RoutineImportExportButton from './RoutineImportExportButton';
 import RoutineEditorControls from './RoutineEditorControls';
 import StepListEditor from './StepListEditor/StepListEditor';
 
@@ -35,16 +33,7 @@ function RoutineEditorTabbed({
   return (
     <Box height="100%" display="flex" flexDirection="column">
       <Box flexShrink={1}>
-        <BraccioAppBar
-          extraButtons={
-            <AppBarIconButton
-              aria-label="importa o esporta routine"
-              onClick={() => alert('non ancora implementato')}
-            >
-              <ImportExportIcon />
-            </AppBarIconButton>
-          }
-        >
+        <BraccioAppBar extraButtons={<RoutineImportExportButton />}>
           <Tabs
             variant="fullWidth"
             value={selectedTab}
