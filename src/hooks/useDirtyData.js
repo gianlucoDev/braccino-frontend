@@ -25,7 +25,7 @@ function useDirtyData(initial) {
 
     // if the initial data is changed
     // reset() will be re-defined so this will trigger
-  }, [reset]);
+  }, [initial, reset]);
 
   return [data, setState, isDirty, reset];
 }
