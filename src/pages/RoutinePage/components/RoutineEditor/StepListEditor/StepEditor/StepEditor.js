@@ -3,6 +3,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
 import StepPositionSliders from 'components/StepPositionSliders/StepPositionSliders';
+import LabelSliderNumberCombo from 'components/StepPositionSliders/LabelSliderNumberCombo';
 import LabelNumberCombo from './LabelNumberCombo';
 
 function StepEditor({ step, onChange }) {
@@ -27,7 +28,7 @@ function StepEditor({ step, onChange }) {
           onChange={handleChange('delay')}
         />
 
-        <LabelNumberCombo
+        <LabelSliderNumberCombo
           label="Speed"
           min={10}
           max={30}
