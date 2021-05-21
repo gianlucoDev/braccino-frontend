@@ -32,7 +32,6 @@ const Transition = forwardRef(function Transition(props, ref) {
 function StepListEditorMobile() {
   const classes = useStyles();
 
-  // FIXME: move state up so it can be accessed through context
   const { stepEditorModalOpen, closeStepEditor } =
     useContext(RoutineContext);
 
