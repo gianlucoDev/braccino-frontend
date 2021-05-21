@@ -32,8 +32,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 function StepListEditorMobile() {
   const classes = useStyles();
 
-  const { stepEditorModalOpen, closeStepEditor } =
-    useContext(RoutineContext);
+  const { selectedStep, closeStepEditor } = useContext(RoutineContext);
 
   return (
     <>
@@ -41,7 +40,7 @@ function StepListEditorMobile() {
 
       <Dialog
         fullScreen
-        open={stepEditorModalOpen}
+        open={!!selectedStep}
         onClose={closeStepEditor}
         TransitionComponent={Transition}
       >
@@ -62,7 +61,8 @@ function StepListEditorMobile() {
         </AppBar>
 
         <Box padding={2}>
-          <StepEditor />
+          {/* HACK: avoid rendering if there is no selected step or it will crash */}
+          {!!selectedStep && <StepEditor />}
         </Box>
       </Dialog>
     </>

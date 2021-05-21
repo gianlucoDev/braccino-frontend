@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useReducer } from 'react';
 import { useHistory } from 'react-router-dom';
 import useSWR, { mutate } from 'swr';
 
@@ -10,16 +10,80 @@ import {
   updateRoutine,
   deleteRoutine,
 } from 'api/routines';
-import useDirtyData from 'hooks/useDirtyData';
-import useArrayItemSelection from 'hooks/useArrayItemSelection';
 
 import RoutineEditor from './components/RoutineEditor/RoutineEditor';
 import SaveCancelFabs from './components/SaveCancelFabs';
 
 const RoutineContext = createContext();
 
+function reducer(state, action) {
+  const { type, ...args } = action;
+
+  switch (type) {
+    case 'swr-data': {
+      const { data, error } = args;
+      return {
+        error,
+        initial: data,
+        routine: data,
+        dirty: false,
+        selectedStepIndex: null,
+      };
+    }
+
+    case 'reset': {
+      return { ...state, routine: state.initial };
+    }
+
+    case 'step-select': {
+      const { index } = args;
+      // TODO: check bounds
+      return { ...state, selectedStepIndex: index };
+    }
+
+    case 'step-deselect': {
+      return { ...state, selectedStepIndex: null };
+    }
+
+    // this action is needed while i migrate all the components to
+    // use the dispather instead of callbacks
+    // TODO: remove
+    case 'mutate-routine': {
+      const { routine } = args;
+      return { ...state, routine };
+    }
+
+    default: {
+      console.error('Unknow action', action);
+      return state;
+    }
+  }
+}
+
+function useRoutineState(id, isNew) {
+  const { data, error } = useSWR(isNew ? null : `/routines/${id}`);
+  const initial = isNew ? DEFAULT_ROUTINE : data;
+
+  const [state, dispatch] = useReducer(reducer, {
+    error,
+    initial,
+    routine: initial,
+    dirty: false,
+    selectedStepIndex: null,
+  });
+
+  useEffect(() => {
+    // overwrite current state whenever new data is fetched
+    dispatch({ type: 'swr-data', data, error });
+  }, [data, error]);
+
+  return [state, dispatch];
+}
+
 function RoutinePage({ createNew = false, id }) {
   const history = useHistory();
+  const [state, dispatch] = useRoutineState(id, createNew);
+  const { error, dirty, routine, selectedStepIndex } = state;
 
   // action handling
   const handleSubmitNew = async () => {
@@ -39,34 +103,26 @@ function RoutinePage({ createNew = false, id }) {
     mutate(`/routines/${id}`);
   };
 
-  const handleReset = () => {
-    reset();
-  };
-
   const handleDelete = async () => {
     await deleteRoutine(id);
     history.push('/');
   };
 
-  // state
+  const handleReset = () => {
+    dispatch({ type: 'reset' });
+  };
 
-  const { data, error } = useSWR(createNew ? null : `/routines/${id}`);
-  const [routine, setRoutine, dirty, reset] = useDirtyData(
-    createNew ? DEFAULT_ROUTINE : data
-  );
-  const [selectedStep, selectedStepIndex, setSelectedStep] =
-    useArrayItemSelection(!!routine ? routine.steps : [], 0);
-
-  // toggles the step editor in mobile layout
-  const [stepEditorModalOpen, setStepEditorModalOpen] = useState(false);
-
-  const editStep = (stepIndex) => {
-    setStepEditorModalOpen(true);
-    setSelectedStep(stepIndex);
+  // TODO: call dispatcher inside components
+  const editStep = (index) => {
+    dispatch({ type: 'step-select', index });
   };
 
   const closeStepEditor = () => {
-    setStepEditorModalOpen(false);
+    dispatch({ type: 'step-deselect' });
+  };
+
+  const setRoutine = (routine) => {
+    dispatch({ type: 'mutate-routine', routine });
   };
 
   // utility function to avoid copying this snippet in all components
@@ -77,6 +133,22 @@ function RoutinePage({ createNew = false, id }) {
     });
   };
 
+  if (error) {
+    return <Typography variant="h3">Error.</Typography>;
+  }
+
+  if (!routine) {
+    return <Typography variant="h3">Loading...</Typography>;
+  }
+
+  // TODO: create new context, pass down state and dispatch instead of this mess
+  const selectedStep =
+    selectedStepIndex !== null
+      ? selectedStepIndex >= 0 && selectedStepIndex < routine.steps.length
+        ? routine.steps[selectedStepIndex]
+        : null
+      : null;
+
   const contextValue = {
     // routine state
     routine,
@@ -86,7 +158,6 @@ function RoutinePage({ createNew = false, id }) {
     // editor state
     dirty,
     isNew: createNew,
-    stepEditorModalOpen,
 
     // callbacks
     setRoutine,
@@ -95,21 +166,9 @@ function RoutinePage({ createNew = false, id }) {
     closeStepEditor,
   };
 
-  if (error) {
-    return <Typography variant="h3">Error.</Typography>;
-  }
-
-  if (!routine) {
-    return <Typography variant="h3">Loading...</Typography>;
-  }
-
   return (
     <RoutineContext.Provider value={contextValue}>
       <RoutineEditor
-        routine={routine}
-        onChange={setRoutine}
-        dirty={dirty}
-        isNew={createNew}
         // optional actions
         onDelete={handleDelete}
       />
