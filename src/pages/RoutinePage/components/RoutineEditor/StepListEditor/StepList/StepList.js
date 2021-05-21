@@ -41,9 +41,9 @@ function StepList() {
     editStep(newSteps.length - 1);
   };
 
-  const handleStepDelete = () => {
+  const handleStepDelete = (i) => {
     const newSteps = [...steps];
-    newSteps.splice(selectedStepIndex, 1);
+    newSteps.splice(i, 1);
 
     setSteps(newSteps);
   };
