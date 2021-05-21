@@ -1,5 +1,7 @@
 import { BASE_URL } from './fetcher';
 
+export const DEFAULT_ROUTINE = { name: '', steps: [] };
+
 export async function createRoutine(routine) {
   const res = await fetch(BASE_URL + `/routines`, {
     method: 'POST',

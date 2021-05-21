@@ -3,13 +3,16 @@ import useSWR, { mutate } from 'swr';
 
 import Typography from '@material-ui/core/Typography';
 
-import { createRoutine, updateRoutine, deleteRoutine } from 'api/routines';
+import {
+  DEFAULT_ROUTINE,
+  createRoutine,
+  updateRoutine,
+  deleteRoutine,
+} from 'api/routines';
 import useDirtyData from 'hooks/useDirtyData';
 
 import RoutineEditor from './components/RoutineEditor/RoutineEditor';
 import SaveCancelFabs from './components/SaveCancelFabs';
-
-const DEFAULT_ROUTINE = { name: '', steps: [] };
 
 function RoutinePage({ createNew = false, id }) {
   const history = useHistory();
