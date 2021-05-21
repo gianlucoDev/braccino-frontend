@@ -27,10 +27,6 @@ function StepList() {
     useContext(RoutineEditorContext);
   const { steps } = routine;
 
-  const handleStepSelect = (i) => {
-    editStep(i);
-  };
-
   const handleStepCreate = () => {
     const lastStep = steps.length >= 1 ? steps[steps.length - 1] : null;
     const newStep = lastStep || { ...defaultStep };
@@ -41,11 +37,15 @@ function StepList() {
     editStep(newSteps.length - 1);
   };
 
-  const handleStepDelete = (i) => {
+  const handleStepDelete = (i) => () => {
     const newSteps = [...steps];
     newSteps.splice(i, 1);
 
     setSteps(newSteps);
+  };
+
+  const handleStepEdit = (i) => () => {
+    editStep(i);
   };
 
   return (
@@ -71,8 +71,8 @@ function StepList() {
             index={i}
             step={step}
             active={i === selectedStepIndex}
-            onDelete={() => handleStepDelete(i)}
-            onSelect={() => handleStepSelect(i)}
+            onDelete={handleStepDelete(i)}
+            onSelect={handleStepEdit(i)}
           />
         ))}
       </List>
