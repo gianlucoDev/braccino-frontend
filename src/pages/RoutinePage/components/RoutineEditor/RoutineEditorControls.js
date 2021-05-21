@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import { RoutineEditorContext } from './RoutineEditor';
+import { RoutineContext } from 'pages/RoutinePage/RoutinePage';
 import RoutineEditorRunControls from './RoutineEditorRunControls';
 
 const useStyles = makeStyles((theme) => ({
@@ -26,7 +26,7 @@ function RoutineEditorControls({
 }) {
   const classes = useStyles();
 
-  const { routine, dirty, isNew, setRoutine } = useContext(RoutineEditorContext);
+  const { routine, dirty, isNew, setRoutine } = useContext(RoutineContext);
   const nameError = dirty && !routine.name;
 
   const handleNameChange = (name) => {

@@ -11,7 +11,7 @@ import AddIcon from '@material-ui/icons/Add';
 
 import { defaultStep } from 'api/steps';
 
-import { RoutineEditorContext } from '../../RoutineEditor';
+import { RoutineContext } from 'pages/RoutinePage/RoutinePage';
 import StepListItem from './StepListItem';
 
 const useStyles = makeStyles((theme) => ({
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 function StepList() {
   const classes = useStyles();
   const { routine, selectedStepIndex, setSteps, editStep } =
-    useContext(RoutineEditorContext);
+    useContext(RoutineContext);
   const { steps } = routine;
 
   const handleStepCreate = () => {

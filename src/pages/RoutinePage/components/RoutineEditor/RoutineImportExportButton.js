@@ -12,7 +12,7 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 
 import AppBarIconButton from 'components/AppBarIconButton';
-import { RoutineEditorContext } from './RoutineEditor';
+import { RoutineContext } from 'pages/RoutinePage/RoutinePage';
 
 function downloadJson(fileName, json) {
   const dataStr =
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function RoutineImportExportButton() {
-  const { routine, setRoutine } = useContext(RoutineEditorContext);
+  const { routine, setRoutine } = useContext(RoutineContext);
 
   const classes = useStyles();
   const [open, setOpen] = useState(false);

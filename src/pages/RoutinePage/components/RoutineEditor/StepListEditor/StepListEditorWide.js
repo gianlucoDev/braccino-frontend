@@ -6,12 +6,12 @@ import ListIcon from '@material-ui/icons/ListAlt';
 
 import BigMessage from 'components/BigMessage';
 
-import { RoutineEditorContext } from '../RoutineEditor';
+import { RoutineContext } from 'pages/RoutinePage/RoutinePage';
 import StepList from './StepList/StepList';
 import StepEditor from './StepEditor/StepEditor';
 
 function StepListEditorWide() {
-  const { routine, selectedStep } = useContext(RoutineEditorContext);
+  const { routine, selectedStep } = useContext(RoutineContext);
 
   return (
     <Box padding={2}>

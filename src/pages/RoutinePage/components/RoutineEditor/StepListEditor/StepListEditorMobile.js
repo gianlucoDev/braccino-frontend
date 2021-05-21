@@ -11,9 +11,9 @@ import Typography from '@material-ui/core/Typography';
 
 import CloseIcon from '@material-ui/icons/Close';
 
+import { RoutineContext } from 'pages/RoutinePage/RoutinePage';
 import StepList from './StepList/StepList';
 import StepEditor from './StepEditor/StepEditor';
-import { RoutineEditorContext } from '../RoutineEditor';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -34,7 +34,7 @@ function StepListEditorMobile() {
 
   // FIXME: move state up so it can be accessed through context
   const { stepEditorModalOpen, closeStepEditor } =
-    useContext(RoutineEditorContext);
+    useContext(RoutineContext);
 
   return (
     <>

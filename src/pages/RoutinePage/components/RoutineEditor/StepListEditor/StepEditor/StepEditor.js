@@ -6,13 +6,13 @@ import Typography from '@material-ui/core/Typography';
 
 import StepPositionSliders from 'components/StepPositionSliders/StepPositionSliders';
 import LabelSliderNumberCombo from 'components/StepPositionSliders/LabelSliderNumberCombo';
+import { RoutineContext } from 'pages/RoutinePage/RoutinePage';
 
-import { RoutineEditorContext } from '../../RoutineEditor';
 import LabelNumberCombo from './LabelNumberCombo';
 
 function StepEditor() {
   const { routine, selectedStep, selectedStepIndex, setSteps } =
-    useContext(RoutineEditorContext);
+    useContext(RoutineContext);
 
   const handleStepChange = (key) => (value) => {
     const newStep = {

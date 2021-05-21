@@ -1,3 +1,4 @@
+import { createContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import useSWR, { mutate } from 'swr';
 
@@ -10,30 +11,29 @@ import {
   deleteRoutine,
 } from 'api/routines';
 import useDirtyData from 'hooks/useDirtyData';
+import useArrayItemSelection from 'hooks/useArrayItemSelection';
 
 import RoutineEditor from './components/RoutineEditor/RoutineEditor';
 import SaveCancelFabs from './components/SaveCancelFabs';
 
+const RoutineContext = createContext();
+
 function RoutinePage({ createNew = false, id }) {
   const history = useHistory();
 
-  const { data, error } = useSWR(createNew ? null : `/routines/${id}`);
-  const [state, setState, dirty, reset] = useDirtyData(
-    createNew ? DEFAULT_ROUTINE : data
-  );
-
+  // action handling
   const handleSubmitNew = async () => {
-    const created = await createRoutine(state);
+    const created = await createRoutine(routine);
 
     // preload the data so the next page loads instantly
-    mutate(`/routines/${created.id}`, state, false);
+    mutate(`/routines/${created.id}`, routine, false);
 
     // navigate to newly created routine
     history.push(`/routines/${created.id}`);
   };
 
   const handleSubmitEdit = async () => {
-    await updateRoutine(id, state);
+    await updateRoutine(id, routine);
 
     // trigger re-validation
     mutate(`/routines/${id}`);
@@ -48,19 +48,66 @@ function RoutinePage({ createNew = false, id }) {
     history.push('/');
   };
 
+  // state
+
+  const { data, error } = useSWR(createNew ? null : `/routines/${id}`);
+  const [routine, setRoutine, dirty, reset] = useDirtyData(
+    createNew ? DEFAULT_ROUTINE : data
+  );
+  const [selectedStep, selectedStepIndex, setSelectedStep] =
+    useArrayItemSelection(!!routine ? routine.steps : [], 0);
+
+  // toggles the step editor in mobile layout
+  const [stepEditorModalOpen, setStepEditorModalOpen] = useState(false);
+
+  const editStep = (stepIndex) => {
+    setStepEditorModalOpen(true);
+    setSelectedStep(stepIndex);
+  };
+
+  const closeStepEditor = () => {
+    setStepEditorModalOpen(false);
+  };
+
+  // utility function to avoid copying this snippet in all components
+  const setSteps = (steps) => {
+    setRoutine({
+      ...routine,
+      steps,
+    });
+  };
+
+  const contextValue = {
+    // routine state
+    routine,
+    selectedStep,
+    selectedStepIndex,
+
+    // editor state
+    dirty,
+    isNew: createNew,
+    stepEditorModalOpen,
+
+    // callbacks
+    setRoutine,
+    setSteps,
+    editStep,
+    closeStepEditor,
+  };
+
   if (error) {
     return <Typography variant="h3">Error.</Typography>;
   }
 
-  if (!state) {
+  if (!routine) {
     return <Typography variant="h3">Loading...</Typography>;
   }
 
   return (
-    <>
+    <RoutineContext.Provider value={contextValue}>
       <RoutineEditor
-        routine={state}
-        onChange={setState}
+        routine={routine}
+        onChange={setRoutine}
         dirty={dirty}
         isNew={createNew}
         // optional actions
@@ -68,13 +115,14 @@ function RoutinePage({ createNew = false, id }) {
       />
 
       <SaveCancelFabs
-        disableSubmit={!dirty || !state.name}
+        disableSubmit={!dirty || !routine.name}
         disableCancel={!dirty}
         onSubmit={createNew ? handleSubmitNew : handleSubmitEdit}
         onCancel={handleReset}
       />
-    </>
+    </RoutineContext.Provider>
   );
 }
 
 export default RoutinePage;
+export { RoutineContext };
