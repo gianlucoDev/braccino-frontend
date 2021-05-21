@@ -3,8 +3,6 @@ import { useContext } from 'react';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-import useArrayItemSelection from 'hooks/useArrayItemSelection';
-
 import { DEFAULT_JOINT_POSITIONS } from 'api/joints';
 
 import StepListEditorWide from './StepListEditorWide';
@@ -21,13 +19,9 @@ function StepListEditor() {
   const theme = useTheme();
   const sm = useMediaQuery(theme.breakpoints.up('sm'));
 
-  const { routine, setRoutine } = useContext(RoutineEditorContext);
-  const steps = routine.steps || [];
-
-  const [selectedStep, selectedIndex, setSelectedStep] = useArrayItemSelection(
-    steps,
-    0
-  );
+  const { routine, selectedStep, selectedIndex, setRoutine, setSelectedStep } =
+    useContext(RoutineEditorContext);
+  const steps = routine.steps;
 
   const setSteps = (steps) => {
     setRoutine({
