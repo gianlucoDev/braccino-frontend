@@ -1,17 +1,29 @@
+import { useContext } from 'react';
+
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
 import StepPositionSliders from 'components/StepPositionSliders/StepPositionSliders';
 import LabelSliderNumberCombo from 'components/StepPositionSliders/LabelSliderNumberCombo';
+
+import { RoutineEditorContext } from '../../RoutineEditor';
 import LabelNumberCombo from './LabelNumberCombo';
 
-function StepEditor({ step, onChange }) {
-  const handleChange = (key) => (value) => {
-    onChange({
-      ...step,
+function StepEditor() {
+  const { routine, selectedStep, selectedStepIndex, setSteps } =
+    useContext(RoutineEditorContext);
+
+  const handleStepChange = (key) => (value) => {
+    const newStep = {
+      ...selectedStep,
       [key]: value,
-    });
+    };
+
+    const newSteps = [...routine.steps];
+    newSteps[selectedStepIndex] = newStep;
+
+    setSteps(newSteps);
   };
 
   return (
@@ -24,21 +36,21 @@ function StepEditor({ step, onChange }) {
         <LabelNumberCombo
           label="Delay"
           min={0}
-          value={step['delay']}
-          onChange={handleChange('delay')}
+          value={selectedStep['delay']}
+          onChange={handleStepChange('delay')}
         />
 
         <LabelSliderNumberCombo
           label="Speed"
           min={10}
           max={30}
-          value={step['speed']}
-          onChange={handleChange('speed')}
+          value={selectedStep['speed']}
+          onChange={handleStepChange('speed')}
         />
 
         <StepPositionSliders
-          position={step.position}
-          onChange={handleChange('position')}
+          position={selectedStep.position}
+          onChange={handleStepChange('position')}
         />
       </Box>
     </Paper>

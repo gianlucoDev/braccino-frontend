@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import { createContext, useState } from 'react';
 
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -12,7 +12,7 @@ const RoutineEditorContext = createContext();
 
 function RoutineEditor({
   routine,
-  onChange,
+  onChange: setRoutine,
   dirty = false,
   isNew = false,
 
@@ -26,21 +26,45 @@ function RoutineEditor({
   const EditorLayout = md ? RoutineEditorWide : RoutineEditorTabbed;
 
   // state
-  // const steps = routine.steps || [];
-  const [selectedStep, selectedIndex, setSelectedStep] = useArrayItemSelection(
-    routine.steps,
-    0
-  );
+  const [selectedStep, selectedStepIndex, setSelectedStep] =
+    useArrayItemSelection(routine.steps, 0);
+
+  // toggles the step editor in mobile layout
+  const [stepEditorModalOpen, setStepEditorModalOpen] = useState(false);
+
+  const editStep = (stepIndex) => {
+    setStepEditorModalOpen(true);
+    setSelectedStep(stepIndex);
+  };
+
+  const closeStepEditor = () => {
+    setStepEditorModalOpen(false);
+  };
+
+  // utility function to avoid copying this snippet in all components
+  const setSteps = (steps) => {
+    setRoutine({
+      ...routine,
+      steps,
+    });
+  };
 
   const contextValue = {
+    // routine state
     routine,
+    selectedStep,
+    selectedStepIndex,
+
+    // editor state
     dirty,
     isNew,
-    selectedStep,
-    selectedIndex,
+    stepEditorModalOpen,
 
-    setRoutine: onChange,
-    setSelectedStep,
+    // callbacks
+    setRoutine,
+    setSteps,
+    editStep,
+    closeStepEditor,
   };
 
   return (

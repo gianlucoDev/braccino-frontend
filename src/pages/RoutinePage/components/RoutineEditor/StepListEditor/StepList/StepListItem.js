@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function StepListItem({ index, step, active = false, onDelete, onEdit }) {
+function StepListItem({ index, step, active = false, onDelete, onSelect }) {
   const classes = useStyles();
 
   const StepValue = ({ i, name }) => {
@@ -57,7 +57,7 @@ function StepListItem({ index, step, active = false, onDelete, onEdit }) {
   );
 
   return (
-    <ListItem button alignItems="flex-start" onClick={onEdit} selected={active}>
+    <ListItem button alignItems="flex-start" onClick={onSelect} selected={active}>
       <ListItemAvatar>
         <Avatar variant="rounded" className={active ? classes.active : ''}>
           {index + 1}

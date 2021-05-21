@@ -1,4 +1,4 @@
-import { useState, forwardRef } from 'react';
+import { forwardRef, useContext } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -13,6 +13,7 @@ import CloseIcon from '@material-ui/icons/Close';
 
 import StepList from './StepList/StepList';
 import StepEditor from './StepEditor/StepEditor';
+import { RoutineEditorContext } from '../RoutineEditor';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -28,40 +29,21 @@ const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function StepListEditorMobile({
-  steps,
-  selectedStep,
-  onStepSelect,
-  onNewStep,
-  onStepChange,
-  onStepDelete,
-}) {
+function StepListEditorMobile() {
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleStepSelect = (i) => {
-    setOpen(true);
-    onStepSelect(i);
-  };
+  // FIXME: move state up so it can be accessed through context
+  const { stepEditorModalOpen, closeStepEditor } =
+    useContext(RoutineEditorContext);
 
   return (
     <>
-      <StepList
-        steps={steps}
-        activeItem={null}
-        onDelete={onStepDelete}
-        onEdit={handleStepSelect}
-        onAdd={onNewStep}
-      />
+      <StepList />
 
       <Dialog
         fullScreen
-        open={open}
-        onClose={handleClose}
+        open={stepEditorModalOpen}
+        onClose={closeStepEditor}
         TransitionComponent={Transition}
       >
         <AppBar className={classes.appBar}>
@@ -69,7 +51,7 @@ function StepListEditorMobile({
             <IconButton
               edge="start"
               color="inherit"
-              onClick={handleClose}
+              onClick={closeStepEditor}
               aria-label="chiudi"
             >
               <CloseIcon />
@@ -81,7 +63,7 @@ function StepListEditorMobile({
         </AppBar>
 
         <Box padding={2}>
-          <StepEditor step={selectedStep} onChange={onStepChange} />
+          <StepEditor />
         </Box>
       </Dialog>
     </>

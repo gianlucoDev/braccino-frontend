@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Box from '@material-ui/core/Box';
@@ -7,6 +8,10 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 import AddIcon from '@material-ui/icons/Add';
+
+import { defaultStep } from 'api/steps';
+
+import { RoutineEditorContext } from '../../RoutineEditor';
 import StepListItem from './StepListItem';
 
 const useStyles = makeStyles((theme) => ({
@@ -16,8 +21,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function StepList({ steps, activeItem, onDelete, onEdit, onAdd }) {
+function StepList() {
   const classes = useStyles();
+  const { routine, selectedStepIndex, setSteps, editStep } =
+    useContext(RoutineEditorContext);
+  const { steps } = routine;
+
+  const handleStepSelect = (i) => {
+    editStep(i);
+  };
+
+  const handleStepCreate = () => {
+    const lastStep = steps.length >= 1 ? steps[steps.length - 1] : null;
+    const newStep = lastStep || { ...defaultStep };
+    const newSteps = [...steps, newStep];
+
+    setSteps(newSteps);
+    // select the last step
+    editStep(newSteps.length - 1);
+  };
+
+  const handleStepDelete = () => {
+    const newSteps = [...steps];
+    newSteps.splice(selectedStepIndex, 1);
+
+    setSteps(newSteps);
+  };
 
   return (
     <>
@@ -28,7 +57,7 @@ function StepList({ steps, activeItem, onDelete, onEdit, onAdd }) {
         padding={1}
       >
         <Typography>{steps.length} steps</Typography>
-        <Button onClick={onAdd} startIcon={<AddIcon />}>
+        <Button onClick={handleStepCreate} startIcon={<AddIcon />}>
           Aggiungi step
         </Button>
       </Box>
@@ -41,9 +70,9 @@ function StepList({ steps, activeItem, onDelete, onEdit, onAdd }) {
             key={i}
             index={i}
             step={step}
-            active={i === activeItem}
-            onDelete={() => onDelete(i)}
-            onEdit={() => onEdit(i)}
+            active={i === selectedStepIndex}
+            onDelete={() => handleStepDelete(i)}
+            onSelect={() => handleStepSelect(i)}
           />
         ))}
       </List>

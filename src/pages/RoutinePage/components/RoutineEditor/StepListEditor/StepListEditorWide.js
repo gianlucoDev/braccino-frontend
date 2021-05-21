@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 
@@ -5,35 +6,24 @@ import ListIcon from '@material-ui/icons/ListAlt';
 
 import BigMessage from 'components/BigMessage';
 
+import { RoutineEditorContext } from '../RoutineEditor';
 import StepList from './StepList/StepList';
 import StepEditor from './StepEditor/StepEditor';
 
-function StepListEditorWide({
-  steps,
-  selectedIndex,
-  selectedStep,
-  onStepSelect,
-  onNewStep,
-  onStepChange,
-  onStepDelete,
-}) {
+function StepListEditorWide() {
+  const { routine, selectedStep } = useContext(RoutineEditorContext);
+
   return (
     <Box padding={2}>
       <Grid container>
         <Grid item xs={6}>
-          <StepList
-            steps={steps}
-            activeItem={selectedIndex}
-            onDelete={onStepDelete}
-            onEdit={onStepSelect}
-            onAdd={onNewStep}
-          />
+          <StepList />
         </Grid>
 
         <Grid item xs={6}>
           {selectedStep === null ? (
             <Box height="100%">
-              {steps ? (
+              {routine.steps.length > 0 ? (
                 <BigMessage
                   IconComponent={ListIcon}
                   message="Nessuno step selezionato"
@@ -49,7 +39,7 @@ function StepListEditorWide({
             </Box>
           ) : (
             <Box padding={2}>
-              <StepEditor step={selectedStep} onChange={onStepChange} />
+              <StepEditor />
             </Box>
           )}
         </Grid>
