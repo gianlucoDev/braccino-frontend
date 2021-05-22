@@ -1,5 +1,4 @@
 import { Link as RouterLink } from 'react-router-dom';
-import useSWR from 'swr';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -13,8 +12,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 
-import { deleteRoutine } from '../../../api/routines';
-import BigAction from '../../../components/BigAction';
+import { useRoutineList, deleteRoutine } from 'api/routines';
+import BigAction from 'components/BigAction';
 
 const useStyles = makeStyles((theme) => ({
   card_size: {
@@ -25,13 +24,10 @@ const useStyles = makeStyles((theme) => ({
 
 function RoutineList() {
   const classes = useStyles();
-  const { data, error, mutate } = useSWR('/routines');
+  const { data, error } = useRoutineList();
 
   const handleRoutineDelete = async (id) => {
     await deleteRoutine(id);
-
-    // trigger re-validation
-    mutate();
   };
 
   if (error) {

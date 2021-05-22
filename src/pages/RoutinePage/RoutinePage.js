@@ -1,5 +1,4 @@
 import { createContext, useEffect, useReducer } from 'react';
-import useSWR, { mutate } from 'swr';
 
 import Typography from '@material-ui/core/Typography';
 
@@ -7,6 +6,7 @@ import history from '../../history';
 
 import {
   DEFAULT_ROUTINE,
+  useRoutine,
   createRoutine,
   updateRoutine,
   deleteRoutine,
@@ -52,17 +52,11 @@ function reducer(state, action) {
 
       if (isNew) {
         createRoutine(routine).then((created) => {
-          // preload the data so the next page loads instantly
-          mutate(`/routines/${created.id}`, routine, false);
-
           // navigate to newly created routine
           history.push(`/routines/${created.id}`);
         });
       } else {
-        updateRoutine(routine.id, routine).then(() => {
-          // trigger re-validation
-          mutate(`/routines/${routine.id}`);
-        });
+        updateRoutine(routine.id, routine);
       }
 
       // does not mutate state
@@ -183,7 +177,7 @@ function reducer(state, action) {
 }
 
 function useRoutineState(id, isNew) {
-  const { data, error } = useSWR(isNew ? null : `/routines/${id}`);
+  const { data, error } = useRoutine(isNew ? null : id);
   const initial = isNew ? DEFAULT_ROUTINE : data;
 
   const [state, dispatch] = useReducer(reducer, {
