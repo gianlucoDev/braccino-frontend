@@ -3,6 +3,7 @@ import { ReadyState } from 'react-use-websocket';
 
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import { useBraccio, useBraccioSocket } from 'api/braccio';
@@ -42,41 +43,49 @@ function BraccioPage() {
             {data.name}
           </Typography>
 
-          <Typography variant="h4">Arduino connetion status</Typography>
-          <Typography color="textSecondary">
-            {data.connection_status.code} (
-            {data.connection_status.ok ? 'OK' : 'NOT OK'})
-          </Typography>
+          <Grid container>
+            <Grid item xs={12} md={6}>
+              <Typography variant="h4">Arduino connetion status</Typography>
+              <Typography color="textSecondary">
+                {data.connection_status.code} (
+                {data.connection_status.ok ? 'OK' : 'NOT OK'})
+              </Typography>
 
-          <Typography variant="h4">Serial number</Typography>
-          <Typography color="textSecondary">{data.serial_number}</Typography>
+              <Typography variant="h4">Serial number</Typography>
+              <Typography color="textSecondary">
+                {data.serial_number}
+              </Typography>
 
-          <Typography variant="h4">Current action</Typography>
-          {data.running ? (
-            <Typography color="textSecondary">{data.running.name}</Typography>
-          ) : (
-            <Typography color="textSecondary">
-              Non sta svoglendo nulla
-            </Typography>
-          )}
+              <Typography variant="h4">Current action</Typography>
+              {data.running ? (
+                <Typography color="textSecondary">
+                  {data.running.name}
+                </Typography>
+              ) : (
+                <Typography color="textSecondary">
+                  Non sta svoglendo nulla
+                </Typography>
+              )}
 
-          <Typography variant="h4">WebSocket connection status</Typography>
-          <Typography color="textSecondary">{connectionStatus}</Typography>
+              <Typography variant="h4">WebSocket connection status</Typography>
+              <Typography color="textSecondary">{connectionStatus}</Typography>
+            </Grid>
 
-          {readyState === ReadyState.OPEN && (
-            <>
-              <Box paddingY={2}>
-                <BraccioSpeedEditor speed={speed} onChange={setSpeed} />
-              </Box>
+            {readyState === ReadyState.OPEN && (
+              <Grid item xs={12} md={6}>
+                <Box paddingY={2}>
+                  <BraccioSpeedEditor speed={speed} onChange={setSpeed} />
+                </Box>
 
-              <Box paddingY={2}>
-                <BraccioPositionEditor
-                  position={position}
-                  onChange={setPosition}
-                />
-              </Box>
-            </>
-          )}
+                <Box paddingY={2}>
+                  <BraccioPositionEditor
+                    position={position}
+                    onChange={setPosition}
+                  />
+                </Box>
+              </Grid>
+            )}
+          </Grid>
         </Box>
       </Container>
     </>
