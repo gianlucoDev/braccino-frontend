@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import { RoutineContext } from 'pages/RoutinePage/RoutinePage';
+import { RoutineStateContext } from 'pages/RoutinePage/RoutinePage';
 import RoutineEditorRunControls from './RoutineEditorRunControls';
 
 const useStyles = makeStyles((theme) => ({
@@ -20,20 +20,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function RoutineEditorControls({
-  // optional actions
-  onDelete,
-}) {
+function RoutineEditorControls() {
   const classes = useStyles();
 
-  const { routine, dirty, isNew, setRoutine } = useContext(RoutineContext);
+  const { state, dispatch } = useContext(RoutineStateContext);
+  const { routine, dirty, isNew } = state;
+
   const nameError = dirty && !routine.name;
 
   const handleNameChange = (name) => {
-    setRoutine({
-      ...routine,
-      name,
-    });
+    dispatch({ type: 'routine-rename', name });
+  };
+
+  const handleDelete = (name) => {
+    dispatch({ type: 'routine-delete' });
   };
 
   return (
@@ -60,7 +60,7 @@ function RoutineEditorControls({
               fullWidth
               className={classes.wideButton}
               startIcon={<DeleteIcon />}
-              onClick={onDelete}
+              onClick={handleDelete}
             >
               Elimina routine
             </Button>

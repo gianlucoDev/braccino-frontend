@@ -78,6 +78,19 @@ function reducer(state, action) {
       return state;
     }
 
+    case 'routine-rename': {
+      const { name } = args;
+      return {
+        ...state,
+        dirty: true,
+
+        routine: {
+          ...state.routine,
+          name,
+        },
+      };
+    }
+
     case 'step-select': {
       const { index } = args;
       // TODO: check bounds
@@ -131,11 +144,6 @@ function RoutinePage({ createNew = false, id }) {
   const { error, dirty, routine, selectedStepIndex } = state;
 
   // action handling
-
-  const handleDelete = async () => {
-    dispatch({ type: 'routine-delete' });
-  };
-
   // TODO: call dispatcher inside components
   const editStep = (index) => {
     dispatch({ type: 'step-select', index });
@@ -194,10 +202,7 @@ function RoutinePage({ createNew = false, id }) {
   return (
     <RoutineContext.Provider value={contextValue}>
       <RoutineStateContext.Provider value={value}>
-        <RoutineEditor
-          // optional actions
-          onDelete={handleDelete}
-        />
+        <RoutineEditor />
 
         <SaveCancelFabs />
       </RoutineStateContext.Provider>

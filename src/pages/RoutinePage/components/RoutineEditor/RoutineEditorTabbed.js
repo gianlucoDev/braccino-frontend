@@ -11,10 +11,7 @@ import RoutineImportExportButton from './RoutineImportExportButton';
 import RoutineEditorControls from './RoutineEditorControls';
 import StepListEditor from './StepListEditor/StepListEditor';
 
-function RoutineEditorTabbed({
-  // optional actions
-  onDelete,
-}) {
+function RoutineEditorTabbed() {
   const [selectedTab, setSelectedTab] = useState(0);
 
   const handleTabChange = (event, newValue) => {
@@ -43,10 +40,7 @@ function RoutineEditorTabbed({
               Routine
             </Typography>
 
-            <RoutineEditorControls
-              // optional actions
-              onDelete={onDelete}
-            />
+            <RoutineEditorControls />
           </Box>
         )}
 

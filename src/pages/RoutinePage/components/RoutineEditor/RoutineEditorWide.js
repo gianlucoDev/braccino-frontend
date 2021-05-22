@@ -7,10 +7,7 @@ import RoutineImportExportButton from './RoutineImportExportButton';
 import RoutineEditorControls from './RoutineEditorControls';
 import StepListEditor from './StepListEditor/StepListEditor';
 
-function RoutineEditorWide({
-  // optional actions
-  onDelete,
-}) {
+function RoutineEditorWide() {
   return (
     <Box height="100%" display="flex" flexDirection="column">
       <Box flexShrink={1}>
@@ -21,10 +18,7 @@ function RoutineEditorWide({
           {/* left left column */}
           <Grid item xs={3}>
             <Box padding={2}>
-              <RoutineEditorControls
-                // optional actions
-                onDelete={onDelete}
-              />
+              <RoutineEditorControls />
             </Box>
           </Grid>
 
