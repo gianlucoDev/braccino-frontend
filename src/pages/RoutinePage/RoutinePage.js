@@ -16,9 +16,6 @@ import { DEFAULT_STEP } from 'api/steps';
 import RoutineEditor from './components/RoutineEditor/RoutineEditor';
 import SaveCancelFabs from './components/SaveCancelFabs';
 
-// TODO: delete this context once all components have been migrated to the other context
-const RoutineContext = createContext();
-
 const RoutineStateContext = createContext();
 
 function reducer(state, action) {
@@ -178,18 +175,6 @@ function reducer(state, action) {
       };
     }
 
-    // this action is needed while i migrate all the components to
-    // use the dispather instead of callbacks
-    // TODO: remove
-    case 'mutate-routine': {
-      const { routine } = args;
-      return {
-        ...state,
-        dirty: true,
-        routine,
-      };
-    }
-
     default: {
       console.error('Unknow action', action);
       return state;
@@ -222,21 +207,7 @@ function useRoutineState(id, isNew) {
 
 function RoutinePage({ createNew = false, id }) {
   const [state, dispatch] = useRoutineState(id, createNew);
-  const { error, dirty, routine, selectedStepIndex } = state;
-
-  // action handling
-  // TODO: call dispatcher inside components
-  const setRoutine = (routine) => {
-    dispatch({ type: 'mutate-routine', routine });
-  };
-
-  // utility function to avoid copying this snippet in all components
-  const setSteps = (steps) => {
-    setRoutine({
-      ...routine,
-      steps,
-    });
-  };
+  const { error, routine } = state;
 
   if (error) {
     return <Typography variant="h3">Error.</Typography>;
@@ -246,40 +217,14 @@ function RoutinePage({ createNew = false, id }) {
     return <Typography variant="h3">Loading...</Typography>;
   }
 
-  const selectedStep =
-    selectedStepIndex !== null
-      ? selectedStepIndex >= 0 && selectedStepIndex < routine.steps.length
-        ? routine.steps[selectedStepIndex]
-        : null
-      : null;
-
-  const contextValue = {
-    // routine state
-    routine,
-    selectedStep,
-    selectedStepIndex,
-
-    // editor state
-    dirty,
-    isNew: createNew,
-
-    // callbacks
-    setRoutine,
-    setSteps,
-  };
-
   const value = { state, dispatch };
-
   return (
-    <RoutineContext.Provider value={contextValue}>
-      <RoutineStateContext.Provider value={value}>
-        <RoutineEditor />
-
-        <SaveCancelFabs />
-      </RoutineStateContext.Provider>
-    </RoutineContext.Provider>
+    <RoutineStateContext.Provider value={value}>
+      <RoutineEditor />
+      <SaveCancelFabs />
+    </RoutineStateContext.Provider>
   );
 }
 
 export default RoutinePage;
-export { RoutineContext, RoutineStateContext };
+export { RoutineStateContext };
