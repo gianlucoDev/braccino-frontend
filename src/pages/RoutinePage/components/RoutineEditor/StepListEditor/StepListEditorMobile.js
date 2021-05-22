@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 
 import CloseIcon from '@material-ui/icons/Close';
 
-import { RoutineContext } from 'pages/RoutinePage/RoutinePage';
+import { RoutineStateContext } from 'pages/RoutinePage/RoutinePage';
 import StepList from './StepList/StepList';
 import StepEditor from './StepEditor/StepEditor';
 
@@ -32,7 +32,12 @@ const Transition = forwardRef(function Transition(props, ref) {
 function StepListEditorMobile() {
   const classes = useStyles();
 
-  const { selectedStep, closeStepEditor } = useContext(RoutineContext);
+  const { state, dispatch } = useContext(RoutineStateContext);
+  const stepEditorOpen = state.selectedStepIndex !== null;
+
+  const handleStepDeselect = () => {
+    dispatch({ type: 'step-deselect' });
+  };
 
   return (
     <>
@@ -40,8 +45,8 @@ function StepListEditorMobile() {
 
       <Dialog
         fullScreen
-        open={!!selectedStep}
-        onClose={closeStepEditor}
+        open={stepEditorOpen}
+        onClose={handleStepDeselect}
         TransitionComponent={Transition}
       >
         <AppBar className={classes.appBar}>
@@ -49,7 +54,7 @@ function StepListEditorMobile() {
             <IconButton
               edge="start"
               color="inherit"
-              onClick={closeStepEditor}
+              onClick={handleStepDeselect}
               aria-label="chiudi"
             >
               <CloseIcon />
@@ -62,7 +67,7 @@ function StepListEditorMobile() {
 
         <Box padding={2}>
           {/* HACK: avoid rendering if there is no selected step or it will crash */}
-          {!!selectedStep && <StepEditor />}
+          {stepEditorOpen && <StepEditor />}
         </Box>
       </Dialog>
     </>

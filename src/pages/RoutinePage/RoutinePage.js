@@ -149,10 +149,6 @@ function RoutinePage({ createNew = false, id }) {
     dispatch({ type: 'step-select', index });
   };
 
-  const closeStepEditor = () => {
-    dispatch({ type: 'step-deselect' });
-  };
-
   const setRoutine = (routine) => {
     dispatch({ type: 'mutate-routine', routine });
   };
@@ -194,7 +190,6 @@ function RoutinePage({ createNew = false, id }) {
     setRoutine,
     setSteps,
     editStep,
-    closeStepEditor,
   };
 
   const value = { state, dispatch };
