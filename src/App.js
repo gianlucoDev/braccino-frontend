@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Router, Switch, Route } from 'react-router-dom';
 import { SWRConfig } from 'swr';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
@@ -12,9 +12,11 @@ import BraccioPage from 'pages/BraccioPage/BraccioPage';
 import RoutinePage from './pages/RoutinePage/RoutinePage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 
+import history from './history';
+
 function App() {
   return (
-    <Router>
+    <Router history={history}>
       <SWRConfig
         value={{
           fetcher,

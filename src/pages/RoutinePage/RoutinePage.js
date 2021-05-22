@@ -1,8 +1,9 @@
 import { createContext, useEffect, useReducer } from 'react';
-import { useHistory } from 'react-router-dom';
 import useSWR, { mutate } from 'swr';
 
 import Typography from '@material-ui/core/Typography';
+
+import history from '../../history';
 
 import {
   DEFAULT_ROUTINE,
@@ -23,16 +24,55 @@ function reducer(state, action) {
     case 'swr-data': {
       const { data, error } = args;
       return {
+        ...state,
         error,
         initial: data,
         routine: data,
         dirty: false,
-        selectedStepIndex: null,
       };
     }
 
     case 'reset': {
-      return { ...state, routine: state.initial };
+      return { ...state, dirty: false, routine: state.initial };
+    }
+
+    case 'routine-save': {
+      const { isNew, routine } = state;
+
+      if (isNew) {
+        createRoutine(routine).then((created) => {
+          // preload the data so the next page loads instantly
+          mutate(`/routines/${created.id}`, routine, false);
+
+          // navigate to newly created routine
+          history.push(`/routines/${created.id}`);
+        });
+      } else {
+        updateRoutine(routine.id, routine).then(() => {
+          // trigger re-validation
+          mutate(`/routines/${routine.id}`);
+        });
+      }
+
+      // does not mutate state
+      return state;
+    }
+
+    case 'routine-delete': {
+      const { isNew, routine } = state;
+
+      if (isNew) {
+        console.error(
+          'attempting to delete a routine that has not been saved yet',
+          action
+        );
+        return;
+      }
+
+      deleteRoutine(routine.id).then(() => history.push('/'));
+      // return current state just because I have to return something
+      // the component will unmount anyways because the route gets changed
+      return state;
     }
 
     case 'step-select': {
@@ -50,7 +90,7 @@ function reducer(state, action) {
     // TODO: remove
     case 'mutate-routine': {
       const { routine } = args;
-      return { ...state, routine };
+      return { ...state, dirty: true, routine };
     }
 
     default: {
@@ -68,44 +108,32 @@ function useRoutineState(id, isNew) {
     error,
     initial,
     routine: initial,
+    isNew,
     dirty: false,
     selectedStepIndex: null,
   });
 
+  // overwrite current state whenever new data is fetched
   useEffect(() => {
-    // overwrite current state whenever new data is fetched
-    dispatch({ type: 'swr-data', data, error });
-  }, [data, error]);
+    if (!isNew) {
+      dispatch({ type: 'swr-data', data, error });
+    }
+  }, [isNew, data, error]);
 
   return [state, dispatch];
 }
 
 function RoutinePage({ createNew = false, id }) {
-  const history = useHistory();
   const [state, dispatch] = useRoutineState(id, createNew);
   const { error, dirty, routine, selectedStepIndex } = state;
 
   // action handling
-  const handleSubmitNew = async () => {
-    const created = await createRoutine(routine);
-
-    // preload the data so the next page loads instantly
-    mutate(`/routines/${created.id}`, routine, false);
-
-    // navigate to newly created routine
-    history.push(`/routines/${created.id}`);
-  };
-
-  const handleSubmitEdit = async () => {
-    await updateRoutine(id, routine);
-
-    // trigger re-validation
-    mutate(`/routines/${id}`);
+  const handleSubmit = () => {
+    dispatch({ type: 'routine-save' });
   };
 
   const handleDelete = async () => {
-    await deleteRoutine(id);
-    history.push('/');
+    dispatch({ type: 'routine-delete' });
   };
 
   const handleReset = () => {
@@ -176,7 +204,7 @@ function RoutinePage({ createNew = false, id }) {
       <SaveCancelFabs
         disableSubmit={!dirty || !routine.name}
         disableCancel={!dirty}
-        onSubmit={createNew ? handleSubmitNew : handleSubmitEdit}
+        onSubmit={handleSubmit}
         onCancel={handleReset}
       />
     </RoutineContext.Provider>
