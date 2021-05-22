@@ -21,6 +21,16 @@ const RoutineContext = createContext();
 const RoutineStateContext = createContext();
 
 function reducer(state, action) {
+  // helper functions
+  const setRoutine = (routine) => {
+    return {
+      ...state,
+      routine,
+      dirty: true,
+    };
+  };
+
+  // reducer
   const { type, ...args } = action;
 
   switch (type) {
@@ -80,29 +90,19 @@ function reducer(state, action) {
 
     case 'routine-import': {
       const { importedRoutine } = args;
-      return {
-        ...state,
-        dirty: true,
-
-        routine: {
-          ...importedRoutine,
-          // ensure current ID is no overwritten by imported data
-          id: state.routine.id,
-        },
-      };
+      return setRoutine({
+        ...importedRoutine,
+        // ensure current ID is no overwritten by imported data
+        id: state.routine.id,
+      });
     }
 
     case 'routine-rename': {
       const { name } = args;
-      return {
-        ...state,
-        dirty: true,
-
-        routine: {
-          ...state.routine,
-          name,
-        },
-      };
+      return setRoutine({
+        ...state.routine,
+        name,
+      });
     }
 
     case 'step-select': {
