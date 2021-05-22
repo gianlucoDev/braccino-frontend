@@ -8,9 +8,7 @@ function StepListEditor() {
   const theme = useTheme();
   const sm = useMediaQuery(theme.breakpoints.up('sm'));
 
-  const EditorLayout = sm ? StepListEditorWide : StepListEditorMobile;
-
-  return <EditorLayout />;
+  return sm ? <StepListEditorWide /> : <StepListEditorMobile />;
 }
 
 export default StepListEditor;

@@ -5,13 +5,10 @@ import RoutineEditorWide from './RoutineEditorWide';
 import RoutineEditorTabbed from './RoutineEditorTabbed';
 
 function RoutineEditor() {
-  // style
   const theme = useTheme();
   const md = useMediaQuery(theme.breakpoints.up('md'));
 
-  const EditorLayout = md ? RoutineEditorWide : RoutineEditorTabbed;
-
-  return <EditorLayout />;
+  return md ? <RoutineEditorWide /> : <RoutineEditorTabbed />;
 }
 
 export default RoutineEditor;
