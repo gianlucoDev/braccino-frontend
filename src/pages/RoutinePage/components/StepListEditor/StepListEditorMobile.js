@@ -12,8 +12,8 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 
 import { RoutineStateContext } from 'pages/RoutinePage/RoutinePage';
-import StepList from './StepList/StepList';
-import StepEditor from './StepEditor/StepEditor';
+import StepList from '../StepList';
+import StepEditor from '../StepEditor';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {

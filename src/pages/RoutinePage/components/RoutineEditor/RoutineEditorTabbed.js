@@ -9,7 +9,7 @@ import BraccioAppBar from 'components/BraccioAppBar';
 
 import RoutineImportExportButton from './RoutineImportExportButton';
 import RoutineEditorControls from './RoutineEditorControls';
-import StepListEditor from './StepListEditor/StepListEditor';
+import StepListEditor from '../StepListEditor';
 
 function RoutineEditorTabbed() {
   const [selectedTab, setSelectedTab] = useState(0);

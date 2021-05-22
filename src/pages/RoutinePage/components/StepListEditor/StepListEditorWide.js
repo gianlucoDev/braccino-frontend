@@ -7,8 +7,8 @@ import ListIcon from '@material-ui/icons/ListAlt';
 import BigMessage from 'components/BigMessage';
 
 import { RoutineStateContext } from 'pages/RoutinePage/RoutinePage';
-import StepList from './StepList/StepList';
-import StepEditor from './StepEditor/StepEditor';
+import StepList from '../StepList';
+import StepEditor from '../StepEditor';
 
 function StepListEditorWide() {
   const { state } = useContext(RoutineStateContext);

@@ -13,7 +13,7 @@ import {
 } from 'api/routines';
 import { DEFAULT_STEP } from 'api/steps';
 
-import RoutineEditor from './components/RoutineEditor/RoutineEditor';
+import RoutineEditor from './components/RoutineEditor';
 import SaveCancelFabs from './components/SaveCancelFabs';
 
 const RoutineStateContext = createContext();
