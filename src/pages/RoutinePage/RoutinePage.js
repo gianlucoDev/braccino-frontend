@@ -32,10 +32,11 @@ function reducer(state, action) {
   const { type, ...args } = action;
 
   switch (type) {
-    case 'swr-data': {
-      const { data, error } = args;
+    case 'refresh': {
+      const { isNew, data, error } = args;
       return {
         ...state,
+        isNew,
         error,
         initial: data,
         routine: data,
@@ -192,7 +193,7 @@ function useRoutineState(id, isNew) {
   // overwrite current state whenever new data is fetched
   useEffect(() => {
     if (!isNew) {
-      dispatch({ type: 'swr-data', data, error });
+      dispatch({ type: 'refresh', isNew, data, error });
     }
   }, [isNew, data, error]);
 
