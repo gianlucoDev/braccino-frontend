@@ -1,4 +1,13 @@
+import useSWR from 'swr';
 import { BASE_URL } from './fetcher';
+
+export function useBraccioList() {
+  return useSWR('/braccio');
+}
+
+export function useBraccio(serial_number) {
+  return useSWR(!serial_number ? null : `/braccio/${serial_number}`);
+}
 
 export async function runRoutine(braccio, routine) {
   const res = await fetch(

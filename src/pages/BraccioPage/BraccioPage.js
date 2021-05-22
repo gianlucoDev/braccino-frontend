@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { useParams } from 'react-router';
-import useSWR from 'swr';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 
+import { useBraccio } from 'api/braccio';
 import { DEFAULT_JOINT_POSITIONS } from 'api/joints';
 import BraccioAppBar from 'components/BraccioAppBar';
+
 import BraccioPositionEditor from './components/BraccioPositionEditor';
 import BraccioSpeedEditor from './components/BraccioSpeedEditor';
 
@@ -16,7 +17,7 @@ const BASE_URL_WS = 'ws://localhost:8000/ws';
 
 function BraccioPage() {
   const { serial_number } = useParams();
-  const { data, error } = useSWR(`/braccio/${serial_number}`);
+  const { data, error } = useBraccio(serial_number);
 
   const { sendJsonMessage, readyState } = useWebSocket(
     `${BASE_URL_WS}/braccio/${serial_number}/`

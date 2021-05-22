@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import useSWR from 'swr';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -12,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 
-import { runRoutine } from 'api/braccio';
+import { runRoutine, useBraccioList } from 'api/braccio';
 
 const useStyles = makeStyles((theme) => ({
   wideButton: {
@@ -25,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 export function RoutineEditorRunControls({ routine, enabled = false }) {
   const classes = useStyles();
-  const { data, error } = useSWR('/braccio');
+  const { data, error } = useBraccioList();
 
   const [braccio, setBraccio] = useState(null);
 

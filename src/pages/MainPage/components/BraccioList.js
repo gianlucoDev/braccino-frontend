@@ -1,5 +1,4 @@
 import { Link as RouterLink } from 'react-router-dom';
-import useSWR from 'swr';
 
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
@@ -10,8 +9,10 @@ import Typography from '@material-ui/core/Typography';
 
 import InputIcon from '@material-ui/icons/Input';
 
+import { useBraccioList } from 'api/braccio';
+
 function BraccioList() {
-  const { data, error } = useSWR('/braccio');
+  const { data, error } = useBraccioList();
 
   if (error) {
     return <Typography>Error.</Typography>;
