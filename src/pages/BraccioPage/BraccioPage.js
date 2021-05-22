@@ -6,25 +6,22 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
+import WifiIcon from '@material-ui/icons/Wifi';
+
 import { useBraccio, useBraccioSocket } from 'api/braccio';
 import BraccioAppBar from 'components/BraccioAppBar';
+import BigMessage from 'components/BigMessage';
 
 import BraccioPositionEditor from './components/BraccioPositionEditor';
 import BraccioSpeedEditor from './components/BraccioSpeedEditor';
+import BraccioInfoCard from './components/BraccioInfoCard';
+import SocketInfoCard from './components/SocketInfoCard';
 
 function BraccioPage() {
   const { serial_number } = useParams();
   const { data, error } = useBraccio(serial_number);
   const { readyState, speed, position, setSpeed, setPosition } =
     useBraccioSocket(serial_number);
-
-  const connectionStatus = {
-    [ReadyState.CONNECTING]: 'Connecting',
-    [ReadyState.OPEN]: 'Open',
-    [ReadyState.CLOSING]: 'Closing',
-    [ReadyState.CLOSED]: 'Closed',
-    [ReadyState.UNINSTANTIATED]: 'Uninstantiated',
-  }[readyState];
 
   if (error) {
     return <Typography>Error.</Typography>;
@@ -38,55 +35,39 @@ function BraccioPage() {
     <>
       <BraccioAppBar />
       <Container>
-        <Box marginY={2}>
-          <Typography variant="h2" gutterBottom>
-            {data.name}
-          </Typography>
+        <Grid container spacing={4}>
+          <Grid item xs={12} md={6}>
+            <Box marginTop={4}>
+              <BraccioInfoCard braccio={data} />
+            </Box>
 
-          <Grid container>
-            <Grid item xs={12} md={6}>
-              <Typography variant="h4">Arduino connetion status</Typography>
-              <Typography color="textSecondary">
-                {data.connection_status.code} (
-                {data.connection_status.ok ? 'OK' : 'NOT OK'})
-              </Typography>
-
-              <Typography variant="h4">Serial number</Typography>
-              <Typography color="textSecondary">
-                {data.serial_number}
-              </Typography>
-
-              <Typography variant="h4">Current action</Typography>
-              {data.running ? (
-                <Typography color="textSecondary">
-                  {data.running.name}
-                </Typography>
-              ) : (
-                <Typography color="textSecondary">
-                  Non sta svoglendo nulla
-                </Typography>
-              )}
-
-              <Typography variant="h4">WebSocket connection status</Typography>
-              <Typography color="textSecondary">{connectionStatus}</Typography>
-            </Grid>
-
-            {readyState === ReadyState.OPEN && (
-              <Grid item xs={12} md={6}>
-                <Box paddingY={2}>
-                  <BraccioSpeedEditor speed={speed} onChange={setSpeed} />
-                </Box>
-
-                <Box paddingY={2}>
-                  <BraccioPositionEditor
-                    position={position}
-                    onChange={setPosition}
-                  />
-                </Box>
-              </Grid>
-            )}
+            <Box marginTop={4}>
+              <SocketInfoCard readyState={readyState} />
+            </Box>
           </Grid>
-        </Box>
+
+          {readyState === ReadyState.OPEN ? (
+            <Grid item xs={12} md={6}>
+              <Box marginTop={4}>
+                <BraccioSpeedEditor speed={speed} onChange={setSpeed} />
+              </Box>
+              <Box marginTop={4}>
+                <BraccioPositionEditor
+                  position={position}
+                  onChange={setPosition}
+                />
+              </Box>
+            </Grid>
+          ) : (
+            <Grid item xs={12} md={6}>
+              <BigMessage
+                IconComponent={WifiIcon}
+                message="Connessione in corso"
+                suggestion="Attendi un attimo..."
+              />
+            </Grid>
+          )}
+        </Grid>
       </Container>
     </>
   );
