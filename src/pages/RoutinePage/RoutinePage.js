@@ -120,7 +120,14 @@ function reducer(state, action) {
     // TODO: remove
     case 'mutate-routine': {
       const { routine } = args;
-      return { ...state, dirty: true, routine };
+      return {
+        ...state,
+        dirty: true,
+        // deselect step every time it gets mutate,
+        // this is tempory while I implement all the step manipulation actions
+        selectedStepIndex: null,
+        routine,
+      };
     }
 
     default: {

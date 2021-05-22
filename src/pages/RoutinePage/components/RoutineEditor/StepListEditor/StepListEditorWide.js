@@ -6,12 +6,13 @@ import ListIcon from '@material-ui/icons/ListAlt';
 
 import BigMessage from 'components/BigMessage';
 
-import { RoutineContext } from 'pages/RoutinePage/RoutinePage';
+import { RoutineStateContext } from 'pages/RoutinePage/RoutinePage';
 import StepList from './StepList/StepList';
 import StepEditor from './StepEditor/StepEditor';
 
 function StepListEditorWide() {
-  const { routine, selectedStep } = useContext(RoutineContext);
+  const { state } = useContext(RoutineStateContext);
+  const { routine, selectedStepIndex } = state;
 
   return (
     <Box padding={2}>
@@ -21,7 +22,7 @@ function StepListEditorWide() {
         </Grid>
 
         <Grid item xs={6}>
-          {selectedStep === null ? (
+          {selectedStepIndex === null ? (
             <Box height="100%">
               {routine.steps.length > 0 ? (
                 <BigMessage
