@@ -50,5 +50,5 @@ export async function deleteRoutine(id) {
   });
 
   // update list
-  mutate('routines/');
+  mutate('/routines');
 }
