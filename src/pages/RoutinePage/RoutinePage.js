@@ -78,6 +78,20 @@ function reducer(state, action) {
       return state;
     }
 
+    case 'routine-import': {
+      const { importedRoutine } = args;
+      return {
+        ...state,
+        dirty: true,
+
+        routine: {
+          ...importedRoutine,
+          // ensure current ID is no overwritten by imported data
+          id: state.routine.id,
+        },
+      };
+    }
+
     case 'routine-rename': {
       const { name } = args;
       return {

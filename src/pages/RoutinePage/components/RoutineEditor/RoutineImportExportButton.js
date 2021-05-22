@@ -12,7 +12,7 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 
 import AppBarIconButton from 'components/AppBarIconButton';
-import { RoutineContext } from 'pages/RoutinePage/RoutinePage';
+import { RoutineStateContext } from 'pages/RoutinePage/RoutinePage';
 
 function downloadJson(fileName, json) {
   const dataStr =
@@ -33,7 +33,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function RoutineImportExportButton() {
-  const { routine, setRoutine } = useContext(RoutineContext);
+  const { state, dispatch } = useContext(RoutineStateContext);
+  const { routine } = state;
 
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -48,11 +49,7 @@ function RoutineImportExportButton() {
   };
 
   const handleImport = (importedRoutine) => {
-    setRoutine({
-      ...importedRoutine,
-      // ensure current ID is no overwritten by imported data
-      id: routine.id,
-    });
+    dispatch({ type: 'routine-import', importedRoutine });
   };
 
   const handleImportButtonClick = () => {
