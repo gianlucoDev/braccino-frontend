@@ -6,24 +6,24 @@ import Typography from '@material-ui/core/Typography';
 
 import StepPositionSliders from 'components/StepPositionSliders/StepPositionSliders';
 import LabelSliderNumberCombo from 'components/StepPositionSliders/LabelSliderNumberCombo';
-import { RoutineContext } from 'pages/RoutinePage/RoutinePage';
+import { RoutineStateContext } from 'pages/RoutinePage/RoutinePage';
 
 import LabelNumberCombo from './LabelNumberCombo';
 
 function StepEditor() {
-  const { routine, selectedStep, selectedStepIndex, setSteps } =
-    useContext(RoutineContext);
+  const { state, dispatch } = useContext(RoutineStateContext);
+  const { routine, selectedStepIndex } = state;
+
+  const selectedStep =
+    selectedStepIndex !== null ? routine.steps[selectedStepIndex] : null;
 
   const handleStepChange = (key) => (value) => {
-    const newStep = {
+    const step = {
       ...selectedStep,
       [key]: value,
     };
 
-    const newSteps = [...routine.steps];
-    newSteps[selectedStepIndex] = newStep;
-
-    setSteps(newSteps);
+    dispatch({ type: 'step-edit', step });
   };
 
   return (

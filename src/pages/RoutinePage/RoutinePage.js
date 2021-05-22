@@ -160,6 +160,24 @@ function reducer(state, action) {
       };
     }
 
+    case 'step-edit': {
+      const { step } = args;
+      const { routine, selectedStepIndex } = state;
+
+      const newSteps = [...routine.steps];
+      newSteps[selectedStepIndex] = step;
+
+      return {
+        ...state,
+        dirty: true,
+
+        routine: {
+          ...state.routine,
+          steps: newSteps,
+        },
+      };
+    }
+
     // this action is needed while i migrate all the components to
     // use the dispather instead of callbacks
     // TODO: remove
