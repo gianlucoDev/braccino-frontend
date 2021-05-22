@@ -108,8 +108,11 @@ function reducer(state, action) {
 
     case 'step-select': {
       const { index } = args;
-      // TODO: check bounds
-      return { ...state, selectedStepIndex: index };
+      const { routine } = state;
+
+      const selectedStepIndex =
+        index < 0 || index >= routine.steps.length ? null : index;
+      return { ...state, selectedStepIndex };
     }
 
     case 'step-deselect': {
@@ -125,7 +128,7 @@ function reducer(state, action) {
       return {
         ...state,
         dirty: true,
-        selectedStepIndex: steps.length - 1,
+        selectedStepIndex: newSteps.length - 1,
 
         routine: {
           ...state.routine,
@@ -141,11 +144,14 @@ function reducer(state, action) {
       const newSteps = [...steps];
       newSteps.splice(index, 1);
 
+      // keep current selection if the deleted item is not the currently selected one
+      const selectedStepIndex =
+        state.selectedStepIndex === index ? null : state.selectedStepIndex;
+
       return {
         ...state,
         dirty: true,
-        // TODO: check bounds and do not deselect if between bounds
-        selectedStepIndex: null,
+        selectedStepIndex,
 
         routine: {
           ...state.routine,
@@ -162,9 +168,6 @@ function reducer(state, action) {
       return {
         ...state,
         dirty: true,
-        // deselect step every time it gets mutate,
-        // this is tempory while I implement all the step manipulation actions
-        selectedStepIndex: null,
         routine,
       };
     }
