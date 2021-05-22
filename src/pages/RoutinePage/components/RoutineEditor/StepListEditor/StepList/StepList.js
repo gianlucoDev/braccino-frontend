@@ -9,9 +9,7 @@ import Typography from '@material-ui/core/Typography';
 
 import AddIcon from '@material-ui/icons/Add';
 
-import { defaultStep } from 'api/steps';
-
-import { RoutineContext } from 'pages/RoutinePage/RoutinePage';
+import { RoutineStateContext } from 'pages/RoutinePage/RoutinePage';
 import StepListItem from './StepListItem';
 
 const useStyles = makeStyles((theme) => ({
@@ -23,29 +21,19 @@ const useStyles = makeStyles((theme) => ({
 
 function StepList() {
   const classes = useStyles();
-  const { routine, selectedStepIndex, setSteps, editStep } =
-    useContext(RoutineContext);
-  const { steps } = routine;
+  const { state, dispatch } = useContext(RoutineStateContext);
+  const { routine, selectedStepIndex } = state;
 
   const handleStepCreate = () => {
-    const lastStep = steps.length >= 1 ? steps[steps.length - 1] : null;
-    const newStep = lastStep || { ...defaultStep };
-    const newSteps = [...steps, newStep];
-
-    setSteps(newSteps);
-    // select the last step
-    editStep(newSteps.length - 1);
+    dispatch({ type: 'step-create' });
   };
 
-  const handleStepDelete = (i) => () => {
-    const newSteps = [...steps];
-    newSteps.splice(i, 1);
-
-    setSteps(newSteps);
+  const handleStepDelete = (index) => () => {
+    dispatch({ type: 'step-delete', index });
   };
 
-  const handleStepEdit = (i) => () => {
-    editStep(i);
+  const handleStepEdit = (index) => () => {
+    dispatch({ type: 'step-select', index });
   };
 
   return (
@@ -56,7 +44,7 @@ function StepList() {
         justifyContent="space-between"
         padding={1}
       >
-        <Typography>{steps.length} steps</Typography>
+        <Typography>{routine.steps.length} steps</Typography>
         <Button onClick={handleStepCreate} startIcon={<AddIcon />}>
           Aggiungi step
         </Button>
@@ -65,7 +53,7 @@ function StepList() {
       <Divider />
 
       <List disablePadding className={classes.list}>
-        {steps.map((step, i) => (
+        {routine.steps.map((step, i) => (
           <StepListItem
             key={i}
             index={i}

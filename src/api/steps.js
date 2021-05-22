@@ -1,9 +1,9 @@
 import { DEFAULT_JOINT_POSITIONS } from './joints';
 
-const defaultStep = {
+const DEFAULT_STEP = {
   delay: 1000,
   speed: 30,
   position: DEFAULT_JOINT_POSITIONS,
 };
 
-export { defaultStep };
+export { DEFAULT_STEP };

@@ -11,6 +11,7 @@ import {
   updateRoutine,
   deleteRoutine,
 } from 'api/routines';
+import { DEFAULT_STEP } from 'api/steps';
 
 import RoutineEditor from './components/RoutineEditor/RoutineEditor';
 import SaveCancelFabs from './components/SaveCancelFabs';
@@ -115,6 +116,44 @@ function reducer(state, action) {
       return { ...state, selectedStepIndex: null };
     }
 
+    case 'step-create': {
+      const { steps } = state.routine;
+
+      const templateStep = steps[steps.length - 1] || DEFAULT_STEP;
+      const newSteps = [...steps, { ...templateStep }];
+
+      return {
+        ...state,
+        dirty: true,
+        selectedStepIndex: steps.length - 1,
+
+        routine: {
+          ...state.routine,
+          steps: newSteps,
+        },
+      };
+    }
+
+    case 'step-delete': {
+      const { index } = args;
+      const { steps } = state.routine;
+
+      const newSteps = [...steps];
+      newSteps.splice(index, 1);
+
+      return {
+        ...state,
+        dirty: true,
+        // TODO: check bounds and do not deselect if between bounds
+        selectedStepIndex: null,
+
+        routine: {
+          ...state.routine,
+          steps: newSteps,
+        },
+      };
+    }
+
     // this action is needed while i migrate all the components to
     // use the dispather instead of callbacks
     // TODO: remove
@@ -166,10 +205,6 @@ function RoutinePage({ createNew = false, id }) {
 
   // action handling
   // TODO: call dispatcher inside components
-  const editStep = (index) => {
-    dispatch({ type: 'step-select', index });
-  };
-
   const setRoutine = (routine) => {
     dispatch({ type: 'mutate-routine', routine });
   };
@@ -210,7 +245,6 @@ function RoutinePage({ createNew = false, id }) {
     // callbacks
     setRoutine,
     setSteps,
-    editStep,
   };
 
   const value = { state, dispatch };
