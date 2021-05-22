@@ -15,7 +15,10 @@ import {
 import RoutineEditor from './components/RoutineEditor/RoutineEditor';
 import SaveCancelFabs from './components/SaveCancelFabs';
 
+// TODO: delete this context once all components have been migrated to the other context
 const RoutineContext = createContext();
+
+const RoutineStateContext = createContext();
 
 function reducer(state, action) {
   const { type, ...args } = action;
@@ -128,16 +131,9 @@ function RoutinePage({ createNew = false, id }) {
   const { error, dirty, routine, selectedStepIndex } = state;
 
   // action handling
-  const handleSubmit = () => {
-    dispatch({ type: 'routine-save' });
-  };
 
   const handleDelete = async () => {
     dispatch({ type: 'routine-delete' });
-  };
-
-  const handleReset = () => {
-    dispatch({ type: 'reset' });
   };
 
   // TODO: call dispatcher inside components
@@ -169,7 +165,6 @@ function RoutinePage({ createNew = false, id }) {
     return <Typography variant="h3">Loading...</Typography>;
   }
 
-  // TODO: create new context, pass down state and dispatch instead of this mess
   const selectedStep =
     selectedStepIndex !== null
       ? selectedStepIndex >= 0 && selectedStepIndex < routine.steps.length
@@ -194,22 +189,21 @@ function RoutinePage({ createNew = false, id }) {
     closeStepEditor,
   };
 
+  const value = { state, dispatch };
+
   return (
     <RoutineContext.Provider value={contextValue}>
-      <RoutineEditor
-        // optional actions
-        onDelete={handleDelete}
-      />
+      <RoutineStateContext.Provider value={value}>
+        <RoutineEditor
+          // optional actions
+          onDelete={handleDelete}
+        />
 
-      <SaveCancelFabs
-        disableSubmit={!dirty || !routine.name}
-        disableCancel={!dirty}
-        onSubmit={handleSubmit}
-        onCancel={handleReset}
-      />
+        <SaveCancelFabs />
+      </RoutineStateContext.Provider>
     </RoutineContext.Provider>
   );
 }
 
 export default RoutinePage;
-export { RoutineContext };
+export { RoutineContext, RoutineStateContext };

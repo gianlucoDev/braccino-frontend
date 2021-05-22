@@ -1,10 +1,13 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { useContext } from 'react';
 
+import { makeStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import Slide from '@material-ui/core/Slide';
 
 import SaveIcon from '@material-ui/icons/Save';
 import CancelIcon from '@material-ui/icons/Cancel';
+
+import { RoutineStateContext } from '../RoutinePage';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,8 +27,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SaveCancelFabs({ disableSubmit, disableCancel, onSubmit, onCancel }) {
+function SaveCancelFabs() {
   const classes = useStyles();
+  const { state, dispatch } = useContext(RoutineStateContext);
+  const { dirty, routine } = state;
+
+  // The only validation is that the name is not empty.
+  // All the other data should always be valid since all imputs are constrained.
+  // Also, if the data was not in the correct shape, the other components would
+  // throw error and crash the whole application.
+  const valid = !!routine.name;
+
+  const disableSubmit = !dirty || !valid;
+  const disableReset = !dirty;
+
+  const handleSubmit = () => {
+    dispatch({ type: 'routine-save' });
+  };
+
+  const handleReset = () => {
+    dispatch({ type: 'reset' });
+  };
 
   return (
     <div className={classes.root}>
@@ -35,19 +57,19 @@ function SaveCancelFabs({ disableSubmit, disableCancel, onSubmit, onCancel }) {
           size="large"
           color="primary"
           disabled={disableSubmit}
-          onClick={onSubmit}
+          onClick={handleSubmit}
         >
           <SaveIcon className={classes.extendedFabIcon} />
           Salva
         </Fab>
       </Slide>
-      <Slide direction="up" in={!disableCancel}>
+      <Slide direction="up" in={!disableReset}>
         <Fab
           variant="extended"
           size="large"
           color="secondary"
-          disabled={disableCancel}
-          onClick={onCancel}
+          disabled={disableReset}
+          onClick={handleReset}
         >
           <CancelIcon className={classes.extendedFabIcon} />
           Annulla
