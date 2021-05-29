@@ -45,7 +45,19 @@ function reducer(state, action) {
     }
 
     case 'reset': {
-      return { ...state, dirty: false, routine: state.initial };
+      const { initial, selectedStepIndex } = state;
+
+      const index =
+        selectedStepIndex < 0 || selectedStepIndex >= initial.steps.length
+          ? null
+          : selectedStepIndex;
+
+      return {
+        ...state,
+        dirty: false,
+        routine: initial,
+        selectedStepIndexr: index,
+      };
     }
 
     case 'routine-save': {
