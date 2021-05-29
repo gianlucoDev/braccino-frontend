@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import useWebSocket from 'react-use-websocket';
 import useSWR from 'swr';
-import { BASE_URL } from './fetcher';
+import { BASE_URL, BASE_URL_WS } from './urls';
 import { DEFAULT_JOINT_POSITIONS } from './joints';
 
 export function useBraccioList() {
@@ -25,8 +25,6 @@ export async function runRoutine(braccio, routine) {
 
   return await res.json();
 }
-
-const BASE_URL_WS = 'ws://localhost:8000/ws';
 
 export function useBraccioSocket(serial_number) {
   const { sendJsonMessage, readyState } = useWebSocket(

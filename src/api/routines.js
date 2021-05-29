@@ -1,4 +1,4 @@
-import { BASE_URL } from './fetcher';
+import { BASE_URL } from './urls';
 import useSWR, { mutate } from 'swr';
 
 export const DEFAULT_ROUTINE = { name: '', steps: [] };
