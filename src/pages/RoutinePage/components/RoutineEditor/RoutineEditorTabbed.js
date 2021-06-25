@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 
 import BraccioAppBar from 'components/BraccioAppBar';
 
-import RoutineImportExportButton from './RoutineImportExportButton';
+import RoutineImportExportButton from '../ImportExportButton';
 import RoutineEditorControls from './RoutineEditorControls';
 import StepListEditor from '../StepListEditor';
 

@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 
 import BraccioAppBar from 'components/BraccioAppBar';
 
-import RoutineImportExportButton from './RoutineImportExportButton';
+import RoutineImportExportButton from '../ImportExportButton';
 import RoutineEditorControls from './RoutineEditorControls';
 import StepListEditor from '../StepListEditor';
 
