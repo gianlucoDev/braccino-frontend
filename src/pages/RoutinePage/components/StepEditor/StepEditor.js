@@ -7,11 +7,11 @@ import Typography from '@material-ui/core/Typography';
 import ListIcon from '@material-ui/icons/ListAlt';
 
 import BigMessage from 'components/BigMessage';
-import StepPositionSliders from 'components/StepPositionSliders/StepPositionSliders';
-import LabelSliderNumberCombo from 'components/StepPositionSliders/LabelSliderNumberCombo';
-import { RoutineStateContext } from 'pages/RoutinePage/RoutinePage';
+import StepPositionSliders from 'components/inputs/StepPositionSliders';
+import LabelSliderNumberCombo from 'components/inputs/LabelSliderNumberCombo';
+import LabelNumberCombo from 'components/inputs/LabelNumberCombo';
 
-import LabelNumberCombo from './LabelNumberCombo';
+import { RoutineStateContext } from 'pages/RoutinePage/RoutinePage';
 
 function StepEditor() {
   const { state, dispatch } = useContext(RoutineStateContext);

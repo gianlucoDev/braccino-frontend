@@ -2,7 +2,7 @@ import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 
-import StepPositionSliders from 'components/StepPositionSliders/StepPositionSliders';
+import StepPositionSliders from 'components/inputs/StepPositionSliders';
 
 function BraccioPositionEditor({ position, onChange }) {
   return (
