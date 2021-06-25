@@ -66,8 +66,7 @@ function StepListEditorMobile() {
         </AppBar>
 
         <Box padding={2}>
-          {/* HACK: avoid rendering if there is no selected step or it will crash */}
-          {stepEditorOpen && <StepEditor />}
+          <StepEditor />
         </Box>
       </Dialog>
     </>
