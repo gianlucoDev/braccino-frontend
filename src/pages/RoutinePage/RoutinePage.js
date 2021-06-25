@@ -56,7 +56,7 @@ function reducer(state, action) {
         ...state,
         dirty: false,
         routine: initial,
-        selectedStepIndexr: index,
+        selectedStepIndex: index,
       };
     }
 
