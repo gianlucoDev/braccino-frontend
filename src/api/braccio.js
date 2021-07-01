@@ -2,7 +2,6 @@ import { useState } from 'react';
 import useWebSocket from 'react-use-websocket';
 import useSWR from 'swr';
 import { BASE_URL, BASE_URL_WS } from './urls';
-import { DEFAULT_JOINT_POSITIONS } from './joints';
 
 export function useBraccioList() {
   return useSWR('/braccio');
@@ -32,24 +31,25 @@ export function useBraccioSocket(serial_number) {
   );
 
   const [state, setState] = useState({
-    speed: 30,
-    position: { ...DEFAULT_JOINT_POSITIONS },
+    speed: 20,
+    attack_angle: null,
+    gripper: 50,
+    gripper_rot: 0,
+    position: {
+      x: 250,
+      y: 0,
+      z: 125,
+    },
   });
 
   const sendPacket = (type, data) => {
     sendJsonMessage({ type, data });
   };
 
-  const setPosition = (position) => {
-    sendPacket('set_position', position);
-    setState({ ...state, position });
+  const update = (newState) => {
+    sendPacket('update', newState);
+    setState(newState);
   };
 
-  const setSpeed = (speed) => {
-    sendPacket('set_speed', { speed });
-    setState({ ...state, speed });
-  };
-
-  const { speed, position } = state;
-  return { readyState, speed, position, setSpeed, setPosition };
+  return { socketState: readyState, state, update };
 }

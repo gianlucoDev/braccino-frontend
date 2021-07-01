@@ -11,17 +11,22 @@ import WifiIcon from '@material-ui/icons/Wifi';
 import { useBraccio, useBraccioSocket } from 'api/braccio';
 import BraccioAppBar from 'components/BraccioAppBar';
 import BigMessage from 'components/BigMessage';
+import PositionInput from 'components/inputs/PositionInput';
 
-import BraccioPositionEditor from './components/BraccioPositionEditor';
-import BraccioSpeedEditor from './components/BraccioSpeedEditor';
 import BraccioInfoCard from './components/BraccioInfoCard';
 import SocketInfoCard from './components/SocketInfoCard';
 
 function BraccioPage() {
   const { serial_number } = useParams();
   const { data, error } = useBraccio(serial_number);
-  const { readyState, speed, position, setSpeed, setPosition } =
-    useBraccioSocket(serial_number);
+  const { socketState, state, update } = useBraccioSocket(serial_number);
+
+  const handleChange = (key) => (value) => {
+    update({
+      ...state,
+      [key]: value,
+    });
+  };
 
   if (error) {
     return <Typography>Error.</Typography>;
@@ -42,19 +47,16 @@ function BraccioPage() {
             </Box>
 
             <Box marginTop={4}>
-              <SocketInfoCard readyState={readyState} />
+              <SocketInfoCard readyState={socketState} />
             </Box>
           </Grid>
 
-          {readyState === ReadyState.OPEN ? (
+          {socketState === ReadyState.OPEN ? (
             <Grid item xs={12} md={6}>
               <Box marginTop={4}>
-                <BraccioSpeedEditor speed={speed} onChange={setSpeed} />
-              </Box>
-              <Box marginTop={4}>
-                <BraccioPositionEditor
-                  position={position}
-                  onChange={setPosition}
+                <PositionInput
+                  position={state.position}
+                  onChange={handleChange('position')}
                 />
               </Box>
             </Grid>
