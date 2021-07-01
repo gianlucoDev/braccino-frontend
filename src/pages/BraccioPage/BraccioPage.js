@@ -12,6 +12,7 @@ import { useBraccio, useBraccioSocket } from 'api/braccio';
 import BraccioAppBar from 'components/BraccioAppBar';
 import BigMessage from 'components/BigMessage';
 import PositionInput from 'components/inputs/PositionInput';
+import SpeedInput from 'components/inputs/SpeedInput';
 
 import BraccioInfoCard from './components/BraccioInfoCard';
 import SocketInfoCard from './components/SocketInfoCard';
@@ -20,6 +21,8 @@ function BraccioPage() {
   const { serial_number } = useParams();
   const { data, error } = useBraccio(serial_number);
   const { socketState, state, update } = useBraccioSocket(serial_number);
+
+  console.log(state);
 
   const handleChange = (key) => (value) => {
     update({
@@ -57,6 +60,12 @@ function BraccioPage() {
                 <PositionInput
                   position={state.position}
                   onChange={handleChange('position')}
+                />
+              </Box>
+              <Box marginTop={4}>
+                <SpeedInput
+                  speed={state.speed}
+                  onChange={handleChange('speed')}
                 />
               </Box>
             </Grid>
