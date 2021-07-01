@@ -19,7 +19,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function LabelSliderNumberCombo({ label, min, max, value, onChange }) {
+function LabelSliderNumberCombo({
+  label,
+  min,
+  max,
+  disabled = false,
+  value,
+  onChange,
+}) {
   const classes = useStyles();
 
   const handleSliderChange = (event, newValue) => {
@@ -53,6 +60,7 @@ function LabelSliderNumberCombo({ label, min, max, value, onChange }) {
           aria-labelledby={label}
           min={min}
           max={max}
+          disabled={disabled}
           value={value}
           onChange={handleSliderChange}
         />
@@ -66,6 +74,7 @@ function LabelSliderNumberCombo({ label, min, max, value, onChange }) {
         <TextField
           type="number"
           className={classes.textField}
+          disabled={disabled}
           value={value}
           inputProps={{
             min,

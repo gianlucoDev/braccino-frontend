@@ -16,18 +16,30 @@ import SpeedInput from 'components/inputs/SpeedInput';
 
 import BraccioInfoCard from './components/BraccioInfoCard';
 import SocketInfoCard from './components/SocketInfoCard';
+import GripperInput from 'components/inputs/GripperInput';
 
 function BraccioPage() {
   const { serial_number } = useParams();
   const { data, error } = useBraccio(serial_number);
   const { socketState, state, update } = useBraccioSocket(serial_number);
 
-  console.log(state);
-
-  const handleChange = (key) => (value) => {
+  const updateKey = (key) => (value) => {
     update({
       ...state,
       [key]: value,
+    });
+  };
+
+  const gripper = {
+    attack_angle: state.attack_angle,
+    gripper: state.gripper,
+    gripper_rot: state.gripper_rot,
+  };
+
+  const updateGripper = (gripper) => {
+    update({
+      ...state,
+      ...gripper,
     });
   };
 
@@ -59,14 +71,14 @@ function BraccioPage() {
               <Box marginTop={4}>
                 <PositionInput
                   position={state.position}
-                  onChange={handleChange('position')}
+                  onChange={updateKey('position')}
                 />
               </Box>
               <Box marginTop={4}>
-                <SpeedInput
-                  speed={state.speed}
-                  onChange={handleChange('speed')}
-                />
+                <GripperInput gripper={gripper} onChange={updateGripper} />
+              </Box>
+              <Box marginTop={4}>
+                <SpeedInput speed={state.speed} onChange={updateKey('speed')} />
               </Box>
             </Grid>
           ) : (
