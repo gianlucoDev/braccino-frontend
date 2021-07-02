@@ -1,15 +1,13 @@
 import { useContext } from 'react';
 
 import Box from '@material-ui/core/Box';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-
 import ListIcon from '@material-ui/icons/ListAlt';
 
 import BigMessage from 'components/BigMessage';
-import StepPositionSliders from 'components/inputs/StepPositionSliders';
-import LabelSliderNumberCombo from 'components/inputs/LabelSliderNumberCombo';
-import LabelNumberCombo from 'components/inputs/LabelNumberCombo';
+import PositionInput from 'components/inputs/PositionInput';
+import SpeedInput from 'components/inputs/SpeedInput';
+import GripperInput from 'components/inputs/GripperInput';
+import DelayInput from 'components/inputs/DelayInput';
 
 import { RoutineStateContext } from 'pages/RoutinePage/RoutinePage';
 
@@ -20,10 +18,25 @@ function StepEditor() {
   const selectedStep =
     selectedStepIndex !== null ? routine.steps[selectedStepIndex] : null;
 
-  const handleStepChange = (key) => (value) => {
+  const updateKey = (key) => (value) => {
     const step = {
       ...selectedStep,
       [key]: value,
+    };
+
+    dispatch({ type: 'step-edit', step });
+  };
+
+  const gripper = {
+    attack_angle: state.attack_angle,
+    gripper: state.gripper,
+    gripper_rot: state.gripper_rot,
+  };
+
+  const updateGripper = (gripper) => {
+    const step = {
+      ...selectedStep,
+      ...gripper,
     };
 
     dispatch({ type: 'step-edit', step });
@@ -53,33 +66,23 @@ function StepEditor() {
 
   // edit selected step
   return (
-    <Paper>
-      <Box padding={2}>
-        <Typography variant="h4" gutterBottom>
-          Valori step
-        </Typography>
-
-        <LabelNumberCombo
-          label="Delay"
-          min={0}
-          value={selectedStep['delay']}
-          onChange={handleStepChange('delay')}
-        />
-
-        <LabelSliderNumberCombo
-          label="Speed"
-          min={10}
-          max={30}
-          value={selectedStep['speed']}
-          onChange={handleStepChange('speed')}
-        />
-
-        <StepPositionSliders
+    <>
+      <Box paddingY={1}>
+        <PositionInput
           position={selectedStep.position}
-          onChange={handleStepChange('position')}
+          onChange={updateKey('position')}
         />
       </Box>
-    </Paper>
+      <Box paddingY={1}>
+        <GripperInput gripper={gripper} onChange={updateGripper} />
+      </Box>
+      <Box paddingY={1}>
+        <SpeedInput speed={selectedStep.speed} onChange={updateKey('speed')} />
+      </Box>
+      <Box paddingY={1}>
+        <DelayInput delay={selectedStep.delay} onChange={updateKey('delay')} />
+      </Box>
+    </>
   );
 }
 

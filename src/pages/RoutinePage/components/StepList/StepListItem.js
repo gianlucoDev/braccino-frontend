@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   chipRoot: {
-    width: '5em',
+    width: '6em',
     justifyContent: 'left',
   },
   active: {
@@ -30,34 +30,32 @@ const useStyles = makeStyles((theme) => ({
 function StepListItem({ index, step, active = false, onDelete, onSelect }) {
   const classes = useStyles();
 
-  const StepValue = ({ i, name }) => {
+  const StepValue = ({ name }) => {
     return (
       <Chip
         classes={{ root: classes.chipRoot }}
         size="small"
-        avatar={<Avatar>{i}</Avatar>}
+        avatar={<Avatar>{name}</Avatar>}
         label={step.position[name] + '°'}
       />
     );
   };
 
   const values = (
-    <>
-      <div className={classes.valuesContainer}>
-        <StepValue i={1} name="base" />
-        <StepValue i={2} name="shoulder" />
-        <StepValue i={3} name="elbow" />
-      </div>
-      <div className={classes.valuesContainer}>
-        <StepValue i={4} name="wrist_ver" />
-        <StepValue i={5} name="wrist_rot" />
-        <StepValue i={6} name="gripper" />
-      </div>
-    </>
+    <div className={classes.valuesContainer}>
+      <StepValue name="x" />
+      <StepValue name="y" />
+      <StepValue name="z" />
+    </div>
   );
 
   return (
-    <ListItem button alignItems="flex-start" onClick={onSelect} selected={active}>
+    <ListItem
+      button
+      alignItems="flex-start"
+      onClick={onSelect}
+      selected={active}
+    >
       <ListItemAvatar>
         <Avatar variant="rounded" className={active ? classes.active : ''}>
           {index + 1}

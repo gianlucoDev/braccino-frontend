@@ -1,9 +1,14 @@
-import { DEFAULT_JOINT_POSITIONS } from './joints';
-
 const DEFAULT_STEP = {
   delay: 1000,
   speed: 30,
-  position: DEFAULT_JOINT_POSITIONS,
+  attack_angle: null,
+  gripper: 50,
+  gripper_rot: 0,
+  position: {
+    x: 250,
+    y: 0,
+    z: 50,
+  },
 };
 
 export { DEFAULT_STEP };

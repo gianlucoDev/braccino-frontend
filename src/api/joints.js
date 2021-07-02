@@ -36,14 +36,3 @@ export const JOINTS = {
     default: 10,
   },
 };
-
-/*
-{
-  base: 90,
-  shoulder: 45,
-  ...
-}
-*/
-export const DEFAULT_JOINT_POSITIONS = Object.fromEntries(
-  Object.entries(JOINTS).map(([key, joint]) => [key, joint.default])
-);
