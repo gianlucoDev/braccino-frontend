@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
 
-import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 
 import { JOINTS } from 'api/joints';
 
+import InputContainer from './InputContainer';
 import LabelSliderNumberCombo from './LabelSliderNumberCombo';
 
 function AttackAngleInput({ attack_angle, onChange }) {
@@ -61,12 +60,8 @@ function GripperInput({ gripper, onChange }) {
   };
 
   return (
-    <Paper>
-      <Box padding={2}>
-        <Typography variant="h4" gutterBottom>
-          Gripper
-        </Typography>
-
+    <InputContainer heading="Gripper">
+      <Grid container>
         <LabelSliderNumberCombo
           label="Apertura"
           min={JOINTS.gripper.min}
@@ -87,8 +82,8 @@ function GripperInput({ gripper, onChange }) {
           attack_angle={gripper.attack_angle}
           onChange={handleChange('attack_angle')}
         />
-      </Box>
-    </Paper>
+      </Grid>
+    </InputContainer>
   );
 }
 
