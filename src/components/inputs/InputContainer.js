@@ -5,11 +5,18 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-function InputContainer({ heading, children }) {
+function InputContainer({ expanded, onExpandedChange, heading, children }) {
+  const summaryChildren =
+    typeof heading !== 'string' ? (
+      heading
+    ) : (
+      <Typography variant="h6">{heading}</Typography>
+    );
+
   return (
-    <Accordion>
+    <Accordion expanded={expanded} onChange={onExpandedChange}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <Typography variant="h6">{heading}</Typography>
+        {summaryChildren}
       </AccordionSummary>
 
       <AccordionDetails>{children}</AccordionDetails>
