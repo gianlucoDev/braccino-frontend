@@ -27,16 +27,10 @@ function StepEditor() {
     dispatch({ type: 'step-edit', step });
   };
 
-  const gripper = {
-    attack_angle: state.attack_angle,
-    gripper: state.gripper,
-    gripper_rot: state.gripper_rot,
-  };
-
-  const updateGripper = (gripper) => {
+  const updateGripper = (newGripper) => {
     const step = {
       ...selectedStep,
-      ...gripper,
+      ...newGripper,
     };
 
     dispatch({ type: 'step-edit', step });
@@ -63,6 +57,12 @@ function StepEditor() {
       />
     );
   }
+
+  const gripper = {
+    attack_angle: selectedStep.attack_angle,
+    gripper: selectedStep.gripper,
+    gripper_rot: selectedStep.gripper_rot,
+  };
 
   // edit selected step
   return (
