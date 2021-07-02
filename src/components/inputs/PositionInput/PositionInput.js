@@ -43,7 +43,6 @@ function PositionInput({ position, onChange }) {
     setExpanded(isExpanded);
   };
 
-  console.log(inputMode);
   const { Component } = inputModes[inputMode];
 
   const heading = (
