@@ -11,12 +11,13 @@ import WifiIcon from '@material-ui/icons/Wifi';
 import { useBraccio, useBraccioSocket } from 'api/braccio';
 import BraccioAppBar from 'components/BraccioAppBar';
 import BigMessage from 'components/BigMessage';
+
 import PositionInput from 'components/inputs/PositionInput';
 import SpeedInput from 'components/inputs/SpeedInput';
+import GripperInput from 'components/inputs/GripperInput';
 
 import BraccioInfoCard from './components/BraccioInfoCard';
 import SocketInfoCard from './components/SocketInfoCard';
-import GripperInput from 'components/inputs/GripperInput';
 
 function BraccioPage() {
   const { serial_number } = useParams();
