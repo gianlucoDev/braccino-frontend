@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Canvas, { getCanvasCoords } from './Canvas';
 
 //#region helper functions
@@ -119,17 +120,19 @@ const drawPos = (ctx, size, axis, pos) => {
 //#endregion
 
 function CartesianPlane({ axis, pos, onClick }) {
+  const [mouseDown, setMouseDown] = useState(false);
+
   const draw = ({ context }) => {
     const size = resizeCanvasSquare(context.canvas);
     drawMarks(context, size, axis);
     drawPos(context, size, axis, pos);
   };
 
-  // takes a MouseEvent fire from a <canvas> and converts to the coordiantes used by the <CartesianPlane />
   const handleClick = (event) => {
     const canvas = event.target;
     const size = canvas.width;
 
+    // convert to the coordiantes used by the <CartesianPlane />
     const coords = getCanvasCoords(event);
     const x = toPositionCoords(coords.x - size / 2, axis.horizontal, size);
     const y = toPositionCoords(-(coords.y - size / 2), axis.vertical, size);
@@ -138,11 +141,26 @@ function CartesianPlane({ axis, pos, onClick }) {
       horizontal: Math.round(x),
       vertical: Math.round(y),
     };
-
     onClick(pos);
   };
 
-  return <Canvas style={{ width: '100%' }} draw={draw} onClick={handleClick} />;
+  const handleMouseMove = (event) => {
+    if (mouseDown) {
+      handleClick(event);
+    }
+  };
+
+  return (
+    <Canvas
+      style={{ width: '100%' }}
+      draw={draw}
+      onMouseDown={() => setMouseDown(true)}
+      onMouseUp={() => setMouseDown(false)}
+      onMouseOut={() => setMouseDown(false)}
+      onMouseMove={handleMouseMove}
+      onClick={handleClick}
+    />
+  );
 }
 
 export default CartesianPlane;
