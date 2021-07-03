@@ -55,6 +55,39 @@ function CartesianPlane({ axis, pos, onClick }) {
     ctx.lineWidth = 2;
     strokeLine(size / 2, 0, size / 2, size);
     strokeLine(0, size / 2, size, size / 2);
+
+    // begin: lables
+    ctx.fillStyle = '#000';
+    ctx.font = `16px monospace`;
+
+    const lm = 4; // label margin
+    const s2 = size / 2; // half size
+
+    // label axis names
+    ctx.textAlign = 'start';
+    ctx.textBaseline = 'top';
+    ctx.fillText(axis.vertical.name, s2 + lm, 0 + lm);
+
+    ctx.textAlign = 'end';
+    ctx.textBaseline = 'bottom';
+    ctx.fillText(axis.horizontal.name, size - lm, s2 - lm);
+
+    // label axis extremes
+    ctx.textAlign = 'start';
+    ctx.textBaseline = 'top';
+    ctx.fillText(axis.horizontal.min, 0 + lm, s2 + lm);
+
+    ctx.textAlign = 'end';
+    ctx.textBaseline = 'top';
+    ctx.fillText(axis.horizontal.max, size - lm, s2 + lm);
+
+    ctx.textAlign = 'end';
+    ctx.textBaseline = 'top';
+    ctx.fillText(axis.vertical.max, s2 - lm, 0 + lm);
+
+    ctx.textAlign = 'end';
+    ctx.textBaseline = 'bottom';
+    ctx.fillText(axis.vertical.min, s2 - lm, size - lm);
   };
 
   const drawPos = ({ context: ctx, size }) => {
