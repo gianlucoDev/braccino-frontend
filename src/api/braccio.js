@@ -36,9 +36,9 @@ export function useBraccioSocket(serial_number) {
     gripper: 50,
     gripper_rot: 0,
     position: {
-      x: 250,
+      x: 50,
       y: 0,
-      z: 125,
+      z: 200,
     },
   });
 
