@@ -62,14 +62,14 @@ function RoutineImportExportButton() {
           <RoutineImportButton
             fullWidth
             variant="outlined"
-            startIcon={<CloudDownloadIcon />}
+            startIcon={<CloudUploadIcon />}
             className={classes.button}
             onImport={handleClose}
           />
           <RoutineExportButton
             fullWidth
             variant="outlined"
-            startIcon={<CloudUploadIcon />}
+            startIcon={<CloudDownloadIcon />}
             className={classes.button}
             onExport={handleClose}
           />
