@@ -5,20 +5,24 @@ import CartesianPlane from './CartesianPlane';
 function PositionInputCartesianPlane({ position, onChange }) {
   const handleClickXY = (pos) => {
     const { horizontal: x, vertical: y } = pos;
-    onChange({
-      ...position,
-      x,
-      y,
-    });
+    if (onChange) {
+      onChange({
+        ...position,
+        x,
+        y,
+      });
+    }
   };
 
   const handleClickXZ = (pos) => {
     const { horizontal: x, vertical: z } = pos;
-    onChange({
-      ...position,
-      x,
-      z,
-    });
+    if (onChange) {
+      onChange({
+        ...position,
+        x,
+        z,
+      });
+    }
   };
 
   return (

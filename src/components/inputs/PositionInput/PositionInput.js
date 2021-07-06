@@ -7,10 +7,12 @@ import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 import SlidersIconsIcon from '@material-ui/icons/Tune';
 import BorderOuterIcon from '@material-ui/icons/BorderOuter';
+import HandIcon from '@material-ui/icons/PanTool';
 
 import InputContainer from '../InputContainer';
 import PositionInputSliders from './PositionInputSliders';
 import PositionInputCartesianPlane from './PositionInputCartesianPlane';
+import PositionInputLeapMotion from './PositionInputLeapMotion';
 
 const inputModes = {
   sliders: {
@@ -23,6 +25,11 @@ const inputModes = {
     Icon: BorderOuterIcon,
     Component: PositionInputCartesianPlane,
   },
+  leapMotion: {
+    name: 'Leap Motion',
+    Icon: HandIcon,
+    Component: PositionInputLeapMotion,
+  }
 };
 
 function PositionInput({ position, onChange }) {
